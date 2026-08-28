@@ -1,0 +1,23 @@
+---
+// Mock de chat (S7). Numeros da carteira-vitrine (showcase 7.1).
+import Icon from '../Icon.astro';
+import { showcase } from '../../data/showcase';
+---
+<div class="chat-mock reveal">
+  <div class="chat-head">
+    <div class="t"><span class="k"><Icon name="sparkle" size={15} /></span> Perguntar ao Claude</div>
+    <span class="live">Conectado</span>
+  </div>
+  <div class="chat-body">
+    <div class="bubble q">Quanto de crédito de IBS/CBS está em risco neste mês?</div>
+    <div class="bubble a">
+      <b>{showcase.creditoEmRisco}</b> em créditos dependem de {showcase.fornecedoresSemCredito} fornecedores com pendência. 2 estão com CND vencida. Quer que eu avise o financeiro e segure a conciliação até regularizar?
+      <span class="src">fonte: monitor de fornecedores · adimplência do período</span>
+    </div>
+    <div class="bubble q">Como fica o meu caixa em 2027 com o split payment?</div>
+    <div class="bubble a">
+      No split, o imposto sai na venda. O buraco de caixa chega ao pico de <b>{showcase.buracoCaixaPico}</b> no mês mais forte, e você precisa de <b>{showcase.capitalGiro}</b> de capital de giro extra. Preparei o relatório para a diretoria.
+      <span class="src">fonte: aba fluxo de caixa · projeção 2027</span>
+    </div>
+  </div>
+</div>

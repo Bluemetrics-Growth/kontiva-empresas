@@ -1,0 +1,29 @@
+---
+// S6 Segundo agente (Recuperacao de creditos), com qualificacao.
+import GestaoExcedentes from './app-frames/GestaoExcedentes.astro';
+import { CTA_PRIMARIO, CTA_ANCORA } from '../data/showcase';
+---
+<section class="bg-alt" aria-labelledby="hon-h">
+  <div class="shell">
+    <div class="hon-grid">
+      <div class="hon-copy reveal">
+        <div class="eyebrow"><span class="dot-cyan"></span> Segundo agente</div>
+        <h2 id="hon-h" style="margin-top:20px;">E tem um segundo agente que costuma se pagar sozinho.</h2>
+
+        <div class="qualify">
+          <p>Se a sua empresa apura no Real ou no Presumido e tem volume de insumos, o Agente de Recuperação vasculha os últimos períodos e encontra o crédito que ficou para trás: PIS/COFINS não aproveitado, ICMS-ST pago a mais, imposto recolhido em duplicidade. Quem controla no braço perde de 15% a 20% dos créditos. Se a sua operação é enxuta e sem crédito a recuperar, tudo bem, esse aqui não é para você.</p>
+        </div>
+
+        <p>Ele reprocessa as notas do período, cruza com a apuração, identifica o crédito recuperável e explica cada achado com a origem, os valores e a base legal. Nenhuma retificação ou pedido sai sem a sua revisão. Você aprova antes de qualquer coisa sair.</p>
+
+        <p class="hon-close">Os dois agentes vêm no mesmo Hub. O tributário prepara a reforma, o de créditos <span class="serif-accent">paga a conta</span>.</p>
+
+        <div class="hero-cta-row" style="margin-top:28px;">
+          <a href={CTA_ANCORA} class="btn btn-primary" data-cta="s6">{CTA_PRIMARIO}</a>
+        </div>
+      </div>
+
+      <div class="hon-frame reveal delay-1"><div class="viewfinder"><GestaoExcedentes /></div></div>
+    </div>
+  </div>
+</section>
