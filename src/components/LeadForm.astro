@@ -1,5 +1,6 @@
 ---
-// CTA + formulario de demo (campos novos entram na Fase 4). Portado verbatim.
+// 16 - CTA + formulario de demo (PRD 6 e bugs #5/#6). Campos novos: faixa de
+// faturamento (qualificador do ICP) e regime tributario (eixo da Dor 4).
 ---
 <section class="final grain" id="agendar" aria-labelledby="final-h">
 <div class="shell final-grid">
@@ -28,7 +29,7 @@
 <div class="form-card reveal delay-1" id="form-card">
 <div class="form-body">
 <h3>Agende a demo com os dados da sua empresa</h3>
-<p class="fc-sub">Cinco campos. Nossa equipe responde em até 1 dia útil.</p>
+<p class="fc-sub">Poucos campos. Nossa equipe responde em até 1 dia útil.</p>
 <form id="lead-form" novalidate action="" method="post">
 <div class="f-field" data-field="nome">
 <label for="lf-nome">Nome</label>
@@ -64,6 +65,30 @@
 <option>Planilhas</option>
 <option>Outro</option>
 </select>
+</div>
+<div class="f-row">
+<div class="f-field" data-field="faturamento">
+<label for="lf-faturamento">Faixa de faturamento <span class="opt">(opcional)</span>
+</label>
+<select id="lf-faturamento" name="faturamento">
+<option value="">Selecione</option>
+<option>até R$ 20M</option>
+<option>R$ 20M a R$ 80M</option>
+<option>R$ 80M a R$ 300M</option>
+<option>acima de R$ 300M</option>
+</select>
+</div>
+<div class="f-field" data-field="regime">
+<label for="lf-regime">Regime tributário <span class="opt">(opcional)</span>
+</label>
+<select id="lf-regime" name="regime">
+<option value="">Selecione</option>
+<option>Lucro Presumido</option>
+<option>Lucro Real</option>
+<option>Simples</option>
+<option>Não sei</option>
+</select>
+</div>
 </div>
 <!-- honeypot anti-spam -->
 <div class="f-honeypot" aria-hidden="true">

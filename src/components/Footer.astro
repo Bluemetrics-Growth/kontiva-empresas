@@ -1,5 +1,6 @@
 ---
-// Rodape. String de WhatsApp do CTA corrigida (bug #1) para o vocabulario de empresa.
+// Rodape. Link de WhatsApp centralizado em content/site.ts (bug #1).
+import { whatsappHref } from "../../content/site";
 ---
 <footer class="site">
 <div class="shell">
@@ -13,7 +14,7 @@
 <p class="foot-tag">O Hub de agentes de IA que opera os processos fiscais e financeiros críticos da sua empresa.</p>
 </div>
 <nav class="foot-links" aria-label="Contato e legal">
-<a href="https://wa.me/5551926343014?text=Ol%C3%A1%2C%20quero%20agendar%20a%20demo%20da%20Kontiva%20com%20os%20dados%20da%20minha%20empresa." target="_blank" rel="noreferrer" data-cta="whatsapp">WhatsApp</a>
+<a href={whatsappHref} target="_blank" rel="noreferrer" data-cta="whatsapp">WhatsApp</a>
 <a href="mailto:contato@kontiva.ai">contato@kontiva.ai</a>
 <a href="/privacidade">Política de Privacidade</a>
 <a href="/termos">Termos de Uso</a>

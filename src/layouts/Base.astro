@@ -1,6 +1,7 @@
 ---
 import "../styles/tokens.css";
 import "../styles/lp.css";
+import { WHATSAPP_NUM, WHATSAPP_MSG, GTM_ID, LP_ID } from "../../content/site";
 
 interface Props {
   title?: string;
@@ -12,31 +13,21 @@ const {
 } = Astro.props as Props;
 
 // Canonical no dominio final de empresas (espelha lp.kontiva.ai de escritorios).
-// og:image e twitter:card entram na Fase 4 junto com o OG proprio de empresas.
 const canonical = "https://empresas.kontiva.ai/";
-
-const orgLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Kontiva",
-  url: canonical,
-  description:
-    "Hub de agentes de IA que opera a reforma tributária para empresas: créditos, fornecedores, caixa do split payment e repricing. Uma empresa BlueMetrics.",
-  parentOrganization: { "@type": "Organization", name: "BlueMetrics" },
-};
-const siteLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Kontiva",
-  url: canonical,
-  inLanguage: "pt-BR",
-};
+const ogImage = "https://empresas.kontiva.ai/og/og.png";
 ---
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Tag Manager (PRD secao 10) -->
+    <script is:inline define:vars={{ GTM_ID }}>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',GTM_ID);
+    </script>
+    <!-- End Google Tag Manager -->
+
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -50,6 +41,13 @@ const siteLd = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
@@ -77,18 +75,208 @@ const siteLd = {
       <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
     </noscript>
 
-    <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
-    <script type="application/ld+json" set:html={JSON.stringify(siteLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Kontiva",
+      url: canonical,
+      description:
+        "Hub de agentes de IA que opera a reforma tributária para empresas: créditos, fornecedores, caixa do split payment e repricing. Uma empresa BlueMetrics.",
+      parentOrganization: { "@type": "Organization", name: "BlueMetrics" },
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Kontiva",
+      url: canonical,
+      inLanguage: "pt-BR",
+    })} />
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <slot />
 
-    <script>
-      // Reveal on scroll + tracking (dataLayer) + formulario de demo.
-      // Portado verbatim do index.html monolitico de empresas na migracao para
-      // Astro. A string de WhatsApp ja usa "minha empresa" (bug #1). O endpoint
-      // (N) fica vazio: sem endpoint, o envio cai no fallback de WhatsApp.
-      const k=window.matchMedia("(prefers-reduced-motion: reduce)").matches,I=document.querySelectorAll(".reveal");if(k||!("IntersectionObserver"in window))I.forEach(a=>a.classList.add("in"));else{const a=new IntersectionObserver(t=>{t.forEach(s=>{s.isIntersecting&&(s.target.classList.add("in"),a.unobserve(s.target))})},{threshold:.12});I.forEach(t=>a.observe(t))}const d=(a,t={})=>{const s=window;s.dataLayer=s.dataLayer||[],s.dataLayer.push({event:a,...t})},y=document.getElementById("topo");if(y){const a=new IntersectionObserver(t=>{t[0].isIntersecting&&(d("view_hero"),a.disconnect())},{threshold:.3});a.observe(y)}document.addEventListener("click",a=>{const t=a.target.closest("[data-cta]");if(!t)return;const s=t.getAttribute("data-cta")||"unknown";d("cta_click",{position:s}),s==="whatsapp"&&d("whatsapp_click")});const b="5551926343014",B="Olá, quero agendar a demo da Kontiva com os dados da minha empresa.",S=`https://wa.me/${b}?text=${encodeURIComponent(B)}`,N="",$=(a,t={})=>{const s=window;s.dataLayer=s.dataLayer||[],s.dataLayer.push({event:a,...t})},o=document.getElementById("lead-form");if(o){const a=document.getElementById("form-card"),t=document.getElementById("lf-submit"),s=document.getElementById("form-success"),m=document.getElementById("form-sendfail"),u=document.getElementById("sendfail-wa");let f=!1;const _=new URLSearchParams(location.search),h={};["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(e=>{const n=_.get(e)||sessionStorage.getItem(e);n&&(h[e]=n,sessionStorage.setItem(e,n))});const c=document.getElementById("lf-whats");c.addEventListener("input",()=>{let e=c.value.replace(/\D/g,"").slice(0,11),n=e;e.length>2&&(n=`(${e.slice(0,2)}) ${e.slice(2)}`),e.length>7&&(n=`(${e.slice(0,2)}) ${e.slice(2,7)}-${e.slice(7)}`),c.value=n}),o.addEventListener("focusin",()=>{f||(f=!0,$("form_start"))});const r=(e,n)=>{const i=o.querySelector(`[data-field="${e}"]`);i&&i.classList.toggle("invalid",n)},A=()=>{const e=o.nome.value.trim(),n=o.email.value.trim(),i=c.value.replace(/\D/g,""),l=parseInt(o.carteira.value,10),g=e.length>0,w=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(n),E=i.length>=10,L=Number.isFinite(l)&&l>0;return r("nome",!g),r("email",!w),r("whatsapp",!E),r("carteira",!L),{ok:g&&w&&E&&L}},v=e=>{const n=`Olá, quero agendar a demo da Kontiva com os dados da minha empresa.%0A%0ANome: ${e.nome||""}%0AWhatsApp: ${e.whatsapp||""}%0AE-mail: ${e.email||""}%0ACNPJs na operação: ${e.carteira||""}%0ASistema: ${e.sistema||"não informado"}`;return`https://wa.me/${b}?text=${n}`},p=()=>{a.classList.add("sent"),s.classList.add("show"),s.scrollIntoView({behavior:"smooth",block:"center"}),$("form_submit_success")};o.addEventListener("submit",async e=>{if(e.preventDefault(),m.classList.remove("show"),o.empresa_site.value){p();return}const{ok:n}=A();if(!n){o.querySelector(".f-field.invalid input, .f-field.invalid select")?.focus();return}const i={nome:o.nome.value.trim(),whatsapp:c.value.trim(),email:o.email.value.trim(),carteira:o.carteira.value.trim(),sistema:o.sistema.value,...h};t.classList.add("is-loading"),t.innerHTML='<span class="spinner"></span> Enviando...';try{N||(window.open(v(i),"_blank","noopener"),p())}catch{t.classList.remove("is-loading"),t.textContent="Agendar minha demo",u.href=v(i),m.classList.add("show")}}),u.href=S}
+    <script is:inline define:vars={{ WA_NUM: WHATSAPP_NUM, WA_MSG: WHATSAPP_MSG, LP: LP_ID }}>
+      (function () {
+        var w = window;
+        var track = function (name, data) {
+          w.dataLayer = w.dataLayer || [];
+          w.dataLayer.push(Object.assign({ event: name, lp: LP }, data || {}));
+        };
+
+        // Reveal on scroll (respeita prefers-reduced-motion)
+        var reduce = w.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var reveals = document.querySelectorAll(".reveal");
+        if (reduce || !("IntersectionObserver" in w)) {
+          reveals.forEach(function (el) { el.classList.add("in"); });
+        } else {
+          var ro = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              if (en.isIntersecting) { en.target.classList.add("in"); ro.unobserve(en.target); }
+            });
+          }, { threshold: 0.12 });
+          reveals.forEach(function (el) { ro.observe(el); });
+        }
+
+        // lp_view no carregamento
+        track("lp_view");
+
+        // Cliques em CTA: hero_cta_click e whatsapp_click (PRD secao 10)
+        document.addEventListener("click", function (e) {
+          var t = e.target.closest ? e.target.closest("[data-cta]") : null;
+          if (!t) return;
+          var pos = t.getAttribute("data-cta") || "unknown";
+          if (pos === "hero") track("hero_cta_click");
+          if (pos === "whatsapp") track("whatsapp_click");
+          track("cta_click", { position: pos });
+        });
+
+        // scroll_depth 25/50/75/90
+        var marks = [25, 50, 75, 90];
+        var fired = {};
+        var onScroll = function () {
+          var docH = document.documentElement.scrollHeight - w.innerHeight;
+          if (docH <= 0) return;
+          var pct = (w.scrollY / docH) * 100;
+          marks.forEach(function (m) {
+            if (!fired[m] && pct >= m) { fired[m] = true; track("scroll_depth", { depth: m }); }
+          });
+        };
+        w.addEventListener("scroll", onScroll, { passive: true });
+
+        // pain_section_view (pain_id 1-5) e ruler_view
+        if ("IntersectionObserver" in w) {
+          var secObs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              if (!en.isIntersecting) return;
+              var el = en.target;
+              if (el.dataset.painId) { track("pain_section_view", { pain_id: Number(el.dataset.painId) }); }
+              else if (el.id === "regua") { track("ruler_view"); }
+              secObs.unobserve(el);
+            });
+          }, { threshold: 0.4 });
+          document.querySelectorAll("[data-pain-id], #regua").forEach(function (el) { secObs.observe(el); });
+        }
+
+        // faq_open com o titulo
+        document.querySelectorAll(".faq-item").forEach(function (d) {
+          d.addEventListener("toggle", function () {
+            if (d.open) {
+              var s = d.querySelector("summary");
+              var title = s ? s.textContent.trim() : "";
+              track("faq_open", { title: title });
+            }
+          });
+        });
+
+        // Formulario de demo
+        var waHref = "https://wa.me/" + WA_NUM + "?text=" + encodeURIComponent(WA_MSG);
+        var ENDPOINT = ""; // sem endpoint: fallback via WhatsApp
+        var form = document.getElementById("lead-form");
+        if (form) {
+          var card = document.getElementById("form-card");
+          var submitBtn = document.getElementById("lf-submit");
+          var success = document.getElementById("form-success");
+          var sendfail = document.getElementById("form-sendfail");
+          var sendfailWa = document.getElementById("sendfail-wa");
+          var started = false;
+
+          // Captura de UTM
+          var params = new URLSearchParams(location.search);
+          var utm = {};
+          ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(function (k) {
+            var v = params.get(k) || sessionStorage.getItem(k);
+            if (v) { utm[k] = v; sessionStorage.setItem(k, v); }
+          });
+
+          // Mascara de telefone
+          var whats = document.getElementById("lf-whats");
+          whats.addEventListener("input", function () {
+            var digits = whats.value.replace(/\D/g, "").slice(0, 11);
+            var out = digits;
+            if (digits.length > 2) out = "(" + digits.slice(0, 2) + ") " + digits.slice(2);
+            if (digits.length > 7) out = "(" + digits.slice(0, 2) + ") " + digits.slice(2, 7) + "-" + digits.slice(7);
+            whats.value = out;
+          });
+
+          form.addEventListener("focusin", function () {
+            if (!started) { started = true; track("form_start"); }
+          });
+
+          var mark = function (field, invalid) {
+            var el = form.querySelector('[data-field="' + field + '"]');
+            if (el) el.classList.toggle("invalid", invalid);
+          };
+          var validate = function () {
+            var nome = form.nome.value.trim();
+            var email = form.email.value.trim();
+            var tel = whats.value.replace(/\D/g, "");
+            var cnpjs = parseInt(form.carteira.value, 10);
+            var okNome = nome.length > 0;
+            var okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            var okTel = tel.length >= 10;
+            var okCnpjs = Number.isFinite(cnpjs) && cnpjs > 0;
+            mark("nome", !okNome); mark("email", !okEmail); mark("whatsapp", !okTel); mark("carteira", !okCnpjs);
+            return { ok: okNome && okEmail && okTel && okCnpjs };
+          };
+          var waWithData = function (d) {
+            var msg = WA_MSG +
+              "%0A%0ANome: " + (d.nome || "") +
+              "%0AWhatsApp: " + (d.whatsapp || "") +
+              "%0AE-mail: " + (d.email || "") +
+              "%0ACNPJs na operação: " + (d.carteira || "") +
+              "%0ASistema: " + (d.sistema || "não informado") +
+              "%0AFaturamento: " + (d.faturamento || "não informado") +
+              "%0ARegime: " + (d.regime || "não informado");
+            return "https://wa.me/" + WA_NUM + "?text=" + msg;
+          };
+          var showSuccess = function () {
+            card.classList.add("sent");
+            success.classList.add("show");
+            success.scrollIntoView({ behavior: "smooth", block: "center" });
+            track("form_submit_success");
+          };
+
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            sendfail.classList.remove("show");
+            if (form.empresa_site.value) { showSuccess(); return; } // honeypot
+            var res = validate();
+            if (!res.ok) {
+              var bad = form.querySelector(".f-field.invalid input, .f-field.invalid select");
+              if (bad) bad.focus();
+              return;
+            }
+            var data = {
+              nome: form.nome.value.trim(),
+              whatsapp: whats.value.trim(),
+              email: form.email.value.trim(),
+              carteira: form.carteira.value.trim(),
+              sistema: form.sistema.value,
+              faturamento: form.faturamento.value,
+              regime: form.regime.value
+            };
+            Object.assign(data, utm);
+            submitBtn.classList.add("is-loading");
+            submitBtn.innerHTML = '<span class="spinner"></span> Enviando...';
+            try {
+              if (!ENDPOINT) { w.open(waWithData(data), "_blank", "noopener"); showSuccess(); }
+            } catch (err) {
+              submitBtn.classList.remove("is-loading");
+              submitBtn.textContent = "Agendar minha demo";
+              sendfailWa.href = waWithData(data);
+              sendfail.classList.add("show");
+              track("form_submit_error");
+            }
+          });
+          sendfailWa.href = waHref;
+        }
+      })();
     </script>
   </body>
 </html>
