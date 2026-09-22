@@ -1,5 +1,6 @@
 ---
-// Cabecalho / navegacao. Portado do index.html monolitico.
+// Cabecalho v3: navegacao minima + CTA (PRD secao 18).
+import { CTA_SECUNDARIO } from "../../content/site";
 ---
 <header class="nav">
 <div class="shell nav-inner">
@@ -9,6 +10,12 @@
 <span class="ai">ai</span>
 <span class="brand-note">uma empresa BlueMetrics</span>
 </a>
-<a href="#agendar" class="btn btn-primary" data-cta="header">Agendar demo</a>
+<nav class="nav-links" aria-label="Navegação principal">
+<a href="#problemas" class="nav-link">Como funciona</a>
+<a href="#produto" class="nav-link">Produto</a>
+<a href="#confianca" class="nav-link">Segurança</a>
+<a href="#faq" class="nav-link">FAQ</a>
+<a href="#agendar" class="btn btn-primary" data-cta="header">{CTA_SECUNDARIO}</a>
+</nav>
 </div>
 </header>

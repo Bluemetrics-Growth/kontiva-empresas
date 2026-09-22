@@ -1,0 +1,27 @@
+---
+// 09 - FAQ (PRD v3 secao 12). Cinco perguntas. Questoes regulatorias detalhadas
+// saem da FAQ principal.
+const faqs = [
+  { q: "O que o Kontiva faz hoje?", a: "Conecta os dados da sua empresa, simula o impacto da reforma por unidade e opera a rotina de crédito, fornecedores, preço e caixa, com aprovação do seu time. Está em fase de testes assistida." },
+  { q: "Preciso trocar de ERP?", a: "Não. O Kontiva lê SAP, TOTVS, Oracle, Senior e planilhas. Você não troca de ERP." },
+  { q: "Isso substitui meu contador ou consultoria?", a: "Não. O Kontiva opera a rotina e mostra a memória de cálculo. A decisão continua com o seu time e o seu contador." },
+  { q: "A IA executa ações automaticamente?", a: "Não. O agente propõe, o seu time aprova pela interface e fica registrado quem aprovou o quê. Nada sai sem revisão." },
+  { q: "Como funciona a demo?", a: "Você preenche o formulário, nossa equipe configura uma amostra dos seus dados e mostra onde estão os principais riscos e oportunidades. Sem custo, resposta em até 1 dia útil." },
+];
+---
+<section class="bg-page" id="faq" aria-labelledby="faq-h">
+  <div class="shell">
+    <div class="section-head reveal" style="text-align:center; margin-left:auto; margin-right:auto;">
+      <div class="eyebrow" style="justify-content:center;"><span class="dot-cyan"></span> Perguntas frequentes</div>
+      <h2 id="faq-h" style="margin-top:18px;">Ainda tem dúvida? A gente responde.</h2>
+    </div>
+    <div class="faq-list reveal delay-1">
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q} <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <div class="faq-a"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

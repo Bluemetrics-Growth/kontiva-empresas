@@ -1,28 +1,42 @@
 ---
-// S1 Hero (empresas). Foto full-bleed de background + overlay navy, texto branco.
-// PRD 7.1/7.2: mesmo tratamento do hero de escritorios (portado do design system),
-// com a foto renomeada para hero-empresas-* (a troca da foto vem depois). A copy e
-// o card flutuante sao de empresa (PRD 6.1). Contagem regressiva em JS puro.
-import { countdown } from "../../content/facts";
+// 01 - Hero v3 (PRD v3 secao 4). Promessa + prova + CTA. Foto de fundo com
+// pessoas no terco direito e espaco negativo a esquerda para a copy.
+// Art direction: recorte 4:5 no mobile. Card de produto em sobreposicao.
+import { seloExemplo } from "../../content/facts";
+import { CTA_PRIMARIO as CTA, CTA_ANCORA } from "../../content/site";
 ---
 <section class="hero hero-photo" id="topo" aria-labelledby="hero-h1">
   <picture class="hero-photo-bg" aria-hidden="true">
+    <!-- Mobile: recorte 4:5 focado nas pessoas -->
+    <source
+      media="(max-width: 860px)"
+      type="image/avif"
+      srcset="/images/hero-kontiva-empresas-m-640.avif 640w, /images/hero-kontiva-empresas-m-900.avif 900w"
+      sizes="100vw"
+    />
+    <source
+      media="(max-width: 860px)"
+      type="image/webp"
+      srcset="/images/hero-kontiva-empresas-m-640.webp 640w, /images/hero-kontiva-empresas-m-900.webp 900w"
+      sizes="100vw"
+    />
+    <!-- Desktop: composicao completa 16:9 -->
     <source
       type="image/avif"
-      srcset="/hero-empresas-800.avif 800w, /hero-empresas-1600.avif 1600w, /hero-empresas-2400.avif 2400w"
+      srcset="/images/hero-kontiva-empresas-800.avif 800w, /images/hero-kontiva-empresas-1280.avif 1280w, /images/hero-kontiva-empresas-1672.avif 1672w"
       sizes="100vw"
     />
     <source
       type="image/webp"
-      srcset="/hero-empresas-800.webp 800w, /hero-empresas-1600.webp 1600w, /hero-empresas-2400.webp 2400w"
+      srcset="/images/hero-kontiva-empresas-800.webp 800w, /images/hero-kontiva-empresas-1280.webp 1280w, /images/hero-kontiva-empresas-1672.webp 1672w"
       sizes="100vw"
     />
     <img
-      src="/hero-empresas-1600.jpg"
-      srcset="/hero-empresas-800.jpg 800w, /hero-empresas-1600.jpg 1600w, /hero-empresas-2400.jpg 2400w"
+      src="/images/hero-kontiva-empresas-1280.jpg"
+      srcset="/images/hero-kontiva-empresas-800.jpg 800w, /images/hero-kontiva-empresas-1280.jpg 1280w, /images/hero-kontiva-empresas-1672.jpg 1672w"
       sizes="100vw"
-      width="1600"
-      height="1067"
+      width="1672"
+      height="941"
       alt=""
       fetchpriority="high"
       decoding="async"
@@ -33,41 +47,32 @@ import { countdown } from "../../content/facts";
 
   <div class="shell hero-photo-inner">
     <div class="hero-copy">
-      <div class="eyebrow reveal"><span class="dot-cyan"></span> Reforma tributária · a conta vira em 1º de janeiro de 2027</div>
+      <div class="eyebrow reveal"><span class="dot-cyan"></span> Reforma tributária · operação 2027</div>
 
       <h1 id="hero-h1" class="reveal delay-1">
-        Em 2027 o seu crédito passa a depender de <span class="accent">quem vende para você</span>.
+        A reforma muda o imposto. O Kontiva muda <span class="accent">como sua empresa opera isso</span>.
       </h1>
 
       <p class="lead hero-sub reveal delay-2">
-        O agente de IA que opera a reforma dentro da sua empresa. Ele responde qualquer dúvida com a fonte e os seus dados, simula a operação inteira de uma vez e roda a rotina que começa em janeiro: crédito que depende do fornecedor, compra que virou decisão fiscal, preço que precisa ser refeito e caixa que perde o colchão. Com observabilidade total e a aprovação do seu time em cada passo.
-      </p>
-
-      <p
-        class="hero-countdown reveal delay-2"
-        id="hero-countdown"
-        data-target={countdown.primary}
-        data-secondary={countdown.secondary}
-        aria-live="polite"
-      >
-        <span data-cd-text><b data-cd-num>&nbsp;</b> dias até a CBS entrar em alíquota plena.</span>
+        O Kontiva conecta os dados da sua empresa, simula o impacto da reforma e transforma crédito, fornecedores, preço e caixa em uma rotina operacional acompanhada pelo seu time.
       </p>
 
       <div class="hero-cta-row reveal delay-2">
-        <a href="#agendar" class="btn btn-primary btn-lg" data-cta="hero">Agende a demo com os dados da sua empresa</a>
+        <a href={CTA_ANCORA} class="btn btn-primary btn-lg" data-cta="hero">{CTA}</a>
+        <a href="#produto" class="btn btn-ghost btn-lg" data-cta="hero-secondary">Entender como funciona</a>
       </div>
-      <p class="hero-cta-note reveal delay-3">Sem custo e sem compromisso. Você vê rodando na sua operação antes de decidir.</p>
+      <p class="hero-cta-note reveal delay-3">Demo com dados da sua empresa · sem custo</p>
 
       <div class="hero-seal reveal delay-3">
         <div>
           <span class="tick">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
-          </span> Conecta a SAP, TOTVS, Oracle, Senior e planilhas.
+          </span> SAP · TOTVS · Oracle · Senior · Planilhas
         </div>
         <div>
           <span class="tick">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
-          </span> O seu time aprova antes de qualquer coisa sair.
+          </span> Aprovação humana antes de qualquer ação
         </div>
       </div>
     </div>
@@ -81,41 +86,7 @@ import { countdown } from "../../content/facts";
         <span class="hero-proof-value">R$ <b>214.700</b></span>
         <span class="hero-proof-sub">em 7 fornecedores sem recolhimento confirmado</span>
       </div>
-      <span class="hero-proof-tag">Exemplo ilustrativo · dados de demonstração</span>
+      <span class="hero-proof-tag">{seloExemplo}</span>
     </aside>
   </div>
 </section>
-
-<script>
-  // Contagem regressiva do hero. Sem biblioteca externa, formatada em pt-BR.
-  // Antes de 01/01/2027: dias ate a CBS plena. A partir de 01/01/2027: troca a
-  // label para o avanco do IBS, com alvo em 01/01/2029. Nunca renderiza numero
-  // negativo nem zero quebrado (PRD 6.1).
-  const el = document.getElementById("hero-countdown");
-  if (el) {
-    const numEl = el.querySelector("[data-cd-num]") as HTMLElement | null;
-    const textEl = el.querySelector("[data-cd-text]") as HTMLElement | null;
-    const primary = new Date((el.dataset.target || "2027-01-01") + "T00:00:00");
-    const secondary = new Date((el.dataset.secondary || "2029-01-01") + "T00:00:00");
-    const MS_DAY = 86400000;
-
-    const startOfToday = () => {
-      const n = new Date();
-      return new Date(n.getFullYear(), n.getMonth(), n.getDate());
-    };
-    const daysUntil = (target: Date) => Math.max(1, Math.ceil((target.getTime() - startOfToday().getTime()) / MS_DAY));
-
-    const render = () => {
-      const today = startOfToday();
-      if (today < primary) {
-        const d = daysUntil(primary);
-        if (numEl) numEl.textContent = d.toLocaleString("pt-BR");
-        if (textEl) textEl.innerHTML = `<b data-cd-num>${d.toLocaleString("pt-BR")}</b> dias até a CBS entrar em alíquota plena.`;
-      } else {
-        const d = daysUntil(secondary);
-        if (textEl) textEl.innerHTML = `A CBS já está valendo. Faltam <b data-cd-num>${d.toLocaleString("pt-BR")}</b> dias para o IBS avançar sobre ICMS e ISS.`;
-      }
-    };
-    render();
-  }
-</script>

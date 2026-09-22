@@ -1,0 +1,217 @@
+---
+// 08 - CTA + formulario em duas etapas (PRD v3 secao 11).
+// Etapa 1: Nome, E-mail corporativo, WhatsApp. Etapa 2: ERP, CNPJs, Regime,
+// Faturamento. Preserva o comportamento atual (sem endpoint: fallback via
+// WhatsApp) e a captura de UTM. Se um endpoint HubSpot for configurado em
+// FORM_ENDPOINT, o POST passa a valer sem quebrar os campos existentes.
+import { WHATSAPP_NUM, WHATSAPP_MSG, CTA_SECUNDARIO } from "../../content/site";
+---
+<section class="final grain" id="agendar" aria-labelledby="final-h">
+  <div class="shell final-grid">
+    <div class="final-copy reveal">
+      <div class="eyebrow"><span class="dot-cyan"></span> Agende a demo</div>
+      <h2 id="final-h" style="margin-top:18px;">Veja o impacto da reforma na sua <span class="hl">própria operação.</span></h2>
+      <p class="final-sub">Em uma demo assistida, configuramos uma amostra dos seus dados e mostramos onde estão os principais riscos e oportunidades.</p>
+      <div class="setup-steps">
+        <div class="setup-step"><span class="sn">1</span><p>Você preenche 3 campos. Sem custo.</p></div>
+        <div class="setup-step"><span class="sn">2</span><p>Rodamos os agentes numa amostra da sua operação.</p></div>
+        <div class="setup-step"><span class="sn">3</span><p>Você vê o resultado em reais e decide.</p></div>
+      </div>
+    </div>
+
+    <div class="form-card reveal delay-1" id="form-card">
+      <div class="form-body">
+        <h3>Agende a demo com os dados da sua empresa</h3>
+        <p class="fc-sub">Sem custo · sem compromisso · resposta em até 1 dia útil</p>
+
+        <div class="lf2-steps" aria-hidden="true">
+          <span class="lf2-dot on" id="dot-1"></span>
+          <span class="lf2-dot" id="dot-2"></span>
+        </div>
+
+        <form id="lead-form" novalidate action="" method="post">
+          <!-- Etapa 1 -->
+          <div class="f-step active" id="step-1" data-step="1">
+            <p class="lf2-stepnote">Etapa 1 de 2 · seus dados</p>
+            <div class="f-field" data-field="nome">
+              <label for="lf-nome">Nome</label>
+              <input id="lf-nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" aria-describedby="err-nome">
+              <div class="f-error" id="err-nome">Preencha este campo para continuar.</div>
+            </div>
+            <div class="f-field" data-field="email">
+              <label for="lf-email">E-mail corporativo</label>
+              <input id="lf-email" name="email" type="email" placeholder="voce@suaempresa.com.br" autocomplete="email" aria-describedby="err-email">
+              <div class="f-error" id="err-email">E-mail inválido. Confira e tente de novo.</div>
+            </div>
+            <div class="f-field" data-field="whatsapp">
+              <label for="lf-whats">WhatsApp</label>
+              <input id="lf-whats" name="whatsapp" type="tel" inputmode="tel" placeholder="(00) 00000-0000" autocomplete="tel" aria-describedby="err-whats">
+              <div class="f-error" id="err-whats">Número incompleto. Inclua o DDD.</div>
+            </div>
+            <button type="button" class="btn btn-primary btn-block btn-lg" id="lf-next" data-cta="form-next">Continuar</button>
+          </div>
+
+          <!-- Etapa 2 -->
+          <div class="f-step" id="step-2" data-step="2">
+            <button type="button" class="lf2-back" id="lf-back">Voltar</button>
+            <p class="lf2-stepnote">Etapa 2 de 2 · para preparar a demo</p>
+            <div class="f-field" data-field="sistema">
+              <label for="lf-sistema">Sistema / ERP</label>
+              <select id="lf-sistema" name="sistema">
+                <option value="">Selecione</option>
+                <option>SAP</option><option>TOTVS</option><option>Oracle</option><option>Senior</option><option>Planilhas</option><option>Outro</option>
+              </select>
+            </div>
+            <div class="f-row">
+              <div class="f-field" data-field="carteira">
+                <label for="lf-carteira">Número de CNPJs</label>
+                <input id="lf-carteira" name="carteira" type="number" min="1" step="1" placeholder="Ex: 22" aria-describedby="err-carteira">
+                <div class="f-error" id="err-carteira">Informe um número maior que zero.</div>
+              </div>
+              <div class="f-field" data-field="regime">
+                <label for="lf-regime">Regime tributário</label>
+                <select id="lf-regime" name="regime">
+                  <option value="">Selecione</option>
+                  <option>Lucro Presumido</option><option>Lucro Real</option><option>Simples</option><option>Não sei</option>
+                </select>
+              </div>
+            </div>
+            <div class="f-field" data-field="faturamento">
+              <label for="lf-faturamento">Faixa de faturamento</label>
+              <select id="lf-faturamento" name="faturamento">
+                <option value="">Selecione</option>
+                <option>até R$ 20M</option><option>R$ 20M a R$ 80M</option><option>R$ 80M a R$ 300M</option><option>acima de R$ 300M</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="lf-submit" data-cta="form">Agendar minha demo</button>
+          </div>
+
+          <!-- honeypot anti-spam -->
+          <div class="f-honeypot" aria-hidden="true">
+            <label for="lf-empresa-site">Não preencha este campo</label>
+            <input id="lf-empresa-site" name="empresa_site" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <p class="f-consent">Ao enviar, você concorda em ser contatado pela nossa equipe. Seus dados ficam protegidos e você pode pedir a exclusão quando quiser.</p>
+          <div class="form-sendfail" id="form-sendfail" role="alert">
+            Não conseguimos enviar agora. Tente de novo, ou chame a gente no WhatsApp.
+            <a href="#" class="btn btn-dark btn-block" style="margin-top:10px;" id="sendfail-wa" target="_blank" rel="noreferrer" data-cta="whatsapp">Falar no WhatsApp</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-success" id="form-success" role="status" aria-live="polite">
+        <span class="ok-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+        </span>
+        <h3>Recebemos seu contato.</h3>
+        <p>Nossa equipe responde em até 1 dia útil para agendar a demo e combinar a amostra da sua operação.</p>
+      </div>
+      <p class="form-honesty">Setup assistido em turmas limitadas pela nossa capacidade de onboarding.</p>
+    </div>
+  </div>
+</section>
+
+<script is:inline define:vars={{ WA_NUM: WHATSAPP_NUM, WA_MSG: WHATSAPP_MSG }}>
+  (function () {
+    var w = window;
+    var track = function (n, d) { if (typeof w.__ktrack === "function") w.__ktrack(n, d); else { w.dataLayer = w.dataLayer || []; w.dataLayer.push(Object.assign({ event: n }, d || {})); } };
+    var FORM_ENDPOINT = ""; // configurar para POST direto (HubSpot). Vazio: fallback WhatsApp.
+
+    var form = document.getElementById("lead-form");
+    if (!form) return;
+    var card = document.getElementById("form-card");
+    var step1 = document.getElementById("step-1");
+    var step2 = document.getElementById("step-2");
+    var dot2 = document.getElementById("dot-2");
+    var nextBtn = document.getElementById("lf-next");
+    var backBtn = document.getElementById("lf-back");
+    var submitBtn = document.getElementById("lf-submit");
+    var success = document.getElementById("form-success");
+    var sendfail = document.getElementById("form-sendfail");
+    var sendfailWa = document.getElementById("sendfail-wa");
+    var whats = document.getElementById("lf-whats");
+    var started = false, step1done = false;
+
+    // UTM
+    var params = new URLSearchParams(location.search), utm = {};
+    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(function (k) {
+      var v = params.get(k) || sessionStorage.getItem(k);
+      if (v) { utm[k] = v; try { sessionStorage.setItem(k, v); } catch (e) {} }
+    });
+
+    // form_view quando o form entra na tela
+    if ("IntersectionObserver" in w) {
+      var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { track("form_view"); io.disconnect(); } }, { threshold: 0.3 });
+      io.observe(form);
+    }
+
+    // Mascara de WhatsApp (nao bloqueia colar: normaliza no fim)
+    whats.addEventListener("input", function () {
+      var d = whats.value.replace(/\D/g, "").slice(0, 11), out = d;
+      if (d.length > 2) out = "(" + d.slice(0, 2) + ") " + d.slice(2);
+      if (d.length > 7) out = "(" + d.slice(0, 2) + ") " + d.slice(2, 7) + "-" + d.slice(7);
+      whats.value = out;
+    });
+
+    form.addEventListener("focusin", function () { if (!started) { started = true; track("form_start"); } });
+
+    var mark = function (field, invalid) { var el = form.querySelector('[data-field="' + field + '"]'); if (el) el.classList.toggle("invalid", invalid); };
+    var validStep1 = function () {
+      var nome = form.nome.value.trim();
+      var email = form.email.value.trim();
+      var tel = whats.value.replace(/\D/g, "");
+      var okNome = nome.length > 0, okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), okTel = tel.length >= 10;
+      mark("nome", !okNome); mark("email", !okEmail); mark("whatsapp", !okTel);
+      return okNome && okEmail && okTel;
+    };
+    var goStep = function (n) {
+      step1.classList.toggle("active", n === 1);
+      step2.classList.toggle("active", n === 2);
+      dot2.classList.toggle("on", n === 2);
+      var first = (n === 1 ? step1 : step2).querySelector("input, select");
+      if (first) first.focus();
+    };
+    nextBtn.addEventListener("click", function () {
+      if (!validStep1()) { var bad = form.querySelector(".f-field.invalid input"); if (bad) bad.focus(); return; }
+      if (!step1done) { step1done = true; track("form_step_1_complete"); }
+      goStep(2);
+    });
+    backBtn.addEventListener("click", function () { goStep(1); }); // preserva dados
+
+    var waWithData = function (d) {
+      var msg = WA_MSG +
+        "%0A%0ANome: " + (d.nome || "") + "%0AWhatsApp: " + (d.whatsapp || "") + "%0AE-mail: " + (d.email || "") +
+        "%0ASistema: " + (d.sistema || "não informado") + "%0ACNPJs: " + (d.carteira || "não informado") +
+        "%0ARegime: " + (d.regime || "não informado") + "%0AFaturamento: " + (d.faturamento || "não informado");
+      return "https://wa.me/" + WA_NUM + "?text=" + msg;
+    };
+    var showSuccess = function () { card.classList.add("sent"); success.classList.add("show"); success.scrollIntoView({ behavior: "smooth", block: "center" }); track("form_submit_success"); };
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      sendfail.classList.remove("show");
+      if (form.empresa_site.value) { showSuccess(); return; } // honeypot
+      if (!validStep1()) { goStep(1); var bad = form.querySelector(".f-field.invalid input"); if (bad) bad.focus(); return; }
+      var data = {
+        nome: form.nome.value.trim(), email: form.email.value.trim(), whatsapp: whats.value.trim(),
+        sistema: form.sistema.value, carteira: form.carteira.value.trim(), regime: form.regime.value, faturamento: form.faturamento.value
+      };
+      Object.assign(data, utm);
+      submitBtn.classList.add("is-loading");
+      submitBtn.innerHTML = '<span class="spinner"></span> Enviando...';
+      var finishFail = function () {
+        submitBtn.classList.remove("is-loading"); submitBtn.textContent = "Agendar minha demo";
+        sendfailWa.href = waWithData(data); sendfail.classList.add("show"); track("form_submit_error");
+      };
+      if (FORM_ENDPOINT) {
+        fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+          .then(function (r) { if (!r.ok) throw new Error("bad status"); showSuccess(); })
+          .catch(finishFail);
+      } else {
+        try { w.open(waWithData(data), "_blank", "noopener"); showSuccess(); } catch (err) { finishFail(); }
+      }
+    });
+    sendfailWa.href = "https://wa.me/" + WA_NUM + "?text=" + encodeURIComponent(WA_MSG);
+  })();
+</script>

@@ -1,7 +1,7 @@
 ---
 import "../styles/tokens.css";
 import "../styles/lp.css";
-import { WHATSAPP_NUM, WHATSAPP_MSG, GTM_ID, LP_ID } from "../../content/site";
+import { GTM_ID, LP_ID, LP_VERSION } from "../../content/site";
 
 interface Props {
   title?: string;
@@ -9,10 +9,9 @@ interface Props {
 }
 const {
   title = "Kontiva · O agente de IA que opera a reforma tributária na sua empresa",
-  description = "O copiloto fiscal e financeiro da sua empresa na reforma. Responda a reforma com fonte, simule a operação inteira de uma vez e opere créditos, fornecedores e caixa do split payment. Veja rodando nos seus dados, sem custo.",
+  description = "A reforma muda o imposto. O Kontiva muda como sua empresa opera isso: crédito, fornecedores, preço e caixa em uma rotina operacional acompanhada pelo seu time. Demo com os seus dados, sem custo.",
 } = Astro.props as Props;
 
-// Canonical no dominio final de empresas (espelha lp.kontiva.ai de escritorios).
 const canonical = "https://empresas.kontiva.ai/";
 const ogImage = "https://empresas.kontiva.ai/og/og.png";
 ---
@@ -22,7 +21,7 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Google Tag Manager (PRD secao 10) -->
+    <!-- Google Tag Manager (PRD secao 20) -->
     <script is:inline define:vars={{ GTM_ID }}>
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',GTM_ID);
     </script>
@@ -51,18 +50,21 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-    <!-- Foto do hero (above the fold): prioriza o carregamento para o LCP -->
+    <!-- Foto do hero (above the fold): preload por breakpoint para proteger o LCP -->
     <link
-      rel="preload"
-      as="image"
-      href="/hero-empresas-1600.avif"
-      type="image/avif"
-      imagesrcset="/hero-empresas-800.avif 800w, /hero-empresas-1600.avif 1600w, /hero-empresas-2400.avif 2400w"
-      imagesizes="100vw"
-      fetchpriority="high"
+      rel="preload" as="image" media="(min-width: 861px)"
+      href="/images/hero-kontiva-empresas-1280.avif" type="image/avif"
+      imagesrcset="/images/hero-kontiva-empresas-800.avif 800w, /images/hero-kontiva-empresas-1280.avif 1280w, /images/hero-kontiva-empresas-1672.avif 1672w"
+      imagesizes="100vw" fetchpriority="high"
+    />
+    <link
+      rel="preload" as="image" media="(max-width: 860px)"
+      href="/images/hero-kontiva-empresas-m-640.avif" type="image/avif"
+      imagesrcset="/images/hero-kontiva-empresas-m-640.avif 640w, /images/hero-kontiva-empresas-m-900.avif 900w"
+      imagesizes="100vw" fetchpriority="high"
     />
 
-    <!-- Fontes do design system (Google Fonts, font-display swap) -->
+    <!-- Fontes do design system -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -70,26 +72,17 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
       rel="stylesheet"
     />
 
-    <!-- Sem JS: mostra todo o conteudo (a pagina le e converte sem JS) -->
     <noscript>
       <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
     </noscript>
 
     <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "Kontiva",
-      url: canonical,
-      description:
-        "Hub de agentes de IA que opera a reforma tributária para empresas: créditos, fornecedores, caixa do split payment e repricing. Uma empresa BlueMetrics.",
+      "@context": "https://schema.org", "@type": "Organization", name: "Kontiva", url: canonical,
+      description: "Agente de IA que opera a reforma tributária para empresas: créditos, fornecedores, caixa do split payment e repricing. Uma empresa BlueMetrics.",
       parentOrganization: { "@type": "Organization", name: "BlueMetrics" },
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      name: "Kontiva",
-      url: canonical,
-      inLanguage: "pt-BR",
+      "@context": "https://schema.org", "@type": "WebSite", name: "Kontiva", url: canonical, inLanguage: "pt-BR",
     })} />
   </head>
   <body>
@@ -97,17 +90,28 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
     <noscript>
       <iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
     <slot />
 
-    <script is:inline define:vars={{ WA_NUM: WHATSAPP_NUM, WA_MSG: WHATSAPP_MSG, LP: LP_ID }}>
+    <script is:inline define:vars={{ LP: LP_ID, LPV: LP_VERSION }}>
       (function () {
         var w = window;
-        var track = function (name, data) {
+        // UTM + contexto compartilhado nos eventos (PRD secao 20)
+        var params = new URLSearchParams(location.search);
+        var utm = {};
+        ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(function (k) {
+          var v = params.get(k) || sessionStorage.getItem(k);
+          if (v) { utm[k] = v; try { sessionStorage.setItem(k, v); } catch (e) {} }
+        });
+        var device = w.matchMedia("(max-width: 860px)").matches ? "mobile" : "desktop";
+        w.__ktrack = function (name, data) {
           w.dataLayer = w.dataLayer || [];
-          w.dataLayer.push(Object.assign({ event: name, lp: LP }, data || {}));
+          w.dataLayer.push(Object.assign({
+            event: name, lp: LP, lp_version: LPV, device: device,
+            source: utm.utm_source, medium: utm.utm_medium, campaign: utm.utm_campaign
+          }, data || {}));
         };
+        var track = w.__ktrack;
 
         // Reveal on scroll (respeita prefers-reduced-motion)
         var reduce = w.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -116,165 +120,56 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
           reveals.forEach(function (el) { el.classList.add("in"); });
         } else {
           var ro = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) {
-              if (en.isIntersecting) { en.target.classList.add("in"); ro.unobserve(en.target); }
-            });
+            entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); ro.unobserve(en.target); } });
           }, { threshold: 0.12 });
           reveals.forEach(function (el) { ro.observe(el); });
         }
 
-        // lp_view no carregamento
         track("lp_view");
 
-        // Cliques em CTA: hero_cta_click e whatsapp_click (PRD secao 10)
+        // CTA clicks
         document.addEventListener("click", function (e) {
           var t = e.target.closest ? e.target.closest("[data-cta]") : null;
           if (!t) return;
           var pos = t.getAttribute("data-cta") || "unknown";
           if (pos === "hero") track("hero_cta_click");
-          if (pos === "whatsapp") track("whatsapp_click");
-          track("cta_click", { position: pos });
+          else if (pos === "whatsapp") track("whatsapp_click");
+          else if (pos === "hero-secondary" || pos === "header" || pos === "secondary") track("secondary_cta_click", { position: pos });
         });
 
-        // scroll_depth 25/50/75/90
-        var marks = [25, 50, 75, 90];
-        var fired = {};
-        var onScroll = function () {
+        // scroll_25 / 50 / 75 / 90
+        var marks = [25, 50, 75, 90], fired = {};
+        w.addEventListener("scroll", function () {
           var docH = document.documentElement.scrollHeight - w.innerHeight;
           if (docH <= 0) return;
           var pct = (w.scrollY / docH) * 100;
-          marks.forEach(function (m) {
-            if (!fired[m] && pct >= m) { fired[m] = true; track("scroll_depth", { depth: m }); }
-          });
-        };
-        w.addEventListener("scroll", onScroll, { passive: true });
+          marks.forEach(function (m) { if (!fired[m] && pct >= m) { fired[m] = true; track("scroll_" + m); } });
+        }, { passive: true });
 
-        // pain_section_view (pain_id 1-5) e ruler_view
-        if ("IntersectionObserver" in w) {
-          var secObs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) {
-              if (!en.isIntersecting) return;
-              var el = en.target;
-              if (el.dataset.painId) { track("pain_section_view", { pain_id: Number(el.dataset.painId) }); }
-              else if (el.id === "regua") { track("ruler_view"); }
-              secObs.unobserve(el);
-            });
-          }, { threshold: 0.4 });
-          document.querySelectorAll("[data-pain-id], #regua").forEach(function (el) { secObs.observe(el); });
-        }
-
-        // faq_open com o titulo
+        // faq_open
         document.querySelectorAll(".faq-item").forEach(function (d) {
           d.addEventListener("toggle", function () {
-            if (d.open) {
-              var s = d.querySelector("summary");
-              var title = s ? s.textContent.trim() : "";
-              track("faq_open", { title: title });
-            }
+            if (d.open) { var s = d.querySelector("summary"); track("faq_open", { title: s ? s.textContent.trim() : "" }); }
           });
         });
 
-        // Formulario de demo
-        var waHref = "https://wa.me/" + WA_NUM + "?text=" + encodeURIComponent(WA_MSG);
-        var ENDPOINT = ""; // sem endpoint: fallback via WhatsApp
-        var form = document.getElementById("lead-form");
-        if (form) {
-          var card = document.getElementById("form-card");
-          var submitBtn = document.getElementById("lf-submit");
-          var success = document.getElementById("form-success");
-          var sendfail = document.getElementById("form-sendfail");
-          var sendfailWa = document.getElementById("sendfail-wa");
-          var started = false;
-
-          // Captura de UTM
-          var params = new URLSearchParams(location.search);
-          var utm = {};
-          ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(function (k) {
-            var v = params.get(k) || sessionStorage.getItem(k);
-            if (v) { utm[k] = v; sessionStorage.setItem(k, v); }
-          });
-
-          // Mascara de telefone
-          var whats = document.getElementById("lf-whats");
-          whats.addEventListener("input", function () {
-            var digits = whats.value.replace(/\D/g, "").slice(0, 11);
-            var out = digits;
-            if (digits.length > 2) out = "(" + digits.slice(0, 2) + ") " + digits.slice(2);
-            if (digits.length > 7) out = "(" + digits.slice(0, 2) + ") " + digits.slice(2, 7) + "-" + digits.slice(7);
-            whats.value = out;
-          });
-
-          form.addEventListener("focusin", function () {
-            if (!started) { started = true; track("form_start"); }
-          });
-
-          var mark = function (field, invalid) {
-            var el = form.querySelector('[data-field="' + field + '"]');
-            if (el) el.classList.toggle("invalid", invalid);
-          };
-          var validate = function () {
-            var nome = form.nome.value.trim();
-            var email = form.email.value.trim();
-            var tel = whats.value.replace(/\D/g, "");
-            var cnpjs = parseInt(form.carteira.value, 10);
-            var okNome = nome.length > 0;
-            var okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            var okTel = tel.length >= 10;
-            var okCnpjs = Number.isFinite(cnpjs) && cnpjs > 0;
-            mark("nome", !okNome); mark("email", !okEmail); mark("whatsapp", !okTel); mark("carteira", !okCnpjs);
-            return { ok: okNome && okEmail && okTel && okCnpjs };
-          };
-          var waWithData = function (d) {
-            var msg = WA_MSG +
-              "%0A%0ANome: " + (d.nome || "") +
-              "%0AWhatsApp: " + (d.whatsapp || "") +
-              "%0AE-mail: " + (d.email || "") +
-              "%0ACNPJs na operação: " + (d.carteira || "") +
-              "%0ASistema: " + (d.sistema || "não informado") +
-              "%0AFaturamento: " + (d.faturamento || "não informado") +
-              "%0ARegime: " + (d.regime || "não informado");
-            return "https://wa.me/" + WA_NUM + "?text=" + msg;
-          };
-          var showSuccess = function () {
-            card.classList.add("sent");
-            success.classList.add("show");
-            success.scrollIntoView({ behavior: "smooth", block: "center" });
-            track("form_submit_success");
-          };
-
-          form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            sendfail.classList.remove("show");
-            if (form.empresa_site.value) { showSuccess(); return; } // honeypot
-            var res = validate();
-            if (!res.ok) {
-              var bad = form.querySelector(".f-field.invalid input, .f-field.invalid select");
-              if (bad) bad.focus();
-              return;
-            }
-            var data = {
-              nome: form.nome.value.trim(),
-              whatsapp: whats.value.trim(),
-              email: form.email.value.trim(),
-              carteira: form.carteira.value.trim(),
-              sistema: form.sistema.value,
-              faturamento: form.faturamento.value,
-              regime: form.regime.value
-            };
-            Object.assign(data, utm);
-            submitBtn.classList.add("is-loading");
-            submitBtn.innerHTML = '<span class="spinner"></span> Enviando...';
-            try {
-              if (!ENDPOINT) { w.open(waWithData(data), "_blank", "noopener"); showSuccess(); }
-            } catch (err) {
-              submitBtn.classList.remove("is-loading");
-              submitBtn.textContent = "Agendar minha demo";
-              sendfailWa.href = waWithData(data);
-              sendfail.classList.add("show");
-              track("form_submit_error");
-            }
-          });
-          sendfailWa.href = waHref;
+        // Sticky CTA mobile: aparece apos 60% do hero, some quando o form aparece
+        var sticky = document.getElementById("sticky-cta");
+        if (sticky && "IntersectionObserver" in w) {
+          var hero = document.getElementById("topo");
+          var formSec = document.getElementById("agendar");
+          var heroPassed = false, formVisible = false;
+          var apply = function () { sticky.classList.toggle("show", heroPassed && !formVisible); };
+          if (hero) {
+            new IntersectionObserver(function (e) {
+              heroPassed = e[0].intersectionRatio < 0.4; apply();
+            }, { threshold: [0, 0.4, 1] }).observe(hero);
+          }
+          if (formSec) {
+            new IntersectionObserver(function (e) {
+              formVisible = e[0].isIntersecting; apply();
+            }, { threshold: 0.05 }).observe(formSec);
+          }
         }
       })();
     </script>

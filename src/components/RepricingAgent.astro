@@ -1,0 +1,37 @@
+---
+// 06 - Segundo agente: Repricing (PRD v3 secao 9). Texto cortado em ~60%.
+import { seloExemplo } from "../../content/facts";
+import { CTA_CONTEXTUAL, CTA_ANCORA } from "../../content/site";
+---
+<section class="bg-page" id="repricing" aria-labelledby="rep-h">
+  <div class="shell">
+    <div class="pain-grid">
+      <div class="pain-copy reveal">
+        <div class="eyebrow"><span class="dot-cyan"></span> Segundo agente</div>
+        <h2 id="rep-h" style="margin-top:16px;">E quando a reforma mexer na margem, o Repricing entra junto.</h2>
+        <p class="lead" style="margin-top:16px; max-width:48ch;">O agente cruza contratos, índices e impacto tributário para identificar reajustes e repasses que precisam de ação.</p>
+        <ul class="rep-bullets">
+          <li>Reajustes vencidos</li>
+          <li>Repasse tributário</li>
+          <li>Margem em risco</li>
+          <li>Aprovação humana</li>
+        </ul>
+        <div style="margin-top:26px;">
+          <a href={CTA_ANCORA} class="btn btn-primary" data-cta="repricing">{CTA_CONTEXTUAL}</a>
+        </div>
+      </div>
+      <div class="pain-visual reveal delay-1">
+        <div class="mini" aria-hidden="true">
+          <div class="mini-head">Repricing de contratos <span class="mini-live">Memória de cálculo</span></div>
+          <div class="mini-body">
+            <div class="mini-row"><b>Contrato 24 meses</b><span>reajuste por IPCA</span><span class="mini-badge risk">Margem em queda</span></div>
+            <div class="mini-row"><b>Custo tributário novo</b><span>+ IBS/CBS por fora</span><span class="mini-badge neutral">Recalculado</span></div>
+            <div class="mini-row"><b>Preço que preserva a margem</b><span>revisão tributária</span><span class="mini-badge ok">Proposto</span></div>
+          </div>
+          <div class="mini-toggle"><span class="sw"></span> Aplicar só após aprovação do seu time</div>
+        </div>
+        <small class="selo">{seloExemplo}</small>
+      </div>
+    </div>
+  </div>
+</section>

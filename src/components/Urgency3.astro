@@ -1,0 +1,30 @@
+---
+// 02 - Urgencia compacta (PRD v3 secao 5). Tres marcos, sem timeline longa.
+import { CTA_CONTEXTUAL, CTA_ANCORA } from "../../content/site";
+---
+<section class="bg-page" id="urgencia" aria-labelledby="urg-h">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="dot-cyan"></span> Reforma em curso</div>
+      <h2 id="urg-h">2027 começa antes de janeiro.</h2>
+      <p class="urg3-copy">A CBS entra em regime pleno, o crédito muda de lógica e decisões de fornecedor, preço e caixa passam a depender de uma nova operação tributária.</p>
+    </div>
+    <div class="urg3-marcos reveal delay-1">
+      <div class="marco">
+        <div class="when">Agora</div>
+        <p class="what">Mapear operação e fornecedores.</p>
+      </div>
+      <div class="marco">
+        <div class="when">Jan/2027</div>
+        <p class="what">CBS plena e nova lógica de crédito.</p>
+      </div>
+      <div class="marco">
+        <div class="when">2028+</div>
+        <p class="what">Split payment avança e a operação muda novamente.</p>
+      </div>
+    </div>
+    <div class="urg3-cta reveal">
+      <a href={CTA_ANCORA} class="btn btn-primary" data-cta="urgency">{CTA_CONTEXTUAL}</a>
+    </div>
+  </div>
+</section>

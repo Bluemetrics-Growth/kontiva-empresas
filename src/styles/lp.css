@@ -324,3 +324,116 @@
 .ponte p:last-child { margin-bottom: 0; }
 .ponte strong { font-weight: 700; color: var(--text-primary); }
 .ponte .q { color: color-mix(in oklab, var(--ciano) 26%, var(--azul-profundo)); }
+
+/* =========================================================
+   V3 - OTIMIZACAO DE CONVERSAO (PRD v3)
+   Arquitetura enxuta de 9 secoes. Navy como contraste, nao fundo permanente.
+   ========================================================= */
+
+/* Botao secundario (ghost) sobre foto/navy */
+.btn-ghost {
+  background: transparent; color: var(--branco);
+  border: 1px solid rgba(255,255,255,0.35);
+}
+.btn-ghost:hover { border-color: var(--branco); background: rgba(255,255,255,0.06); }
+
+/* Header: navegacao minima */
+.nav-links { display: flex; align-items: center; gap: 26px; }
+.nav-links a.nav-link { font-size: 14px; font-weight: 500; color: var(--cinza-escuro); }
+.nav-links a.nav-link:hover { color: var(--azul-profundo); }
+@media (max-width: 860px) { .nav-links .nav-link { display: none; } }
+
+/* 02 - Urgencia compacta */
+.urg3-copy { max-width: 60ch; margin-top: 14px; }
+.urg3-marcos { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.marco { padding: 22px 24px; border-radius: var(--r-lg); background: var(--surface-alt); border: 1px solid var(--border-on-light); }
+.marco .when { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: color-mix(in oklab, var(--ciano) 55%, var(--cinza-escuro)); text-transform: uppercase; }
+.marco .what { margin-top: 8px; font-size: 15.5px; line-height: 1.45; color: var(--text-body); }
+.urg3-cta { margin-top: 30px; }
+@media (max-width: 760px) { .urg3-marcos { grid-template-columns: 1fr; gap: 12px; } }
+
+/* 03 - Quatro problemas */
+.prob-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.prob-card { padding: 26px 24px; border-radius: var(--r-lg); background: var(--surface-page); border: 1px solid var(--border-on-light); }
+.prob-ico { width: 40px; height: 40px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; color: color-mix(in oklab, var(--ciano) 40%, var(--azul-profundo)); background: color-mix(in srgb, var(--ciano) 12%, transparent); border: 1px solid color-mix(in srgb, var(--ciano) 24%, transparent); }
+.prob-kicker { margin-top: 16px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
+.prob-title { margin: 8px 0 10px; font-size: 18px; line-height: 1.25; font-weight: 700; color: var(--text-primary); }
+.prob-desc { font-size: 14px; line-height: 1.55; color: var(--text-body); }
+@media (max-width: 980px) { .prob-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .prob-grid { grid-template-columns: 1fr; } }
+
+/* 04 - Produto em tabs */
+.ptabs { margin-top: 40px; }
+.ptab-btns { display: flex; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--border-on-light); padding-bottom: 2px; }
+.ptab-btn {
+  appearance: none; background: transparent; border: none; cursor: pointer;
+  font-family: var(--font-body); font-size: 14.5px; font-weight: 600; color: var(--text-secondary);
+  padding: 12px 16px; border-radius: var(--r-sm) var(--r-sm) 0 0; position: relative;
+}
+.ptab-btn[aria-selected="true"] { color: var(--text-primary); }
+.ptab-btn[aria-selected="true"]::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: -2px; height: 2px; background: var(--ciano); border-radius: 2px; }
+.ptab-panels { margin-top: 28px; }
+.ptab-panel { display: none; }
+.ptab-panel.active { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 44px; align-items: center; }
+.ptab-panel .pt-metric { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: color-mix(in oklab, var(--ciano) 40%, var(--azul-profundo)); margin: 14px 0 20px; }
+.ptab-panel h3 { font-size: clamp(21px, 2.2vw, 28px); line-height: 1.15; letter-spacing: -0.01em; color: var(--text-primary); }
+.ptab-panel p { font-size: 16px; line-height: 1.6; color: var(--text-body); margin: 12px 0 0; max-width: 46ch; }
+@media (max-width: 860px) {
+  .ptab-btns { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .ptab-btn { white-space: nowrap; }
+  .ptab-panel.active { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* 05 - Comparacao (diferenciacao) */
+.cmp-wrap { margin-top: 36px; overflow-x: auto; }
+.cmp-table { width: 100%; border-collapse: collapse; min-width: 520px; }
+.cmp-table th, .cmp-table td { padding: 16px 18px; text-align: center; border-bottom: 1px solid var(--border-on-light); }
+.cmp-table thead th { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: none; }
+.cmp-table tbody th { text-align: left; font-weight: 600; color: var(--text-primary); font-size: 15px; }
+.cmp-table td { color: var(--text-body); font-weight: 600; }
+.cmp-table .yes { color: color-mix(in oklab, var(--ciano) 35%, var(--azul-profundo)); }
+.cmp-table .no { color: var(--border-on-light-strong); }
+.cmp-table .part { color: var(--aviso-fg); font-size: 13px; }
+.cmp-table tr.hl th, .cmp-table tr.hl td { background: color-mix(in srgb, var(--ciano) 7%, transparent); }
+.cmp-table tr.hl th { color: var(--azul-profundo); }
+.cmp-table tr.hl .yes { color: color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo)); }
+.cmp-note { margin-top: 22px; font-size: var(--fs-lead); line-height: 1.5; max-width: 56ch; color: var(--text-body); }
+
+/* 07 - Confianca: 4 pilares */
+.trust-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.trust-pillar .tp-ico { width: 38px; height: 38px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: color-mix(in oklab, var(--ciano) 78%, white); background: color-mix(in srgb, var(--ciano) 16%, transparent); border: 1px solid color-mix(in srgb, var(--ciano) 30%, transparent); }
+.trust-pillar h3 { margin: 14px 0 6px; font-size: 16px; font-weight: 700; color: var(--branco); }
+.trust-pillar p { font-size: 14px; line-height: 1.5; color: color-mix(in srgb, var(--branco) 78%, transparent); }
+@media (max-width: 900px) { .trust-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .trust-grid { grid-template-columns: 1fr; } }
+
+/* 08 - Formulario 2 etapas */
+.lf2-steps { display: flex; gap: 8px; margin-bottom: 18px; }
+.lf2-dot { flex: 1; height: 4px; border-radius: 2px; background: var(--border-on-light-strong); }
+.lf2-dot.on { background: var(--ciano); }
+.f-step { display: none; }
+.f-step.active { display: block; }
+.lf2-back { background: none; border: none; color: var(--text-secondary); font-size: 13px; cursor: pointer; padding: 8px 0; text-decoration: underline; }
+.lf2-stepnote { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px; }
+
+/* 17 - Sticky CTA mobile */
+#sticky-cta {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--azul-profundo) 92%, transparent);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border-on-dark);
+  transform: translateY(120%); transition: transform 0.25s ease;
+}
+#sticky-cta.show { transform: translateY(0); }
+#sticky-cta .btn { width: 100%; }
+@media (min-width: 861px) { #sticky-cta { display: none; } }
+
+/* Selo em fundo claro (fora dos blocos navy) */
+.bg-page .selo, .bg-alt .selo { color: var(--text-secondary); }
+
+/* Bullets do repricing (v3) */
+.rep-bullets { margin: 20px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; max-width: 44ch; }
+.rep-bullets li { position: relative; padding-left: 24px; font-size: 15px; color: var(--text-body); }
+.rep-bullets li::before { content: ""; position: absolute; left: 0; top: 7px; width: 12px; height: 12px; border-radius: 3px; background: color-mix(in oklab, var(--ciano) 20%, white); border: 1px solid color-mix(in oklab, var(--ciano) 45%, transparent); }
+@media (max-width: 560px) { .rep-bullets { grid-template-columns: 1fr; } }
