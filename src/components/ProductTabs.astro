@@ -26,8 +26,8 @@ const tabs: Tab[] = [
     id: "credito",
     label: "Crédito e fornecedores",
     title: "Seu crédito depende de quem vende para você.",
-    risk: "Sem acompanhamento, a empresa descobre o crédito que não veio só quando o caixa já sentiu.",
-    how: "A Kontiva monitora fornecedores, notas, recolhimento e risco de crédito para mostrar onde uma compra pode gerar problema antes de virar perda de caixa.",
+    risk: "Sem acompanhamento, você descobre o crédito que não veio quando o caixa já sentiu.",
+    how: "A Kontiva acompanha notas e recolhimento de cada fornecedor e avisa onde há crédito em risco.",
     metric: "R$ 214.700 em crédito potencial sob revisão · 7 fornecedores exigem revisão",
     cta: "Ver risco de crédito",
     screen: "Fornecedores",
@@ -43,8 +43,8 @@ const tabs: Tab[] = [
     id: "compras",
     label: "Compras e custo real",
     title: "O menor preço bruto pode não ser o menor custo.",
-    risk: "Comprar pelo menor preço de tabela pode encarecer a operação e deixar crédito pelo caminho.",
-    how: "A Kontiva compara fornecedores considerando crédito, regime tributário, forma de pagamento e impacto no caixa.",
+    risk: "O fornecedor mais barato na tabela pode custar mais depois do crédito.",
+    how: "A Kontiva compara fornecedores pelo custo real, com crédito, regime e forma de pagamento na conta.",
     metric: "Fornecedor A × Fornecedor B · custo comparado depois do crédito",
     cta: "Comparar fornecedores",
     screen: "Comparativo de compra",
@@ -59,8 +59,8 @@ const tabs: Tab[] = [
     id: "margem",
     label: "Preço, contratos e margem",
     title: "Sua margem pode mudar sem o seu preço mudar.",
-    risk: "Contratos longos e tabelas antigas podem perder margem mês a mês sem que ninguém perceba a tempo.",
-    how: "A Kontiva cruza contratos, produtos, serviços e impacto de IBS/CBS para indicar onde a margem pode ser pressionada e quais preços precisam de revisão.",
+    risk: "Contratos longos e tabelas antigas perdem margem aos poucos, e ninguém vê a tempo.",
+    how: "A Kontiva cruza contratos e custos com IBS/CBS e aponta quais preços revisar. O reajuste só sai com aprovação do seu time.",
     metric: "Contrato 24 meses · margem pressionada · revisão recomendada",
     cta: "Avaliar margem",
     screen: "Contratos e preços",
@@ -76,8 +76,8 @@ const tabs: Tab[] = [
     id: "caixa",
     label: "Caixa e capital de giro",
     title: "A reforma muda quando o dinheiro entra e quando o crédito aparece.",
-    risk: "Split payment e RAD começam de forma gradual e facultativa, mas cada operação passa a exigir uma decisão: pagar do jeito tradicional, proteger o crédito ou preservar caixa.",
-    how: "A Kontiva simula cenários com recolhimento tradicional, split e RAD em operações elegíveis, mostrando o impacto no capital de giro.",
+    risk: "Split payment e RAD são graduais e facultativos, mas cada operação pede uma escolha entre proteger o crédito e preservar caixa.",
+    how: "A Kontiva simula recolhimento tradicional, split e RAD nas operações elegíveis e mostra o efeito no capital de giro mês a mês.",
     metric: "Cenário tradicional × split/RAD · impacto mês a mês no caixa",
     cta: "Simular caixa",
     screen: "Fluxo de caixa",
@@ -96,7 +96,7 @@ const tabs: Tab[] = [
     <div class="section-head reveal">
       <div class="eyebrow"><span class="dot-cyan"></span> Como opera</div>
       <h2 id="prod-h">O que muda na prática e como a Kontiva opera cada <span class="serif-accent">decisão</span>.</h2>
-      <p class="urg3-copy"><strong>A reforma tributária não é um cálculo novo. É uma operação nova.</strong> Ela transforma decisões fiscais em decisões operacionais. A Kontiva organiza esses dados em uma rotina contínua para você saber onde agir, o que priorizar e o que aprovar.</p>
+      <p class="urg3-copy">A reforma muda a operação, e não só o cálculo. A Kontiva transforma seus dados fiscais em uma rotina que mostra onde agir primeiro.</p>
     </div>
 
     <div class="ptabs reveal delay-1">

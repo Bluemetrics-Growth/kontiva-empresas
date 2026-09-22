@@ -1,29 +1,30 @@
 ---
-// 09 - Seguranca e IA auditavel (PRD revisao, secao 5.8). Quatro pilares.
-const pillars = [
-  { t: "Fonte visível", d: "Toda resposta mostra de onde veio o número.", ico: '<path d="M4 5a2 2 0 0 1 2-2h10v18H6a2 2 0 0 1-2-2z"/><path d="M16 3l4 2v16l-4-2"/>' },
-  { t: "Memória de cálculo", d: "Seu time entende como a simulação foi formada.", ico: '<path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/>' },
-  { t: "Aprovação humana", d: "Nada é aplicado sem revisão.", ico: '<path d="M20 6L9 17l-5-5"/>' },
-  { t: "Segurança dos dados", d: "Acesso com controles, consentimento e rastreabilidade.", ico: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>' },
+// 07 - IA auditavel e seguranca. Recebe o bloco "Agente de IA, decisao
+// humana" que antes ficava no hero. Credenciais BlueMetrics conforme a fonte
+// oficial da empresa.
+const passos = [
+  { t: "Lê", d: "XML, PDF, SPED e dados financeiros." },
+  { t: "Cruza e simula", d: "Fornecedor, crédito, preço e caixa, por cenário." },
+  { t: "Mostra a origem", d: "Cada número vem com fonte e memória de cálculo." },
+  { t: "Espera sua aprovação", d: "Nada é aplicado sem revisão, e fica registrado quem aprovou." },
 ];
 ---
 <section class="bg-dark grain" id="confianca" aria-labelledby="trust-h">
   <div class="shell">
     <div class="section-head reveal">
-      <div class="eyebrow"><span class="dot-cyan"></span> Segurança e IA auditável</div>
-      <h2 id="trust-h" style="color:var(--branco);">IA para operação crítica precisa ser auditável.</h2>
+      <div class="eyebrow"><span class="dot-cyan"></span> IA auditável</div>
+      <h2 id="trust-h" style="color:var(--branco);">Agente de IA, decisão <span class="serif-accent">humana</span>.</h2>
     </div>
-    <div class="trust-grid">
-      {pillars.map((p, i) => (
-        <article class={`trust-pillar reveal delay-${i % 3}`}>
-          <span class="tp-ico" aria-hidden="true">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={p.ico} />
-          </span>
+    <ol class="trust-grid trust-steps">
+      {passos.map((p, i) => (
+        <li class={`trust-pillar reveal delay-${i % 3}`}>
+          <span class="tp-ico" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
           <h3>{p.t}</h3>
           <p>{p.d}</p>
-        </article>
+        </li>
       ))}
-    </div>
-    <p class="trust-note reveal">Quando houver uso de certificado digital, o acesso é feito com finalidade restrita à leitura dos dados necessários para a simulação e operação fiscal. A Kontiva lê, cruza, simula, monitora e alerta. A decisão continua com a sua empresa.</p>
+    </ol>
+    <p class="trust-note reveal">Dados com controle de acesso e rastreabilidade. Quando houver certificado digital, o acesso fica restrito à leitura do necessário para a simulação e a operação fiscal.</p>
+    <p class="trust-bm reveal">Kontiva é uma empresa BlueMetrics: 10 anos de dados e IA, mais de 200 projetos entregues e mais de 90 clientes.</p>
   </div>
 </section>

@@ -1,28 +1,28 @@
 ---
-// 10 - CTA + formulario de diagnostico em duas etapas (PRD revisao, secao 5.9).
+// 08 - CTA + formulario da demo gratuita em duas etapas.
 // Etapa 1: Nome, E-mail corporativo, WhatsApp, Empresa, Site. Etapa 2: ERP,
 // CNPJs, Regime, Faturamento, Principal dor. Preserva o comportamento atual (sem endpoint: fallback via
 // WhatsApp) e a captura de UTM. Se um endpoint HubSpot for configurado em
 // FORM_ENDPOINT, o POST passa a valer sem quebrar os campos existentes.
-import { WHATSAPP_NUM, WHATSAPP_MSG, DIAG_LIMITE } from "../../content/site";
+import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
 ---
 <section class="final grain" id="agendar" aria-labelledby="final-h">
   <div class="shell final-grid">
     <div class="final-copy reveal">
-      <div class="eyebrow"><span class="dot-cyan"></span> Diagnóstico gratuito</div>
+      <div class="eyebrow"><span class="dot-cyan"></span> Demo gratuita</div>
       <h2 id="final-h" style="margin-top:18px;">Decida com número, <span class="hl">não com susto.</span></h2>
-      <p class="final-sub">A Kontiva é o copiloto fiscal-tributário da sua operação na reforma. Comece por uma leitura objetiva de 1 CNPJ e 1 cenário, antes que crédito, fornecedor, preço e caixa decidam por você.</p>
+      <p class="final-sub">O copiloto fiscal-tributário da sua operação na reforma, rodando com os seus dados.</p>
       <div class="setup-steps">
-        <div class="setup-step"><span class="sn">1</span><p>Você envia seus dados. Sem custo e sem compromisso.</p></div>
-        <div class="setup-step"><span class="sn">2</span><p>A IA analisa uma amostra da sua operação: 1 CNPJ, 1 cenário.</p></div>
-        <div class="setup-step"><span class="sn">3</span><p>Você vê uma simulação resumida em reais e decide os próximos passos.</p></div>
+        <div class="setup-step"><span class="sn">1</span><p>Você preenche o formulário. Sem custo.</p></div>
+        <div class="setup-step"><span class="sn">2</span><p>Preparamos a demo com 1 CNPJ e 1 cenário da sua empresa.</p></div>
+        <div class="setup-step"><span class="sn">3</span><p>Você vê a simulação em reais e decide se quer seguir.</p></div>
       </div>
     </div>
 
     <div class="form-card reveal delay-1" id="form-card">
       <div class="form-body">
-        <h3>Agende seu diagnóstico gratuito</h3>
-        <p class="fc-sub">Envie seus dados para avaliarmos se a sua empresa se encaixa no diagnóstico limitado de 1 CNPJ e 1 cenário. Resposta em até 1 dia útil.</p>
+        <h3>Agende sua demo gratuita</h3>
+        <p class="fc-sub">Resposta em até 1 dia útil.</p>
 
         <div class="lf2-steps" aria-hidden="true">
           <span class="lf2-dot on" id="dot-1"></span>
@@ -65,7 +65,7 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DIAG_LIMITE } from "../../content/site";
           <!-- Etapa 2 -->
           <div class="f-step" id="step-2" data-step="2">
             <button type="button" class="lf2-back" id="lf-back">Voltar</button>
-            <p class="lf2-stepnote">Etapa 2 de 2 · para preparar o diagnóstico</p>
+            <p class="lf2-stepnote">Etapa 2 de 2 · para preparar a demo</p>
             <div class="f-field" data-field="sistema">
               <label for="lf-sistema">Sistema / ERP</label>
               <select id="lf-sistema" name="sistema">
@@ -101,7 +101,7 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DIAG_LIMITE } from "../../content/site";
                 <option>Crédito</option><option>Fornecedor</option><option>Preço</option><option>Caixa</option><option>Notas</option><option>Não sei</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary btn-block btn-lg" id="lf-submit" data-cta="form">Quero meu diagnóstico gratuito</button>
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="lf-submit" data-cta="form">Agendar demo gratuita</button>
           </div>
 
           <!-- honeypot anti-spam -->
@@ -110,7 +110,7 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DIAG_LIMITE } from "../../content/site";
             <input id="lf-empresa-site" name="empresa_site" type="text" tabindex="-1" autocomplete="off">
           </div>
 
-          <p class="f-consent">{DIAG_LIMITE} Ao enviar, você concorda em ser contatado pela Kontiva e autoriza o uso das informações para análise inicial da sua operação. Você pode solicitar exclusão dos dados a qualquer momento.</p>
+          <p class="f-consent">{DEMO_LIMITE} Ao enviar, você concorda em ser contatado pela Kontiva e autoriza o uso das informações para análise inicial da sua operação. Você pode solicitar exclusão dos dados a qualquer momento.</p>
           <div class="form-sendfail" id="form-sendfail" role="alert">
             Não conseguimos enviar agora. Tente de novo, ou chame a gente no WhatsApp.
             <a href="#" class="btn btn-dark btn-block" style="margin-top:10px;" id="sendfail-wa" target="_blank" rel="noreferrer" data-cta="whatsapp">Falar no WhatsApp</a>
@@ -123,9 +123,9 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DIAG_LIMITE } from "../../content/site";
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
         </span>
         <h3>Recebemos seu contato.</h3>
-        <p>Nossa equipe responde em até 1 dia útil para agendar o diagnóstico e combinar a amostra da sua operação (1 CNPJ, 1 cenário).</p>
+        <p>Nossa equipe responde em até 1 dia útil para marcar a demo e combinar a amostra da sua operação (1 CNPJ, 1 cenário).</p>
       </div>
-      <p class="form-honesty">Diagnósticos assistidos em turmas limitadas pela capacidade do nosso time.</p>
+      <p class="form-honesty">Demos assistidas em turmas limitadas pela capacidade do nosso time.</p>
     </div>
   </div>
 </section>
@@ -224,7 +224,7 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DIAG_LIMITE } from "../../content/site";
       submitBtn.classList.add("is-loading");
       submitBtn.innerHTML = '<span class="spinner"></span> Enviando...';
       var finishFail = function () {
-        submitBtn.classList.remove("is-loading"); submitBtn.textContent = "Quero meu diagnóstico gratuito";
+        submitBtn.classList.remove("is-loading"); submitBtn.textContent = "Agendar demo gratuita";
         sendfailWa.href = waWithData(data); sendfail.classList.add("show"); track("form_submit_error");
       };
       if (FORM_ENDPOINT) {

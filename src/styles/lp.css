@@ -441,30 +441,12 @@
 /* =========================================================
    REVISAO LP EMPRESAS (PRD de revisao)
    Contador 2027, gancho de credito, secao unificada, diagnostico
-   limitado e planos. Mesmo design system: navy base, ciano so de acento.
+   limitado. Mesmo design system: navy base, ciano so de acento.
    ========================================================= */
 
-/* Hero: H1 mais longo (risco concreto), escala um pouco menor */
-.hero-photo h1 { font-size: clamp(32px, 3.5vw, 50px); line-height: 1.08; }
+/* Hero enxuto: copy curta, nada sobre a area das pessoas */
 .hero-photo .hero-cta-note { margin-top: 14px; font-size: 13.5px; }
-
-/* Card do agente de IA no hero (reaproveita o glass do .hero-proof) */
-.hero-agent { width: min(360px, 80vw); bottom: clamp(112px, 14vh, 150px); }
 .hero-photo .hero-cta-row .btn-lg { padding: 18px 24px; }
-.hero-agent-title { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; color: var(--branco); margin: 2px 0 4px; }
-.hero-agent .hero-proof-sub { line-height: 1.5; }
-.hero-agent-list { grid-column: 1 / -1; margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 7px; }
-.hero-agent-list li { position: relative; padding-left: 20px; font-size: 12.5px; line-height: 1.4; color: color-mix(in srgb, var(--branco) 84%, transparent); }
-.hero-agent-list li::before { content: ""; position: absolute; left: 2px; top: 5px; width: 8px; height: 8px; border-radius: 2px; background: color-mix(in oklab, var(--ciano) 70%, white); opacity: 0.85; }
-.hero-agent-example { grid-column: 1 / -1; margin-top: 6px; padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); font-size: 12.5px; color: color-mix(in srgb, var(--branco) 80%, transparent); }
-.hero-agent-example b { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 600; color: color-mix(in oklab, var(--ciano) 74%, white); }
-@media (max-width: 1100px) and (min-width: 861px) {
-  .hero-photo .hero-copy { width: min(58%, 560px); }
-  .hero-agent { width: 300px; }
-}
-@media (max-width: 860px) {
-  .hero-agent { width: 100%; }
-}
 
 /* Microcopy de limite abaixo de CTAs em fundo claro */
 .cta-limit { margin: 12px 0 0; font-size: 13px; line-height: 1.5; color: var(--text-secondary); max-width: 60ch; }
@@ -528,7 +510,7 @@ ol.urg3-marcos { list-style: none; padding: 0; margin-bottom: 0; }
 /* Tabela comparativa: cinco colunas */
 .cmp-table { min-width: 620px; }
 
-/* 08 - Diagnostico gratuito e limitado */
+/* 06 - Demo gratuita e limitada */
 .diag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .diag-card { padding: 28px; border-radius: var(--r-lg); background: var(--surface-page); border: 1px solid var(--border-on-light); }
 .diag-in { border-color: color-mix(in srgb, var(--ciano) 40%, var(--border-on-light)); box-shadow: var(--shadow-card); }
@@ -540,23 +522,13 @@ ol.urg3-marcos { list-style: none; padding: 0; margin-bottom: 0; }
 .diag-in li::before { content: "✓"; color: var(--azul-profundo); background: color-mix(in oklab, var(--ciano) 22%, white); border: 1px solid color-mix(in oklab, var(--ciano) 45%, transparent); }
 .diag-out li { color: var(--text-secondary); }
 .diag-out li::before { content: "–"; color: var(--text-secondary); background: var(--cinza-claro); border: 1px solid var(--border-on-light); }
-#diagnostico .section-head, #planos .section-head { margin-bottom: 40px; }
+#demo .section-head { margin-bottom: 40px; }
 @media (max-width: 760px) { .diag-grid { grid-template-columns: 1fr; } .diag-card { padding: 22px; } }
 
-/* 08b - Planos */
-.plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.plan-card { display: flex; flex-direction: column; padding: 28px 26px; border-radius: var(--r-lg); background: var(--surface-page); border: 1px solid var(--border-on-light); }
-.plan-hl { border-color: color-mix(in srgb, var(--ciano) 45%, var(--border-on-light)); box-shadow: var(--shadow-card); }
-.plan-card h3 { font-size: 20px; }
-.plan-para { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: var(--text-secondary); min-height: 3em; }
-.plan-card ul { margin: 18px 0 22px; padding: 0; list-style: none; display: grid; gap: 9px; }
-.plan-card li { position: relative; padding-left: 20px; font-size: 14.5px; line-height: 1.45; color: var(--text-body); }
-.plan-card li::before { content: ""; position: absolute; left: 0; top: 7px; width: 8px; height: 8px; border-radius: 2px; background: color-mix(in oklab, var(--ciano) 40%, var(--azul-profundo)); }
-.plan-valor { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-on-light); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 15px; font-weight: 600; color: var(--text-primary); }
-.plan-note { margin-top: 20px; font-size: 14px; line-height: 1.5; color: var(--text-secondary); max-width: 70ch; }
-@media (max-width: 900px) { .plan-grid { grid-template-columns: 1fr; } .plan-para { min-height: 0; } }
-
-/* 09 - Confianca: nota de certificado e papel da IA */
+/* 07 - IA auditavel: quatro passos numerados + credencial BlueMetrics */
+ol.trust-steps { list-style: none; padding: 0; margin-bottom: 0; }
+.trust-steps .tp-ico { font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+.trust-bm { position: relative; z-index: 1; margin-top: 12px; font-size: 13px; color: color-mix(in srgb, var(--branco) 58%, transparent); }
 .trust-note { position: relative; z-index: 1; margin-top: 32px; max-width: 72ch; font-size: 14px; line-height: 1.6; color: color-mix(in srgb, var(--branco) 72%, transparent); }
 
 /* 10 - Formulario: campo opcional */

@@ -4,7 +4,7 @@
 // No HTML estatico os numeros saem como "--" (fallback seguro, sem depender da
 // hora do build); o script preenche e atualiza a cada segundo.
 import { facts } from "../../content/facts";
-import { CTA_PRIMARIO, CTA_ANCORA, DIAG_LIMITE } from "../../content/site";
+import { CTA_PRIMARIO, CTA_ANCORA, DEMO_LIMITE } from "../../content/site";
 
 const TARGET = "2027-01-01T00:00:00-03:00";
 const unidades = [
@@ -14,9 +14,9 @@ const unidades = [
   { k: "s", l: "segundos" },
 ];
 const marcos = [
-  { when: "2026", what: "Ano de mapear dados, fornecedores, créditos e cenários." },
-  { when: "Jan/2027", what: "CBS em regime pleno. O crédito passa a depender do recolhimento do fornecedor." },
-  { when: "A partir de 2027", what: "Split payment e RAD começam de forma gradual e facultativa. Cada operação passa a exigir uma decisão." },
+  { when: "2026", what: "Hora de mapear fornecedores e créditos." },
+  { when: "Jan/2027", what: "CBS plena. Seu crédito passa a depender do recolhimento de quem vende para você." },
+  { when: "A partir de 2027", what: "Split payment e RAD entram aos poucos e são facultativos. Cada operação pede uma escolha." },
 ];
 ---
 <section class="bg-page" id="reforma-2027" aria-labelledby="cd-h">
@@ -25,7 +25,7 @@ const marcos = [
       <div class="cd-copy reveal">
         <div class="eyebrow"><span class="dot-cyan"></span> Reforma 2027</div>
         <h2 id="cd-h">Tempo para sua empresa chegar em 2027 com a operação <span class="serif-accent">preparada</span>.</h2>
-        <p class="cd-text">2026 é o ano de mapear fornecedores, créditos, preço e caixa. Em 2027, a CBS entra em regime pleno e a sua operação precisa decidir com número, não com susto.</p>
+        <p class="cd-text">Em janeiro a CBS entra em regime pleno. Quem mapear a operação agora chega lá decidindo com número, não com susto.</p>
       </div>
 
       <div class="cd-box reveal delay-1">
@@ -53,7 +53,7 @@ const marcos = [
 
     <div class="urg3-cta reveal">
       <a href={CTA_ANCORA} class="btn btn-primary" data-cta="countdown">{CTA_PRIMARIO}</a>
-      <p class="cta-limit">{DIAG_LIMITE}</p>
+      <p class="cta-limit">{DEMO_LIMITE}</p>
     </div>
   </div>
 </section>
