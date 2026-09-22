@@ -1,5 +1,9 @@
 ---
-// FAQ (atualizado na Fase 3). Portado verbatim.
+// 17 - FAQ (PRD 6.8). Mantidos os 7 itens existentes, acrescidas as duas
+// perguntas novas (split payment adiado e migrar do Presumido). O prazo
+// "ate 60 dias" vem de content/facts.ts.
+import { facts } from "../../content/facts";
+const dias = facts.ate60Dias.value;
 ---
 <section class="bg-page" aria-labelledby="faq-h">
 <div class="shell">
@@ -71,6 +75,24 @@
 </summary>
 <div class="faq-a">
 <p>Sim. Conecte sua IA ao servidor MCP do Kontiva e pergunte, instrua e ajuste sem sair do chat que você já usa.</p>
+</div>
+</details>
+<details class="faq-item">
+<summary>O split payment não foi adiado? Por que a urgência continua? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M6 9l6 6 6-6"/>
+</svg>
+</summary>
+<div class="faq-a">
+<p>Foi adiado o recolhimento automático, não a reforma. Em 1º de janeiro de 2027 a CBS entra em alíquota plena e PIS e Cofins são extintos, isso não mudou. O adiamento do split payment, na prática, piora um ponto: sem ele, o crédito na guia tradicional pode levar {dias} para voltar, e o instrumento para proteger o seu crédito passa a ser o RAD, que exige decisão e previsão contratual. Menos automação, mais trabalho manual.</p>
+</div>
+</details>
+<details class="faq-item">
+<summary>Minha empresa está no Lucro Presumido. Vale migrar? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M6 9l6 6 6-6"/>
+</svg>
+</summary>
+<div class="faq-a">
+<p>Depende da sua estrutura de custos, do volume de aquisições tributadas, da margem real contra a margem presumida e da sua capacidade de gerar crédito. Não existe resposta de manchete, existe simulação. O Kontiva roda esse comparativo por CNPJ, entre regimes e ao longo dos anos, com a memória de cálculo visível. A decisão continua sendo sua e do seu contador.</p>
 </div>
 </details>
 </div>
