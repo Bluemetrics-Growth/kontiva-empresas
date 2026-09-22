@@ -488,80 +488,124 @@ ol.urg3-marcos { list-style: none; padding: 0; margin-bottom: 0; }
   .cd-lbl { font-size: 9.5px; letter-spacing: 0.06em; }
 }
 
-/* 03 - Gancho de credito: esquema do circuito do credito */
-.hook-lead { margin-top: 20px; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-body); max-width: 62ch; }
-#credito .section-head { margin-bottom: 32px; }
+/* 03 - Nova logica do credito: mapa operacional em 4 camadas */
+.hook-lead { margin-top: 20px; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-body); max-width: 58ch; }
 .hook-src { display: block; margin-top: 18px; font-size: 11.5px; color: var(--text-secondary); }
 
-.flow-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-bottom: 22px; font-size: 12.5px; color: var(--text-secondary); }
-.flow-legend span { display: inline-flex; align-items: center; gap: 8px; }
-.flow-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-.lg-step { background: var(--branco); border: 1px solid var(--border-on-light-strong); }
-.lg-risk { background: color-mix(in srgb, var(--risco-terracota) 14%, white); border: 1px solid color-mix(in srgb, var(--risco-terracota) 45%, transparent); }
-.lg-k { background: var(--azul-profundo); }
+/* A · headline + painel de sintese */
+.cm-head { display: grid; grid-template-columns: 1fr 330px; gap: 48px; align-items: end; margin-bottom: 44px; }
+.cm-h2 { margin-top: 18px; font-size: clamp(32px, 4vw, 54px); line-height: 1.04; }
+.cm-tags { margin: 18px 0 0; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); }
+.cm-summary { padding: 22px 22px 18px; border-radius: var(--r-lg); background: var(--branco); border: 1px solid var(--border-on-light-strong); box-shadow: var(--shadow-card); }
+.cm-summary-k { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
+.cm-summary ul { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.cm-summary li { position: relative; padding-left: 18px; font-size: 14.5px; line-height: 1.4; color: var(--text-body); }
+.cm-summary li::before { content: ""; position: absolute; left: 0; top: 7px; width: 7px; height: 7px; border-radius: 2px; background: color-mix(in oklab, var(--ciano) 45%, var(--azul-profundo)); }
+.cm-insight { margin: 14px 0 0; padding-top: 14px; border-top: 1px solid var(--border-on-light); font-size: 15px; font-weight: 600; line-height: 1.35; color: var(--text-primary); }
+.cm-insight b { color: var(--risco-terracota); }
 
-/* Desktop: 4 colunas; cada etapa vira 3 linhas alinhadas (etapa, risco, Kontiva) */
-.flow { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: auto auto auto; grid-auto-flow: column; }
-.flow-step { display: contents; }
-.flow-node, .flow-risk { margin: 0 14px; }
+/* Mapa: B e C dividem a mesma grade; D repete as mesmas colunas */
+.cm-map { --cm-gap: 28px; }
+.cm-grid { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--cm-gap); grid-template-rows: auto auto auto; }
+.cm-col { display: contents; }
+.cm-col:nth-child(3) > * { grid-column: 1; } .cm-col:nth-child(4) > * { grid-column: 2; }
+.cm-col:nth-child(5) > * { grid-column: 3; } .cm-col:nth-child(6) > * { grid-column: 4; }
+.cm-step { grid-row: 1; }
+.cm-risk { grid-row: 3; }
+.cm-riskband { grid-row: 2 / 4; grid-column: 1 / -1; margin: 22px -18px 0; border-radius: var(--r-lg); background: color-mix(in srgb, var(--risco-amber) 9%, white); border: 1px solid color-mix(in srgb, var(--risco-amber) 30%, transparent); }
+.cm-risk-title { grid-row: 2; grid-column: 1 / -1; margin: 40px 0 12px; position: relative; }
 
-.flow-node {
-  position: relative; padding: 20px 20px 18px; border-radius: var(--r-lg);
-  background: var(--branco); border: 1px solid var(--border-on-light-strong); box-shadow: 0 10px 30px -18px rgba(10,31,63,.25);
+/* B · etapas */
+.cm-step {
+  position: relative; z-index: 1; padding: 20px 20px 18px; border-radius: var(--r-lg);
+  background: var(--branco); border: 1px solid var(--border-on-light-strong);
+  box-shadow: 0 14px 34px -22px rgba(10,31,63,.35); outline: none;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
-.flow-node.is-fora { border-color: color-mix(in srgb, var(--risco-terracota) 40%, var(--border-on-light-strong)); }
-/* seta entre etapas */
-.flow-node::after {
-  content: ""; position: absolute; top: 50%; right: -29px; width: 30px; height: 2px;
-  background: linear-gradient(90deg, var(--border-on-light-strong), color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo)));
+.cm-step::after { /* seta para a proxima etapa */
+  content: ""; position: absolute; top: 50%; right: calc(-1 * var(--cm-gap) - 1px); width: calc(var(--cm-gap) - 6px); height: 2px;
+  background: color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo));
 }
-.flow-node::before {
-  content: ""; position: absolute; top: calc(50% - 4px); right: -30px; width: 8px; height: 8px;
-  border-top: 2px solid color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo));
-  border-right: 2px solid color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo));
-  transform: rotate(45deg); z-index: 1;
+.cm-step::before {
+  content: ""; position: absolute; top: calc(50% - 4px); right: calc(-1 * var(--cm-gap) + 4px); width: 8px; height: 8px; z-index: 2;
+  border-top: 2px solid color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo)); border-right: 2px solid color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo));
+  transform: rotate(45deg);
 }
-.flow-step:last-child .flow-node::after, .flow-step:last-child .flow-node::before { display: none; }
-.fn-top { display: flex; align-items: center; justify-content: space-between; }
-.fn-ico { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: color-mix(in oklab, var(--ciano) 40%, var(--azul-profundo)); background: color-mix(in srgb, var(--ciano) 12%, transparent); border: 1px solid color-mix(in srgb, var(--ciano) 24%, transparent); }
-.fn-n { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
-.flow-node h3 { margin-top: 14px; font-size: 19px; }
-.flow-node p { margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--text-body); }
-.fn-tag { display: inline-block; margin-top: 12px; padding: 3px 9px; border-radius: var(--r-pill); font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.04em; color: var(--risco-terracota); background: color-mix(in srgb, var(--risco-terracota) 10%, transparent); }
-.fn-tag-dep { color: color-mix(in oklab, var(--ciano) 35%, var(--azul-profundo)); background: color-mix(in srgb, var(--ciano) 12%, transparent); }
+.cm-col:last-child .cm-step::after, .cm-col:last-child .cm-step::before { display: none; }
+/* a ligacao 03 -> 04 e uma condicao: tracejada em ambar */
+.cm-step.is-critico::after { background: repeating-linear-gradient(90deg, var(--risco-amber) 0 5px, transparent 5px 9px); }
+.cm-step.is-critico::before { border-color: var(--risco-amber); }
+.cm-step.is-critico { border-color: color-mix(in srgb, var(--risco-amber) 70%, white); box-shadow: 0 0 0 4px color-mix(in srgb, var(--risco-amber) 14%, transparent), 0 18px 40px -22px rgba(194,58,31,.45); }
+.cm-step.is-depende { border-style: dashed; }
+.cm-flag { position: absolute; top: -11px; left: 18px; padding: 3px 10px; border-radius: var(--r-pill); font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--branco); background: var(--risco-terracota); }
+.cm-step-top { display: flex; align-items: center; justify-content: space-between; }
+.cm-ico { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: color-mix(in oklab, var(--ciano) 40%, var(--azul-profundo)); background: color-mix(in srgb, var(--ciano) 12%, transparent); border: 1px solid color-mix(in srgb, var(--ciano) 24%, transparent); }
+.is-critico .cm-ico { color: var(--risco-terracota); background: color-mix(in srgb, var(--risco-amber) 14%, transparent); border-color: color-mix(in srgb, var(--risco-amber) 35%, transparent); }
+.cm-n { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
+.cm-step h4 { margin-top: 14px; font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
+.cm-step p { margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--text-body); min-height: 3em; }
+.cm-status { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; padding: 4px 10px; border-radius: var(--r-pill); font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.02em; }
+.cm-status i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.cm-status.is-ok { color: #0F7A3D; background: color-mix(in srgb, var(--positivo) 11%, transparent); }
+.cm-status.is-warn { color: #9A4A12; background: color-mix(in srgb, var(--risco-amber) 18%, transparent); }
+.cm-status.is-warn i { animation: cm-pulse 1.6s ease-in-out infinite; }
+.cm-status.is-info { color: color-mix(in oklab, var(--ciano) 30%, var(--azul-profundo)); background: color-mix(in srgb, var(--ciano) 12%, transparent); }
+@keyframes cm-pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
 
-/* risco pendurado na etapa por um conector tracejado */
-.flow-risk {
-  position: relative; margin-top: 28px; margin-bottom: 18px; padding: 14px 16px 14px 16px;
-  border-radius: var(--r-md); background: color-mix(in srgb, var(--risco-terracota) 6%, white);
-  border: 1px solid color-mix(in srgb, var(--risco-terracota) 28%, transparent);
+/* C · faixa de riscos */
+.cm-band-title { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; z-index: 1; }
+.cm-dot-risk { width: 8px; height: 8px; border-radius: 50%; background: var(--risco-amber); box-shadow: 0 0 0 4px color-mix(in srgb, var(--risco-amber) 20%, transparent); }
+.cm-risk { position: relative; z-index: 1; padding: 4px 0 22px 14px; border-left: 2px solid color-mix(in srgb, var(--risco-amber) 45%, transparent); transition: border-color .2s ease; }
+.cm-risk-k { display: block; font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--risco-terracota); }
+.cm-risk strong { display: block; margin-top: 6px; font-size: 15px; line-height: 1.3; color: var(--text-primary); }
+.cm-risk p { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--text-body); }
+
+/* D · faixa da Kontiva */
+.cm-kband { margin: 18px -18px 0; padding: 22px 18px 18px; border-radius: var(--r-lg); background: var(--azul-profundo); position: relative; overflow: hidden; }
+.cm-kband::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(600px circle at 90% -40%, color-mix(in oklab, var(--ciano) 16%, transparent), transparent 60%); }
+.cm-k-title { color: var(--branco); margin-bottom: 14px; position: relative; }
+.cm-dot-k { width: 8px; height: 8px; border-radius: 50%; background: var(--ciano); box-shadow: 0 0 10px var(--ciano); }
+.cm-kgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--cm-gap); position: relative; }
+.cm-k { padding: 14px 0 4px 14px; border-left: 2px solid rgba(255,255,255,0.12); transition: border-color .2s ease; }
+.cm-k-onde { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in oklab, var(--ciano) 78%, white); }
+.cm-k p { margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: color-mix(in srgb, var(--branco) 88%, transparent); }
+.cm-k-tag { display: inline-block; margin-top: 12px; padding: 3px 9px; border-radius: var(--r-pill); font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: color-mix(in oklab, var(--ciano) 80%, white); background: color-mix(in srgb, var(--ciano) 12%, transparent); border: 1px solid color-mix(in srgb, var(--ciano) 26%, transparent); }
+
+/* Hover: a coluna ativa acende etapa, risco e atuacao; as outras recuam */
+.cm-map[data-active] .cm-step, .cm-map[data-active] .cm-risk, .cm-map[data-active] .cm-k { opacity: .45; transition: opacity .2s ease, transform .2s ease, border-color .2s ease; }
+.cm-map[data-active="1"] [data-col="1"] > *, .cm-map[data-active="1"] .cm-k[data-col="1"],
+.cm-map[data-active="2"] [data-col="2"] > *, .cm-map[data-active="2"] .cm-k[data-col="2"],
+.cm-map[data-active="3"] [data-col="3"] > *, .cm-map[data-active="3"] .cm-k[data-col="3"],
+.cm-map[data-active="4"] [data-col="4"] > *, .cm-map[data-active="4"] .cm-k[data-col="4"] { opacity: 1; }
+.cm-map[data-active="1"] [data-col="1"] .cm-step, .cm-map[data-active="2"] [data-col="2"] .cm-step,
+.cm-map[data-active="3"] [data-col="3"] .cm-step, .cm-map[data-active="4"] [data-col="4"] .cm-step { transform: translateY(-3px); }
+.cm-map[data-active="1"] [data-col="1"] .cm-risk, .cm-map[data-active="2"] [data-col="2"] .cm-risk,
+.cm-map[data-active="3"] [data-col="3"] .cm-risk, .cm-map[data-active="4"] [data-col="4"] .cm-risk { border-left-color: var(--risco-terracota); }
+.cm-map[data-active] .cm-k[data-col] { border-left-color: rgba(255,255,255,0.12); }
+.cm-map[data-active="1"] .cm-k[data-col="1"], .cm-map[data-active="2"] .cm-k[data-col="2"],
+.cm-map[data-active="3"] .cm-k[data-col="3"], .cm-map[data-active="4"] .cm-k[data-col="4"] { border-left-color: var(--ciano); }
+@media (prefers-reduced-motion: reduce) { .cm-status.is-warn i { animation: none; } .cm-step { transition: none; } }
+
+/* Tablet: mais respiro, cabecalho empilhado */
+@media (max-width: 1100px) {
+  .cm-head { grid-template-columns: 1fr; gap: 28px; align-items: start; }
+  .cm-summary { max-width: 460px; }
+  .cm-map { --cm-gap: 20px; }
 }
-.flow-risk::before { content: ""; position: absolute; top: -29px; left: 28px; height: 28px; border-left: 2px dashed color-mix(in srgb, var(--risco-terracota) 45%, transparent); }
-.fr-k { display: block; font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--risco-terracota); }
-.flow-risk strong { display: block; margin-top: 6px; font-size: 15px; line-height: 1.3; color: var(--text-primary); }
-.flow-risk p { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--text-body); }
-
-/* faixa continua da Kontiva */
-.flow-k { background: var(--azul-profundo); padding: 16px 18px; color: var(--claro-escuro); border-left: 1px solid rgba(255,255,255,0.08); }
-.flow-step:first-child .flow-k { border-radius: var(--r-md) 0 0 var(--r-md); border-left: none; }
-.flow-step:last-child .flow-k { border-radius: 0 var(--r-md) var(--r-md) 0; }
-.fk-lbl { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in oklab, var(--ciano) 78%, white); }
-.fk-lbl::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ciano); box-shadow: 0 0 8px var(--ciano); }
-.flow-k p { margin: 6px 0 0; font-size: 13.5px; line-height: 1.45; color: color-mix(in srgb, var(--branco) 86%, transparent); }
-
-/* Mobile/tablet: fluxo vertical, uma etapa por bloco */
+/* Mobile: etapa seguida do risco; faixa da Kontiva no fim */
 @media (max-width: 900px) {
-  .flow { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-flow: row; }
-  .flow-node, .flow-risk, .flow-step > .flow-node, .flow-step > .flow-risk { margin-left: 0 !important; margin-right: 0 !important; }
-  .flow-risk { margin: 22px 0 0 18px !important; }
-  .flow-risk::before { top: -23px; height: 22px; left: 22px; }
-  .flow-node::after, .flow-node::before { display: none; }
-  .flow-k, .flow-step:first-child .flow-k, .flow-step:last-child .flow-k { position: relative; margin: 10px 0 44px 18px; border-radius: var(--r-md); border-left: none; }
-  .flow-step:last-child .flow-k { margin-bottom: 0; }
-  /* seta vertical para a proxima etapa */
-  .flow-k::after { content: ""; position: absolute; left: 10px; bottom: -36px; height: 28px; border-left: 2px solid color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo)); }
-  .flow-k::before { content: ""; position: absolute; left: 6px; bottom: -38px; width: 8px; height: 8px; border-right: 2px solid color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo)); border-bottom: 2px solid color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo)); transform: rotate(45deg); }
-  .flow-step:last-child .flow-k::after, .flow-step:last-child .flow-k::before { display: none; }
+  .cm-grid { grid-template-columns: 1fr; grid-template-rows: none; }
+  .cm-col > *, .cm-col:nth-child(n) > * { grid-column: 1; grid-row: auto; }
+  .cm-riskband, .cm-risk-title { display: none; }
+  .cm-step::after, .cm-step::before { display: none; }
+  .cm-step p { min-height: 0; }
+  .cm-risk { margin: 12px 0 34px 16px; padding: 12px 14px; border-left-width: 3px; border-radius: 0 var(--r-md) var(--r-md) 0; background: color-mix(in srgb, var(--risco-amber) 9%, white); }
+  .cm-risk::after { content: ""; position: absolute; left: 22px; bottom: -30px; height: 24px; border-left: 2px solid color-mix(in oklab, var(--ciano) 55%, var(--azul-profundo)); }
+  .cm-col:last-child .cm-risk { margin-bottom: 0; }
+  .cm-col:last-child .cm-risk::after { display: none; }
+  .cm-kband { margin: 28px 0 0; padding: 20px 18px 8px; }
+  .cm-kgrid { grid-template-columns: 1fr; row-gap: 4px; }
+  .cm-k { padding: 12px 0 14px 14px; }
 }
 
 /* 04 - Secao unificada: dor, risco, como ajuda, exemplo */
