@@ -1,0 +1,94 @@
+---
+import "../styles/tokens.css";
+import "../styles/lp.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "Kontiva · O agente de IA que opera a reforma tributária na sua empresa",
+  description = "O copiloto fiscal e financeiro da sua empresa na reforma. Responda a reforma com fonte, simule a operação inteira de uma vez e opere créditos, fornecedores e caixa do split payment. Veja rodando nos seus dados, sem custo.",
+} = Astro.props as Props;
+
+// Canonical no dominio final de empresas (espelha lp.kontiva.ai de escritorios).
+// og:image e twitter:card entram na Fase 4 junto com o OG proprio de empresas.
+const canonical = "https://empresas.kontiva.ai/";
+
+const orgLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Kontiva",
+  url: canonical,
+  description:
+    "Hub de agentes de IA que opera a reforma tributária para empresas: créditos, fornecedores, caixa do split payment e repricing. Uma empresa BlueMetrics.",
+  parentOrganization: { "@type": "Organization", name: "BlueMetrics" },
+};
+const siteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Kontiva",
+  url: canonical,
+  inLanguage: "pt-BR",
+};
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0A1F3F" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kontiva" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Foto do hero (above the fold): prioriza o carregamento para o LCP -->
+    <link
+      rel="preload"
+      as="image"
+      href="/hero-empresas-1600.avif"
+      type="image/avif"
+      imagesrcset="/hero-empresas-800.avif 800w, /hero-empresas-1600.avif 1600w, /hero-empresas-2400.avif 2400w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+
+    <!-- Fontes do design system (Google Fonts, font-display swap) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Sem JS: mostra todo o conteudo (a pagina le e converte sem JS) -->
+    <noscript>
+      <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
+    </noscript>
+
+    <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(siteLd)} />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Reveal on scroll + tracking (dataLayer) + formulario de demo.
+      // Portado verbatim do index.html monolitico de empresas na migracao para
+      // Astro. A string de WhatsApp ja usa "minha empresa" (bug #1). O endpoint
+      // (N) fica vazio: sem endpoint, o envio cai no fallback de WhatsApp.
+      const k=window.matchMedia("(prefers-reduced-motion: reduce)").matches,I=document.querySelectorAll(".reveal");if(k||!("IntersectionObserver"in window))I.forEach(a=>a.classList.add("in"));else{const a=new IntersectionObserver(t=>{t.forEach(s=>{s.isIntersecting&&(s.target.classList.add("in"),a.unobserve(s.target))})},{threshold:.12});I.forEach(t=>a.observe(t))}const d=(a,t={})=>{const s=window;s.dataLayer=s.dataLayer||[],s.dataLayer.push({event:a,...t})},y=document.getElementById("topo");if(y){const a=new IntersectionObserver(t=>{t[0].isIntersecting&&(d("view_hero"),a.disconnect())},{threshold:.3});a.observe(y)}document.addEventListener("click",a=>{const t=a.target.closest("[data-cta]");if(!t)return;const s=t.getAttribute("data-cta")||"unknown";d("cta_click",{position:s}),s==="whatsapp"&&d("whatsapp_click")});const b="5551926343014",B="Olá, quero agendar a demo da Kontiva com os dados da minha empresa.",S=`https://wa.me/${b}?text=${encodeURIComponent(B)}`,N="",$=(a,t={})=>{const s=window;s.dataLayer=s.dataLayer||[],s.dataLayer.push({event:a,...t})},o=document.getElementById("lead-form");if(o){const a=document.getElementById("form-card"),t=document.getElementById("lf-submit"),s=document.getElementById("form-success"),m=document.getElementById("form-sendfail"),u=document.getElementById("sendfail-wa");let f=!1;const _=new URLSearchParams(location.search),h={};["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(e=>{const n=_.get(e)||sessionStorage.getItem(e);n&&(h[e]=n,sessionStorage.setItem(e,n))});const c=document.getElementById("lf-whats");c.addEventListener("input",()=>{let e=c.value.replace(/\D/g,"").slice(0,11),n=e;e.length>2&&(n=`(${e.slice(0,2)}) ${e.slice(2)}`),e.length>7&&(n=`(${e.slice(0,2)}) ${e.slice(2,7)}-${e.slice(7)}`),c.value=n}),o.addEventListener("focusin",()=>{f||(f=!0,$("form_start"))});const r=(e,n)=>{const i=o.querySelector(`[data-field="${e}"]`);i&&i.classList.toggle("invalid",n)},A=()=>{const e=o.nome.value.trim(),n=o.email.value.trim(),i=c.value.replace(/\D/g,""),l=parseInt(o.carteira.value,10),g=e.length>0,w=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(n),E=i.length>=10,L=Number.isFinite(l)&&l>0;return r("nome",!g),r("email",!w),r("whatsapp",!E),r("carteira",!L),{ok:g&&w&&E&&L}},v=e=>{const n=`Olá, quero agendar a demo da Kontiva com os dados da minha empresa.%0A%0ANome: ${e.nome||""}%0AWhatsApp: ${e.whatsapp||""}%0AE-mail: ${e.email||""}%0ACNPJs na operação: ${e.carteira||""}%0ASistema: ${e.sistema||"não informado"}`;return`https://wa.me/${b}?text=${n}`},p=()=>{a.classList.add("sent"),s.classList.add("show"),s.scrollIntoView({behavior:"smooth",block:"center"}),$("form_submit_success")};o.addEventListener("submit",async e=>{if(e.preventDefault(),m.classList.remove("show"),o.empresa_site.value){p();return}const{ok:n}=A();if(!n){o.querySelector(".f-field.invalid input, .f-field.invalid select")?.focus();return}const i={nome:o.nome.value.trim(),whatsapp:c.value.trim(),email:o.email.value.trim(),carteira:o.carteira.value.trim(),sistema:o.sistema.value,...h};t.classList.add("is-loading"),t.innerHTML='<span class="spinner"></span> Enviando...';try{N||(window.open(v(i),"_blank","noopener"),p())}catch{t.classList.remove("is-loading"),t.textContent="Agendar minha demo",u.href=v(i),m.classList.add("show")}}),u.href=S}
+    </script>
+  </body>
+</html>
