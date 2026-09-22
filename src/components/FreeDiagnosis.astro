@@ -1,0 +1,49 @@
+---
+// 08 - Diagnostico gratuito e limitado (PRD revisao, secoes 4.7 e 5.7).
+// Fronteira clara entre o que e gratuito e o que faz parte do plano pago.
+import { CTA_PRIMARIO, CTA_ANCORA, DIAG_LIMITE } from "../../content/site";
+
+const inclui = [
+  "1 CNPJ",
+  "1 cenário",
+  "Resultado resumido",
+  "Leitura inicial de crédito, fornecedor, preço e caixa",
+  "Recomendação dos próximos passos",
+];
+const naoInclui = [
+  "Simulador multi-cenário completo",
+  "Acompanhamento e operação mensal",
+  "Múltiplos CNPJs",
+  "Franquia de fornecedores",
+  "Reprecificação em lote",
+];
+---
+<section class="bg-alt" id="diagnostico" aria-labelledby="diag-h">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="dot-cyan"></span> Diagnóstico gratuito</div>
+      <h2 id="diag-h">Comece com um diagnóstico gratuito e <span class="serif-accent">limitado</span>.</h2>
+      <p class="urg3-copy">Em vez de esperar a reforma bater no caixa, comece com uma leitura objetiva de uma amostra da sua operação. Você não precisa trocar de ERP, subir um projeto longo ou contratar uma consultoria antes de entender o tamanho do risco.</p>
+    </div>
+
+    <div class="diag-grid reveal delay-1">
+      <div class="diag-card diag-in">
+        <h3>Inclui</h3>
+        <ul>
+          {inclui.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+      <div class="diag-card diag-out">
+        <h3>Não inclui <span>faz parte dos planos pagos</span></h3>
+        <ul>
+          {naoInclui.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="urg3-cta reveal">
+      <a href={CTA_ANCORA} class="btn btn-primary btn-lg" data-cta="diagnostico">{CTA_PRIMARIO}</a>
+      <p class="cta-limit">{DIAG_LIMITE} O plano completo é apresentado apenas se fizer sentido depois do diagnóstico.</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,33 @@
+---
+// 03 - Gancho regulatorio (PRD revisao, secoes 4.2 e 5.4). Logo apos o
+// contador: o credito passa a depender do recolhimento do fornecedor.
+const cards = [
+  { k: "Fornecedor", t: "Fornecedor sem confirmação de recolhimento", d: "Crédito em risco e necessidade de ação.", ico: '<path d="M3 6h11v9H3z"/><path d="M14 9h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>' },
+  { k: "Compras", t: "Compra com preço bruto menor", d: "Pode sair mais cara depois do crédito.", ico: '<path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/>' },
+  { k: "Pagamento", t: "Pagamento sem proteção", d: "Split ou RAD podem ser alternativas em operações específicas.", ico: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 14h4"/>' },
+  { k: "Caixa", t: "Crédito travado", d: "Menos previsibilidade para o capital de giro.", ico: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>' },
+];
+---
+<section class="bg-alt" id="credito" aria-labelledby="hook-h">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="dot-cyan"></span> A nova lógica do crédito</div>
+      <h2 id="hook-h">Seu crédito depende do recolhimento do seu <span class="serif-accent">fornecedor</span>.</h2>
+      <p class="hook-lead">Não depende mais só da sua nota. Com a nova lógica de IBS/CBS, uma compra aparentemente correta pode virar risco de crédito se o fornecedor não recolher, se o pagamento não estiver protegido ou se a operação não for acompanhada.</p>
+      <p class="hook-punch">O problema deixa de ser apenas fiscal. Vira decisão de compra, cadastro, pagamento e caixa.</p>
+    </div>
+    <div class="prob-grid">
+      {cards.map((c, i) => (
+        <article class={`prob-card reveal delay-${i % 3}`}>
+          <span class="prob-ico" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={c.ico} />
+          </span>
+          <div class="prob-kicker">{c.k}</div>
+          <h3 class="prob-title">{c.t}</h3>
+          <p class="prob-desc">{c.d}</p>
+        </article>
+      ))}
+    </div>
+    <small class="hook-src reveal">Nova lógica de crédito de IBS/CBS. Fonte: LC 214/2025.</small>
+  </div>
+</section>

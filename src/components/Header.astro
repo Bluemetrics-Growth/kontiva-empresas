@@ -1,6 +1,6 @@
 ---
-// Cabecalho v3: navegacao minima + CTA (PRD secao 18).
-import { CTA_SECUNDARIO } from "../../content/site";
+// Cabecalho: navegacao minima + CTA (PRD revisao, secao 5.1).
+import { CTA_HEADER, CTA_ANCORA } from "../../content/site";
 ---
 <header class="nav">
 <div class="shell nav-inner">
@@ -11,11 +11,12 @@ import { CTA_SECUNDARIO } from "../../content/site";
 <span class="brand-note">uma empresa BlueMetrics</span>
 </a>
 <nav class="nav-links" aria-label="Navegação principal">
-<a href="#problemas" class="nav-link">Como funciona</a>
-<a href="#produto" class="nav-link">Produto</a>
+<a href="#reforma-2027" class="nav-link">Reforma 2027</a>
+<a href="#produto" class="nav-link">Como opera</a>
+<a href="#diagnostico" class="nav-link">Diagnóstico</a>
 <a href="#confianca" class="nav-link">Segurança</a>
 <a href="#faq" class="nav-link">FAQ</a>
-<a href="#agendar" class="btn btn-primary" data-cta="header">{CTA_SECUNDARIO}</a>
+<a href={CTA_ANCORA} class="btn btn-primary" data-cta="header">{CTA_HEADER}</a>
 </nav>
 </div>
 </header>

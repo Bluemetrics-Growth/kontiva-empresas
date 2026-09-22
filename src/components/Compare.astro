@@ -1,42 +1,41 @@
 ---
-// 05 - Diferenciacao (PRD v3 secao 8). Comparacao simples, sem regua longa.
+// 06 - Diferenciacao (PRD revisao, secao 5.6). Comparacao simples.
+type Cell = "yes" | "no" | "part";
+const cols = ["Responde dúvidas", "Simula cenários", "Monitora fornecedores", "Opera todo mês"];
+const rows: { name: string; cells: Cell[]; hl?: boolean }[] = [
+  { name: "Chatbot", cells: ["yes", "no", "no", "no"] },
+  { name: "Consultoria", cells: ["yes", "yes", "part", "no"] },
+  { name: "ERP", cells: ["part", "part", "part", "part"] },
+  { name: "Kontiva", cells: ["yes", "yes", "yes", "yes"], hl: true },
+];
+const label: Record<Cell, string> = { yes: "Sim", no: "Não", part: "Parcial" };
 ---
 <section class="bg-alt" id="diferenciacao" aria-labelledby="cmp-h">
   <div class="shell">
     <div class="section-head reveal">
-      <div class="eyebrow"><span class="dot-cyan"></span> Onde o Kontiva entra</div>
-      <h2 id="cmp-h">Não é mais um relatório sobre a reforma.</h2>
+      <div class="eyebrow"><span class="dot-cyan"></span> Onde a Kontiva entra</div>
+      <h2 id="cmp-h">Não é mais um relatório sobre a reforma. É uma rotina <span class="serif-accent">operacional</span>.</h2>
     </div>
     <div class="cmp-wrap reveal delay-1">
       <table class="cmp-table">
         <thead>
           <tr>
             <th scope="col">Solução</th>
-            <th scope="col">Responde dúvidas</th>
-            <th scope="col">Simula</th>
-            <th scope="col">Opera todo mês</th>
+            {cols.map((c) => <th scope="col">{c}</th>)}
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Chatbot</th>
-            <td class="yes">✓</td><td class="no">–</td><td class="no">–</td>
-          </tr>
-          <tr>
-            <th scope="row">Consultoria</th>
-            <td class="yes">✓</td><td class="yes">✓</td><td class="no">–</td>
-          </tr>
-          <tr>
-            <th scope="row">ERP</th>
-            <td class="yes">✓</td><td class="yes">✓</td><td class="part">parcial</td>
-          </tr>
-          <tr class="hl">
-            <th scope="row">Kontiva</th>
-            <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
-          </tr>
+          {rows.map((r) => (
+            <tr class={r.hl ? "hl" : undefined}>
+              <th scope="row">{r.name}</th>
+              {r.cells.map((c) => (
+                <td class={c}>{c === "part" ? "parcial" : <span aria-label={label[c]}>{c === "yes" ? "✓" : "–"}</span>}</td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
-    <p class="cmp-note reveal">O Kontiva foi desenhado para a parte que começa depois do diagnóstico: acompanhar a operação continuamente.</p>
+    <p class="cmp-note reveal">A Kontiva foi desenhada para a parte que começa depois do diagnóstico: acompanhar crédito, fornecedores, preço e caixa de forma contínua, com memória de cálculo e aprovação humana.</p>
   </div>
 </section>

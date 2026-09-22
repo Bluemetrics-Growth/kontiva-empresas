@@ -1,0 +1,93 @@
+---
+// 02 - Contador para 2027 (PRD revisao, secoes 4.6, 5.3 e 7.2). Substitui a
+// dobra "Reforma em curso". Contagem client-side ate 01/01/2027 00:00 (BRT).
+// No HTML estatico os numeros saem como "--" (fallback seguro, sem depender da
+// hora do build); o script preenche e atualiza a cada segundo.
+import { facts } from "../../content/facts";
+import { CTA_PRIMARIO, CTA_ANCORA, DIAG_LIMITE } from "../../content/site";
+
+const TARGET = "2027-01-01T00:00:00-03:00";
+const unidades = [
+  { k: "d", l: "dias" },
+  { k: "h", l: "horas" },
+  { k: "m", l: "minutos" },
+  { k: "s", l: "segundos" },
+];
+const marcos = [
+  { when: "2026", what: "Ano de mapear dados, fornecedores, créditos e cenários." },
+  { when: "Jan/2027", what: "CBS em regime pleno. O crédito passa a depender do recolhimento do fornecedor." },
+  { when: "A partir de 2027", what: "Split payment e RAD começam de forma gradual e facultativa. Cada operação passa a exigir uma decisão." },
+];
+---
+<section class="bg-page" id="reforma-2027" aria-labelledby="cd-h">
+  <div class="shell">
+    <div class="cd-grid">
+      <div class="cd-copy reveal">
+        <div class="eyebrow"><span class="dot-cyan"></span> Reforma 2027</div>
+        <h2 id="cd-h">Tempo para sua empresa chegar em 2027 com a operação <span class="serif-accent">preparada</span>.</h2>
+        <p class="cd-text">2026 é o ano de mapear fornecedores, créditos, preço e caixa. Em 2027, a CBS entra em regime pleno e a sua operação precisa decidir com número, não com susto.</p>
+      </div>
+
+      <div class="cd-box reveal delay-1">
+        <div class="cd-clock" id="cd-2027" data-target={TARGET} role="timer" aria-label="Contagem regressiva até 1º de janeiro de 2027">
+          {unidades.map((u) => (
+            <div class="cd-unit">
+              <span class="cd-num" data-unit={u.k}>--</span>
+              <span class="cd-lbl">{u.l}</span>
+            </div>
+          ))}
+        </div>
+        <p class="cd-target">até <b>{facts.cbsPlena.value}</b> · {facts.cbsPlena.label}</p>
+        <small class="cd-src">Fonte: {facts.cbsPlena.source}</small>
+      </div>
+    </div>
+
+    <ol class="urg3-marcos reveal delay-1">
+      {marcos.map((m) => (
+        <li class="marco">
+          <div class="when">{m.when}</div>
+          <p class="what">{m.what}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="urg3-cta reveal">
+      <a href={CTA_ANCORA} class="btn btn-primary" data-cta="countdown">{CTA_PRIMARIO}</a>
+      <p class="cta-limit">{DIAG_LIMITE}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const el = document.getElementById("cd-2027");
+  if (el) {
+    const target = new Date(el.getAttribute("data-target") || "").getTime();
+    const nums: Record<string, HTMLElement | null> = {
+      d: el.querySelector('[data-unit="d"]'),
+      h: el.querySelector('[data-unit="h"]'),
+      m: el.querySelector('[data-unit="m"]'),
+      s: el.querySelector('[data-unit="s"]'),
+    };
+    const pad = (n: number) => String(n).padStart(2, "0");
+    let timer = 0;
+    const tick = () => {
+      const diff = Math.max(0, target - Date.now());
+      const total = Math.floor(diff / 1000);
+      const vals: Record<string, string> = {
+        d: String(Math.floor(total / 86400)),
+        h: pad(Math.floor((total % 86400) / 3600)),
+        m: pad(Math.floor((total % 3600) / 60)),
+        s: pad(total % 60),
+      };
+      for (const k in nums) {
+        const n = nums[k];
+        if (n && n.textContent !== vals[k]) n.textContent = vals[k];
+      }
+      if (diff === 0 && timer) window.clearInterval(timer);
+    };
+    if (!Number.isNaN(target)) {
+      tick();
+      timer = window.setInterval(tick, 1000);
+    }
+  }
+</script>

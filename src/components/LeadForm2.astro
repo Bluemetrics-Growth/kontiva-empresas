@@ -1,28 +1,28 @@
 ---
-// 08 - CTA + formulario em duas etapas (PRD v3 secao 11).
-// Etapa 1: Nome, E-mail corporativo, WhatsApp. Etapa 2: ERP, CNPJs, Regime,
-// Faturamento. Preserva o comportamento atual (sem endpoint: fallback via
+// 10 - CTA + formulario de diagnostico em duas etapas (PRD revisao, secao 5.9).
+// Etapa 1: Nome, E-mail corporativo, WhatsApp, Empresa, Site. Etapa 2: ERP,
+// CNPJs, Regime, Faturamento, Principal dor. Preserva o comportamento atual (sem endpoint: fallback via
 // WhatsApp) e a captura de UTM. Se um endpoint HubSpot for configurado em
 // FORM_ENDPOINT, o POST passa a valer sem quebrar os campos existentes.
-import { WHATSAPP_NUM, WHATSAPP_MSG, CTA_SECUNDARIO } from "../../content/site";
+import { WHATSAPP_NUM, WHATSAPP_MSG, DIAG_LIMITE } from "../../content/site";
 ---
 <section class="final grain" id="agendar" aria-labelledby="final-h">
   <div class="shell final-grid">
     <div class="final-copy reveal">
-      <div class="eyebrow"><span class="dot-cyan"></span> Agende a demo</div>
-      <h2 id="final-h" style="margin-top:18px;">Veja o impacto da reforma na sua <span class="hl">própria operação.</span></h2>
-      <p class="final-sub">Em uma demo assistida, configuramos uma amostra dos seus dados e mostramos onde estão os principais riscos e oportunidades.</p>
+      <div class="eyebrow"><span class="dot-cyan"></span> Diagnóstico gratuito</div>
+      <h2 id="final-h" style="margin-top:18px;">Decida com número, <span class="hl">não com susto.</span></h2>
+      <p class="final-sub">A Kontiva é o copiloto fiscal-tributário da sua operação na reforma. Comece por uma leitura objetiva de 1 CNPJ e 1 cenário, antes que crédito, fornecedor, preço e caixa decidam por você.</p>
       <div class="setup-steps">
-        <div class="setup-step"><span class="sn">1</span><p>Você preenche 3 campos. Sem custo.</p></div>
-        <div class="setup-step"><span class="sn">2</span><p>Rodamos os agentes numa amostra da sua operação.</p></div>
-        <div class="setup-step"><span class="sn">3</span><p>Você vê o resultado em reais e decide.</p></div>
+        <div class="setup-step"><span class="sn">1</span><p>Você envia seus dados. Sem custo e sem compromisso.</p></div>
+        <div class="setup-step"><span class="sn">2</span><p>A IA analisa uma amostra da sua operação: 1 CNPJ, 1 cenário.</p></div>
+        <div class="setup-step"><span class="sn">3</span><p>Você vê uma simulação resumida em reais e decide os próximos passos.</p></div>
       </div>
     </div>
 
     <div class="form-card reveal delay-1" id="form-card">
       <div class="form-body">
-        <h3>Agende a demo com os dados da sua empresa</h3>
-        <p class="fc-sub">Sem custo · sem compromisso · resposta em até 1 dia útil</p>
+        <h3>Agende seu diagnóstico gratuito</h3>
+        <p class="fc-sub">Envie seus dados para avaliarmos se a sua empresa se encaixa no diagnóstico limitado de 1 CNPJ e 1 cenário. Resposta em até 1 dia útil.</p>
 
         <div class="lf2-steps" aria-hidden="true">
           <span class="lf2-dot on" id="dot-1"></span>
@@ -48,13 +48,24 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, CTA_SECUNDARIO } from "../../content/site";
               <input id="lf-whats" name="whatsapp" type="tel" inputmode="tel" placeholder="(00) 00000-0000" autocomplete="tel" aria-describedby="err-whats">
               <div class="f-error" id="err-whats">Número incompleto. Inclua o DDD.</div>
             </div>
+            <div class="f-row">
+              <div class="f-field" data-field="empresa">
+                <label for="lf-empresa">Empresa</label>
+                <input id="lf-empresa" name="empresa" type="text" placeholder="Nome da empresa" autocomplete="organization" aria-describedby="err-empresa">
+                <div class="f-error" id="err-empresa">Informe o nome da empresa.</div>
+              </div>
+              <div class="f-field" data-field="site">
+                <label for="lf-site">Site da empresa <span class="f-opt">(opcional)</span></label>
+                <input id="lf-site" name="site" type="text" inputmode="url" placeholder="suaempresa.com.br" autocomplete="url">
+              </div>
+            </div>
             <button type="button" class="btn btn-primary btn-block btn-lg" id="lf-next" data-cta="form-next">Continuar</button>
           </div>
 
           <!-- Etapa 2 -->
           <div class="f-step" id="step-2" data-step="2">
             <button type="button" class="lf2-back" id="lf-back">Voltar</button>
-            <p class="lf2-stepnote">Etapa 2 de 2 · para preparar a demo</p>
+            <p class="lf2-stepnote">Etapa 2 de 2 · para preparar o diagnóstico</p>
             <div class="f-field" data-field="sistema">
               <label for="lf-sistema">Sistema / ERP</label>
               <select id="lf-sistema" name="sistema">
@@ -83,7 +94,14 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, CTA_SECUNDARIO } from "../../content/site";
                 <option>até R$ 20M</option><option>R$ 20M a R$ 80M</option><option>R$ 80M a R$ 300M</option><option>acima de R$ 300M</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary btn-block btn-lg" id="lf-submit" data-cta="form">Agendar minha demo</button>
+            <div class="f-field" data-field="dor">
+              <label for="lf-dor">Principal dor hoje</label>
+              <select id="lf-dor" name="dor">
+                <option value="">Selecione</option>
+                <option>Crédito</option><option>Fornecedor</option><option>Preço</option><option>Caixa</option><option>Notas</option><option>Não sei</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="lf-submit" data-cta="form">Quero meu diagnóstico gratuito</button>
           </div>
 
           <!-- honeypot anti-spam -->
@@ -92,7 +110,7 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, CTA_SECUNDARIO } from "../../content/site";
             <input id="lf-empresa-site" name="empresa_site" type="text" tabindex="-1" autocomplete="off">
           </div>
 
-          <p class="f-consent">Ao enviar, você concorda em ser contatado pela nossa equipe. Seus dados ficam protegidos e você pode pedir a exclusão quando quiser.</p>
+          <p class="f-consent">{DIAG_LIMITE} Ao enviar, você concorda em ser contatado pela Kontiva e autoriza o uso das informações para análise inicial da sua operação. Você pode solicitar exclusão dos dados a qualquer momento.</p>
           <div class="form-sendfail" id="form-sendfail" role="alert">
             Não conseguimos enviar agora. Tente de novo, ou chame a gente no WhatsApp.
             <a href="#" class="btn btn-dark btn-block" style="margin-top:10px;" id="sendfail-wa" target="_blank" rel="noreferrer" data-cta="whatsapp">Falar no WhatsApp</a>
@@ -105,9 +123,9 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, CTA_SECUNDARIO } from "../../content/site";
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
         </span>
         <h3>Recebemos seu contato.</h3>
-        <p>Nossa equipe responde em até 1 dia útil para agendar a demo e combinar a amostra da sua operação.</p>
+        <p>Nossa equipe responde em até 1 dia útil para agendar o diagnóstico e combinar a amostra da sua operação (1 CNPJ, 1 cenário).</p>
       </div>
-      <p class="form-honesty">Setup assistido em turmas limitadas pela nossa capacidade de onboarding.</p>
+      <p class="form-honesty">Diagnósticos assistidos em turmas limitadas pela capacidade do nosso time.</p>
     </div>
   </div>
 </section>
@@ -161,9 +179,10 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, CTA_SECUNDARIO } from "../../content/site";
       var nome = form.nome.value.trim();
       var email = form.email.value.trim();
       var tel = whats.value.replace(/\D/g, "");
-      var okNome = nome.length > 0, okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), okTel = tel.length >= 10;
-      mark("nome", !okNome); mark("email", !okEmail); mark("whatsapp", !okTel);
-      return okNome && okEmail && okTel;
+      var empresa = form.empresa.value.trim();
+      var okNome = nome.length > 0, okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), okTel = tel.length >= 10, okEmpresa = empresa.length > 0;
+      mark("nome", !okNome); mark("email", !okEmail); mark("whatsapp", !okTel); mark("empresa", !okEmpresa);
+      return okNome && okEmail && okTel && okEmpresa;
     };
     var goStep = function (n) {
       step1.classList.toggle("active", n === 1);
@@ -182,8 +201,10 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, CTA_SECUNDARIO } from "../../content/site";
     var waWithData = function (d) {
       var msg = WA_MSG +
         "%0A%0ANome: " + (d.nome || "") + "%0AWhatsApp: " + (d.whatsapp || "") + "%0AE-mail: " + (d.email || "") +
+        "%0AEmpresa: " + (d.empresa || "") + "%0ASite: " + (d.site || "não informado") +
         "%0ASistema: " + (d.sistema || "não informado") + "%0ACNPJs: " + (d.carteira || "não informado") +
-        "%0ARegime: " + (d.regime || "não informado") + "%0AFaturamento: " + (d.faturamento || "não informado");
+        "%0ARegime: " + (d.regime || "não informado") + "%0AFaturamento: " + (d.faturamento || "não informado") +
+        "%0APrincipal dor: " + (d.dor || "não informado");
       return "https://wa.me/" + WA_NUM + "?text=" + msg;
     };
     var showSuccess = function () { card.classList.add("sent"); success.classList.add("show"); success.scrollIntoView({ behavior: "smooth", block: "center" }); track("form_submit_success"); };
@@ -195,13 +216,15 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, CTA_SECUNDARIO } from "../../content/site";
       if (!validStep1()) { goStep(1); var bad = form.querySelector(".f-field.invalid input"); if (bad) bad.focus(); return; }
       var data = {
         nome: form.nome.value.trim(), email: form.email.value.trim(), whatsapp: whats.value.trim(),
-        sistema: form.sistema.value, carteira: form.carteira.value.trim(), regime: form.regime.value, faturamento: form.faturamento.value
+        empresa: form.empresa.value.trim(), site: form.site.value.trim(),
+        sistema: form.sistema.value, carteira: form.carteira.value.trim(), regime: form.regime.value, faturamento: form.faturamento.value,
+        dor: form.dor.value
       };
       Object.assign(data, utm);
       submitBtn.classList.add("is-loading");
       submitBtn.innerHTML = '<span class="spinner"></span> Enviando...';
       var finishFail = function () {
-        submitBtn.classList.remove("is-loading"); submitBtn.textContent = "Agendar minha demo";
+        submitBtn.classList.remove("is-loading"); submitBtn.textContent = "Quero meu diagnóstico gratuito";
         sendfailWa.href = waWithData(data); sendfail.classList.add("show"); track("form_submit_error");
       };
       if (FORM_ENDPOINT) {

@@ -1,8 +1,9 @@
 ---
-// Sticky CTA mobile (PRD v3 secao 17). Aparece apos 60% do hero, some quando o
-// formulario esta visivel. A logica de exibicao esta no script do Base.astro.
-import { CTA_ANCORA } from "../../content/site";
+// Sticky CTA mobile. Aparece apos 60% do hero, some quando o formulario esta
+// visivel. A logica de exibicao esta no script do Base.astro.
+import { CTA_PRIMARIO, CTA_ANCORA } from "../../content/site";
 ---
 <div id="sticky-cta">
-  <a href={CTA_ANCORA} class="btn btn-primary" data-cta="sticky">Ver na minha operação</a>
+  <a href={CTA_ANCORA} class="btn btn-primary" data-cta="sticky">{CTA_PRIMARIO}</a>
+  <span class="sticky-note">1 CNPJ · 1 cenário · resultado resumido</span>
 </div>

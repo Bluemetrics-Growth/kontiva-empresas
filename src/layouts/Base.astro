@@ -8,8 +8,8 @@ interface Props {
   description?: string;
 }
 const {
-  title = "Kontiva · O agente de IA que opera a reforma tributária na sua empresa",
-  description = "A reforma muda o imposto. O Kontiva muda como sua empresa opera isso: crédito, fornecedores, preço e caixa em uma rotina operacional acompanhada pelo seu time. Demo com os seus dados, sem custo.",
+  title = "Kontiva · IA fiscal-tributária para operar a Reforma Tributária na sua empresa",
+  description = "A Reforma Tributária já entrou na operação. A Kontiva simula cenários e monitora crédito, fornecedores, preço e caixa para sua empresa decidir com número, não com susto. Diagnóstico gratuito limitado: 1 CNPJ, 1 cenário e resultado resumido.",
 } = Astro.props as Props;
 
 const canonical = "https://empresas.kontiva.ai/";
@@ -78,7 +78,7 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
 
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org", "@type": "Organization", name: "Kontiva", url: canonical,
-      description: "Agente de IA que opera a reforma tributária para empresas: créditos, fornecedores, caixa do split payment e repricing. Uma empresa BlueMetrics.",
+      description: "IA fiscal-tributária para empresas operarem a Reforma Tributária: crédito, fornecedores, preço e caixa, com memória de cálculo e aprovação humana. Uma empresa BlueMetrics.",
       parentOrganization: { "@type": "Organization", name: "BlueMetrics" },
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({

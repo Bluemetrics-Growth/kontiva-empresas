@@ -1,9 +1,17 @@
 ---
-// 01 - Hero v3 (PRD v3 secao 4). Promessa + prova + CTA. Foto de fundo com
+// 01 - Hero (PRD revisao, secoes 4.1, 4.9 e 5.2). Risco operacional concreto +
+// IA auditavel + CTA de diagnostico com o limite explicito. Foto de fundo com
 // pessoas no terco direito e espaco negativo a esquerda para a copy.
-// Art direction: recorte 4:5 no mobile. Card de produto em sobreposicao.
+// Art direction: recorte 4:5 no mobile. Card do agente em sobreposicao.
 import { seloExemplo } from "../../content/facts";
-import { CTA_PRIMARIO as CTA, CTA_ANCORA } from "../../content/site";
+import { CTA_PRIMARIO as CTA, CTA_SECUNDARIO, CTA_ANCORA, DIAG_LIMITE } from "../../content/site";
+
+const agente = [
+  "Lê XML, PDF, SPED e dados financeiros",
+  "Cruza fornecedor, crédito, preço e caixa",
+  "Explica a origem de cada número",
+  "Registra aprovação humana antes de qualquer ação",
+];
 ---
 <section class="hero hero-photo" id="topo" aria-labelledby="hero-h1">
   <picture class="hero-photo-bg" aria-hidden="true">
@@ -47,44 +55,50 @@ import { CTA_PRIMARIO as CTA, CTA_ANCORA } from "../../content/site";
 
   <div class="shell hero-photo-inner">
     <div class="hero-copy">
-      <div class="eyebrow reveal"><span class="dot-cyan"></span> Reforma tributária · operação 2027</div>
+      <div class="eyebrow reveal"><span class="dot-cyan"></span> IA fiscal-tributária · Lucro Presumido e Lucro Real enxuto</div>
 
       <h1 id="hero-h1" class="reveal delay-1">
-        A reforma muda o imposto. O Kontiva muda <span class="accent">como sua empresa opera isso</span>.
+        A Reforma Tributária já entrou na operação. Agora o <span class="accent">risco</span> está no seu crédito, nos seus fornecedores, no preço e no caixa.
       </h1>
 
       <p class="lead hero-sub reveal delay-2">
-        O Kontiva conecta os dados da sua empresa, simula o impacto da reforma e transforma crédito, fornecedores, preço e caixa em uma rotina operacional acompanhada pelo seu time.
+        A Kontiva conecta os dados fiscais e financeiros da sua empresa, simula cenários da reforma e mostra onde crédito, margem e capital de giro podem ser pressionados antes da decisão chegar tarde demais.
       </p>
 
       <div class="hero-cta-row reveal delay-2">
         <a href={CTA_ANCORA} class="btn btn-primary btn-lg" data-cta="hero">{CTA}</a>
-        <a href="#produto" class="btn btn-ghost btn-lg" data-cta="hero-secondary">Entender como funciona</a>
+        <a href="#produto" class="btn btn-ghost btn-lg" data-cta="hero-secondary">{CTA_SECUNDARIO}</a>
       </div>
-      <p class="hero-cta-note reveal delay-3">Demo com dados da sua empresa · sem custo</p>
+      <p class="hero-cta-note reveal delay-3">{DIAG_LIMITE} Sem custo e sem compromisso.</p>
 
       <div class="hero-seal reveal delay-3">
         <div>
           <span class="tick">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
-          </span> SAP · TOTVS · Oracle · Senior · Planilhas
+          </span> Integra com ERP, planilhas e documentos fiscais
         </div>
         <div>
           <span class="tick">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
-          </span> Aprovação humana antes de qualquer ação
+          </span> Decisão sempre com aprovação humana
         </div>
       </div>
     </div>
 
-    <aside class="hero-proof reveal delay-3" aria-label="Exemplo ilustrativo de crédito em risco">
+    <aside class="hero-proof hero-agent reveal delay-3" aria-labelledby="hero-agent-h">
       <span class="hero-proof-icon" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 12h4"/></svg>
       </span>
       <div class="hero-proof-main">
-        <span class="hero-proof-label">Crédito de IBS/CBS em risco</span>
-        <span class="hero-proof-value">R$ <b>214.700</b></span>
-        <span class="hero-proof-sub">em 7 fornecedores sem recolhimento confirmado</span>
+        <span class="hero-proof-label">Como a IA trabalha</span>
+        <span id="hero-agent-h" class="hero-agent-title">Agente de IA, decisão humana.</span>
+        <span class="hero-proof-sub">Lê documentos, cruza dados, simula cenários e aponta riscos. Seu time aprova, revisa e decide com memória de cálculo.</span>
+      </div>
+      <ul class="hero-agent-list">
+        {agente.map((a) => <li>{a}</li>)}
+      </ul>
+      <div class="hero-agent-example">
+        <b>R$ 214.700</b> em crédito potencial sob revisão
       </div>
       <span class="hero-proof-tag">{seloExemplo}</span>
     </aside>

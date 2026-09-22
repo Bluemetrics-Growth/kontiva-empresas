@@ -1,16 +1,16 @@
 ---
-// 07 - Confianca (PRD v3 secao 10). Quatro pilares, navy curto.
+// 09 - Seguranca e IA auditavel (PRD revisao, secao 5.8). Quatro pilares.
 const pillars = [
-  { t: "Fonte visível", d: "Toda resposta mostra a origem.", ico: '<path d="M4 5a2 2 0 0 1 2-2h10v18H6a2 2 0 0 1-2-2z"/><path d="M16 3l4 2v16l-4-2"/>' },
-  { t: "Memória de cálculo", d: "O time entende como o número foi formado.", ico: '<path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/>' },
-  { t: "Aprovação humana", d: "Nada é executado sem revisão.", ico: '<path d="M20 6L9 17l-5-5"/>' },
-  { t: "BlueMetrics", d: "10+ anos de IA aplicada e 200+ projetos.", ico: '<circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/>' },
+  { t: "Fonte visível", d: "Toda resposta mostra de onde veio o número.", ico: '<path d="M4 5a2 2 0 0 1 2-2h10v18H6a2 2 0 0 1-2-2z"/><path d="M16 3l4 2v16l-4-2"/>' },
+  { t: "Memória de cálculo", d: "Seu time entende como a simulação foi formada.", ico: '<path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/>' },
+  { t: "Aprovação humana", d: "Nada é aplicado sem revisão.", ico: '<path d="M20 6L9 17l-5-5"/>' },
+  { t: "Segurança dos dados", d: "Acesso com controles, consentimento e rastreabilidade.", ico: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>' },
 ];
 ---
 <section class="bg-dark grain" id="confianca" aria-labelledby="trust-h">
   <div class="shell">
     <div class="section-head reveal">
-      <div class="eyebrow"><span class="dot-cyan"></span> Segurança e observabilidade</div>
+      <div class="eyebrow"><span class="dot-cyan"></span> Segurança e IA auditável</div>
       <h2 id="trust-h" style="color:var(--branco);">IA para operação crítica precisa ser auditável.</h2>
     </div>
     <div class="trust-grid">
@@ -24,5 +24,6 @@ const pillars = [
         </article>
       ))}
     </div>
+    <p class="trust-note reveal">Quando houver uso de certificado digital, o acesso é feito com finalidade restrita à leitura dos dados necessários para a simulação e operação fiscal. A Kontiva lê, cruza, simula, monitora e alerta. A decisão continua com a sua empresa.</p>
   </div>
 </section>

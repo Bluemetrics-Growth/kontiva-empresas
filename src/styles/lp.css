@@ -437,3 +437,135 @@
 .rep-bullets li { position: relative; padding-left: 24px; font-size: 15px; color: var(--text-body); }
 .rep-bullets li::before { content: ""; position: absolute; left: 0; top: 7px; width: 12px; height: 12px; border-radius: 3px; background: color-mix(in oklab, var(--ciano) 20%, white); border: 1px solid color-mix(in oklab, var(--ciano) 45%, transparent); }
 @media (max-width: 560px) { .rep-bullets { grid-template-columns: 1fr; } }
+
+/* =========================================================
+   REVISAO LP EMPRESAS (PRD de revisao)
+   Contador 2027, gancho de credito, secao unificada, diagnostico
+   limitado e planos. Mesmo design system: navy base, ciano so de acento.
+   ========================================================= */
+
+/* Hero: H1 mais longo (risco concreto), escala um pouco menor */
+.hero-photo h1 { font-size: clamp(32px, 3.5vw, 50px); line-height: 1.08; }
+.hero-photo .hero-cta-note { margin-top: 14px; font-size: 13.5px; }
+
+/* Card do agente de IA no hero (reaproveita o glass do .hero-proof) */
+.hero-agent { width: min(360px, 80vw); bottom: clamp(112px, 14vh, 150px); }
+.hero-photo .hero-cta-row .btn-lg { padding: 18px 24px; }
+.hero-agent-title { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; color: var(--branco); margin: 2px 0 4px; }
+.hero-agent .hero-proof-sub { line-height: 1.5; }
+.hero-agent-list { grid-column: 1 / -1; margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+.hero-agent-list li { position: relative; padding-left: 20px; font-size: 12.5px; line-height: 1.4; color: color-mix(in srgb, var(--branco) 84%, transparent); }
+.hero-agent-list li::before { content: ""; position: absolute; left: 2px; top: 5px; width: 8px; height: 8px; border-radius: 2px; background: color-mix(in oklab, var(--ciano) 70%, white); opacity: 0.85; }
+.hero-agent-example { grid-column: 1 / -1; margin-top: 6px; padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); font-size: 12.5px; color: color-mix(in srgb, var(--branco) 80%, transparent); }
+.hero-agent-example b { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 600; color: color-mix(in oklab, var(--ciano) 74%, white); }
+@media (max-width: 1100px) and (min-width: 861px) {
+  .hero-photo .hero-copy { width: min(58%, 560px); }
+  .hero-agent { width: 300px; }
+}
+@media (max-width: 860px) {
+  .hero-agent { width: 100%; }
+}
+
+/* Microcopy de limite abaixo de CTAs em fundo claro */
+.cta-limit { margin: 12px 0 0; font-size: 13px; line-height: 1.5; color: var(--text-secondary); max-width: 60ch; }
+
+/* 02 - Contador 2027 */
+.cd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.cd-copy h2 { font-size: clamp(30px, 3.6vw, 48px); line-height: 1.06; margin-top: 18px; }
+.cd-copy .eyebrow { margin-bottom: 0; }
+.cd-text { margin-top: 18px; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-body); max-width: 50ch; }
+.cd-box {
+  padding: 28px; border-radius: var(--r-xl);
+  background: var(--azul-profundo); color: var(--claro-escuro);
+  box-shadow: var(--shadow-dark);
+}
+.cd-clock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.cd-unit {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 18px 6px 14px; border-radius: var(--r-md);
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border-on-dark);
+}
+.cd-num {
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 44px); line-height: 1; letter-spacing: -0.02em; color: var(--branco);
+}
+.cd-unit:first-child .cd-num { color: color-mix(in oklab, var(--ciano) 78%, white); }
+.cd-lbl { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--claro-escuro) 66%, transparent); }
+.cd-target { margin: 18px 0 0; font-size: 14px; line-height: 1.45; color: color-mix(in srgb, var(--branco) 84%, transparent); }
+.cd-target b { font-family: var(--font-mono); font-weight: 600; color: var(--branco); }
+.cd-src { display: block; margin-top: 6px; font-size: 11px; color: color-mix(in srgb, var(--claro-escuro) 55%, transparent); }
+ol.urg3-marcos { list-style: none; padding: 0; margin-bottom: 0; }
+@media (max-width: 900px) { .cd-grid { grid-template-columns: 1fr; gap: 28px; } }
+@media (max-width: 420px) {
+  .cd-box { padding: 20px 16px; }
+  .cd-clock { gap: 6px; }
+  .cd-unit { padding: 14px 2px 12px; }
+  .cd-lbl { font-size: 9.5px; letter-spacing: 0.06em; }
+}
+
+/* 03 - Gancho de credito */
+.hook-lead { margin-top: 20px; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-body); max-width: 62ch; }
+.hook-punch { margin-top: 14px; font-size: 17px; font-weight: 600; line-height: 1.45; color: var(--text-primary); max-width: 62ch; }
+#credito .section-head { margin-bottom: 40px; }
+#credito .prob-grid { margin-top: 0; }
+.hook-src { display: block; margin-top: 18px; font-size: 11.5px; color: var(--text-secondary); }
+
+/* 04 - Secao unificada: dor, risco, como ajuda, exemplo */
+.pt-steps { margin: 16px 0 0; display: grid; gap: 12px; max-width: 50ch; }
+.pt-step { padding-left: 14px; border-left: 2px solid var(--border-on-light-strong); }
+.pt-step-risk { border-left-color: color-mix(in srgb, var(--risco-terracota) 55%, transparent); }
+.pt-step dt { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
+.pt-step-risk dt { color: var(--risco-terracota); }
+.pt-step dd { margin: 4px 0 0; font-size: 15px; line-height: 1.55; color: var(--text-body); }
+.ptab-panel .pt-metric { line-height: 1.5; }
+.pt-metric-tag { display: inline-block; margin-right: 6px; padding: 2px 8px; border-radius: var(--r-pill); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); background: var(--cinza-claro); vertical-align: 1px; }
+@media (max-width: 560px) {
+  .mini-row { grid-template-columns: 1fr auto; }
+  .mini-row > span:not(.mini-badge) { grid-column: 1 / 2; grid-row: 2; font-size: 12px; color: var(--text-secondary); margin-top: -6px; }
+  .mini-row .mini-badge { grid-column: 2; grid-row: 1 / 3; }
+}
+
+/* Tabela comparativa: cinco colunas */
+.cmp-table { min-width: 620px; }
+
+/* 08 - Diagnostico gratuito e limitado */
+.diag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.diag-card { padding: 28px; border-radius: var(--r-lg); background: var(--surface-page); border: 1px solid var(--border-on-light); }
+.diag-in { border-color: color-mix(in srgb, var(--ciano) 40%, var(--border-on-light)); box-shadow: var(--shadow-card); }
+.diag-card h3 { font-size: 18px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.diag-card h3 span { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); }
+.diag-card ul { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.diag-card li { position: relative; padding-left: 28px; font-size: 15px; line-height: 1.45; color: var(--text-body); }
+.diag-card li::before { position: absolute; left: 0; top: 1px; width: 18px; height: 18px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.diag-in li::before { content: "✓"; color: var(--azul-profundo); background: color-mix(in oklab, var(--ciano) 22%, white); border: 1px solid color-mix(in oklab, var(--ciano) 45%, transparent); }
+.diag-out li { color: var(--text-secondary); }
+.diag-out li::before { content: "–"; color: var(--text-secondary); background: var(--cinza-claro); border: 1px solid var(--border-on-light); }
+#diagnostico .section-head, #planos .section-head { margin-bottom: 40px; }
+@media (max-width: 760px) { .diag-grid { grid-template-columns: 1fr; } .diag-card { padding: 22px; } }
+
+/* 08b - Planos */
+.plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.plan-card { display: flex; flex-direction: column; padding: 28px 26px; border-radius: var(--r-lg); background: var(--surface-page); border: 1px solid var(--border-on-light); }
+.plan-hl { border-color: color-mix(in srgb, var(--ciano) 45%, var(--border-on-light)); box-shadow: var(--shadow-card); }
+.plan-card h3 { font-size: 20px; }
+.plan-para { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: var(--text-secondary); min-height: 3em; }
+.plan-card ul { margin: 18px 0 22px; padding: 0; list-style: none; display: grid; gap: 9px; }
+.plan-card li { position: relative; padding-left: 20px; font-size: 14.5px; line-height: 1.45; color: var(--text-body); }
+.plan-card li::before { content: ""; position: absolute; left: 0; top: 7px; width: 8px; height: 8px; border-radius: 2px; background: color-mix(in oklab, var(--ciano) 40%, var(--azul-profundo)); }
+.plan-valor { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-on-light); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.plan-note { margin-top: 20px; font-size: 14px; line-height: 1.5; color: var(--text-secondary); max-width: 70ch; }
+@media (max-width: 900px) { .plan-grid { grid-template-columns: 1fr; } .plan-para { min-height: 0; } }
+
+/* 09 - Confianca: nota de certificado e papel da IA */
+.trust-note { position: relative; z-index: 1; margin-top: 32px; max-width: 72ch; font-size: 14px; line-height: 1.6; color: color-mix(in srgb, var(--branco) 72%, transparent); }
+
+/* 10 - Formulario: campo opcional */
+.f-opt { font-weight: 400; color: var(--text-secondary); }
+
+/* Sticky CTA: microcopy do limite */
+.sticky-note { display: block; margin-top: 6px; text-align: center; font-size: 11.5px; color: color-mix(in srgb, var(--branco) 70%, transparent); }
+/* Mobile: com o sticky CTA visivel, o botao de WhatsApp sobe para nao cobrir o CTA */
+@media (max-width: 860px) {
+  .wa-float { transition: transform .2s ease, box-shadow .2s ease, bottom .25s ease; }
+  body:has(#sticky-cta.show) .wa-float { bottom: calc(104px + env(safe-area-inset-bottom)); }
+}
