@@ -444,7 +444,10 @@
    limitado. Mesmo design system: navy base, ciano so de acento.
    ========================================================= */
 
-/* Hero enxuto: copy curta, nada sobre a area das pessoas */
+/* Hero enxuto: headline curta em escala maior, nada sobre a area das pessoas */
+.hero-photo h1 { font-size: clamp(42px, 4.6vw, 68px); line-height: 1.04; }
+@media (min-width: 861px) { .hero-photo .hero-copy { width: min(52%, 660px); } }
+.hero-photo .hero-sub { max-width: 500px; }
 .hero-photo .hero-cta-note { margin-top: 14px; font-size: 13.5px; }
 .hero-photo .hero-cta-row .btn-lg { padding: 18px 24px; }
 
