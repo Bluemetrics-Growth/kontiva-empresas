@@ -1,0 +1,44 @@
+---
+// 06 - Dor 2: Gestao de compras (PRD 6.4). Copy canonica. Visual novo:
+// comparativo de duas propostas, mesmo preco bruto e custo liquido diferente
+// (numeros ilustrativos, com selo). Selo ilustrativo obrigatorio.
+import { seloExemplo } from "../../content/facts";
+---
+<section class="bg-dark grain pain" aria-labelledby="dor2-h">
+  <div class="shell">
+    <span class="pain-num" aria-hidden="true">02</span>
+    <div class="pain-grid">
+      <div class="pain-copy reveal">
+        <div class="pain-kicker">Dor 02 · Compras</div>
+        <h2 class="pain-h2" id="dor2-h">Duas propostas de R$ 10 mil deixaram de custar a mesma coisa.</h2>
+        <p class="pain-fato">Se um fornecedor gera R$ 1.500 de crédito e o outro gera R$ 500, o preço escrito na proposta é idêntico e o custo líquido não é. Fornecedor do Simples Nacional transfere apenas o crédito correspondente ao efetivamente devido, bem abaixo do que muita empresa credita hoje. Compra deixou de ser decisão de compras. Virou decisão fiscal.</p>
+        <p class="pain-cons">Pior: dentro de um mesmo grupo econômico, uma empresa pode estar regular e outra, com o mesmo dono, acumular pendências. Comprar da filial errada faz você perder crédito sem perceber. Cadastro de fornecedor desatualizado hoje é crédito perdido em janeiro.</p>
+        <p class="pain-risco">Ninguém no seu time de compras tem hoje uma tela que mostre o custo líquido depois do crédito. A negociação continua sendo feita pelo preço bruto.</p>
+        <div class="pain-solucao">
+          <div class="pain-solucao-label">O que o Kontiva faz</div>
+          <p>Calcula o custo real por fornecedor depois do crédito, ranqueia a base de compras por risco e mostra onde trocar de fornecedor vale mais do que negociar desconto. No interestadual, ainda cuida do DIFAL.</p>
+        </div>
+      </div>
+
+      <div class="pain-visual reveal delay-1">
+        <div class="compare" aria-hidden="true">
+          <div class="compare-col win">
+            <div class="compare-name">Fornecedor A</div>
+            <div class="compare-tag">gera mais crédito</div>
+            <div class="compare-line"><span>Preço bruto</span><b>R$ 10.000</b></div>
+            <div class="compare-line"><span>Crédito de IBS/CBS</span><b>R$ 1.500</b></div>
+            <div class="compare-final"><div class="compare-line"><span>Custo líquido</span><b>R$ 8.500</b></div></div>
+          </div>
+          <div class="compare-col">
+            <div class="compare-name">Fornecedor B</div>
+            <div class="compare-tag">Simples, crédito menor</div>
+            <div class="compare-line"><span>Preço bruto</span><b>R$ 10.000</b></div>
+            <div class="compare-line"><span>Crédito de IBS/CBS</span><b>R$ 500</b></div>
+            <div class="compare-final"><div class="compare-line"><span>Custo líquido</span><b>R$ 9.500</b></div></div>
+          </div>
+        </div>
+        <small class="selo">{seloExemplo}</small>
+      </div>
+    </div>
+  </div>
+</section>

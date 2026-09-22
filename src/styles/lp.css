@@ -141,3 +141,175 @@
 /* Cap de altura do hero: PRD 7.2 e criterio de aceite pedem no maximo 88vh no
    desktop (escritorios usa 92vh). Override final para respeitar o limite. */
 .hero.hero-photo { min-height: clamp(600px, 88vh, 840px); }
+
+/* =========================================================
+   FASE 2 - O RELOGIO, BLOCO DE PRESSAO E OS 5 BLOCOS DE DOR
+   PRD 6.2 a 6.4 e spec visual 7.3.
+   ========================================================= */
+
+/* Tokens de risco (ambar/terracota, nunca vermelho puro de erro) */
+:root {
+  --risco-amber: #E0894A;
+  --risco-terracota: #C23A1F;
+}
+
+/* --- O relogio: timeline (03) --- */
+.relogio-intro { max-width: 60ch; margin-top: 18px; }
+.timeline {
+  margin-top: 48px; display: grid; gap: 20px;
+  grid-template-columns: repeat(7, 1fr);
+  list-style: none; padding: 0;
+}
+.tl-item {
+  position: relative; padding-top: 26px;
+  border-top: 2px solid var(--border-on-light-strong);
+}
+.tl-item::before {
+  content: ""; position: absolute; top: -7px; left: 0;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--ciano); box-shadow: 0 0 0 4px color-mix(in oklab, var(--ciano) 18%, transparent);
+}
+.tl-periodo {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.06em; color: color-mix(in oklab, var(--ciano) 62%, var(--cinza-escuro));
+}
+.tl-titulo { font-weight: 700; font-size: 16px; margin: 6px 0 8px; color: var(--text-primary); }
+.tl-texto { font-size: 13.5px; line-height: 1.5; color: var(--text-body); }
+.tl-fonte { display: block; margin-top: 10px; font-size: 11px; color: var(--text-secondary); }
+.relogio-close { margin-top: 44px; max-width: 40ch; font-size: var(--fs-h3); line-height: 1.25; font-weight: 500; }
+@media (max-width: 900px) {
+  .timeline { grid-template-columns: 1fr; gap: 0; }
+  .tl-item {
+    border-top: none; border-left: 2px solid var(--border-on-light-strong);
+    padding: 0 0 26px 22px; margin-left: 4px;
+  }
+  .tl-item::before { top: 2px; left: -7px; }
+}
+
+/* --- Bloco de pressao (04) --- */
+.pressao-nums {
+  margin-top: 44px; display: grid; gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+}
+.pressao-card {
+  padding: 30px 28px; border-radius: var(--r-lg);
+  background: color-mix(in srgb, var(--branco) 5%, transparent);
+  border: 1px solid var(--border-on-dark);
+}
+.pressao-num {
+  font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em;
+  font-size: clamp(44px, 6vw, 76px); line-height: 1;
+  color: color-mix(in oklab, var(--ciano) 76%, white);
+  font-variant-numeric: tabular-nums;
+}
+.pressao-label { margin-top: 14px; font-size: 15px; line-height: 1.5; color: var(--text-on-dark); }
+.pressao-fonte { display: block; margin-top: 14px; font-size: 11.5px; color: color-mix(in srgb, var(--claro-escuro) 62%, transparent); }
+.pressao-close { margin-top: 40px; max-width: 52ch; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-on-dark); }
+@media (max-width: 900px) { .pressao-nums { grid-template-columns: 1fr; } }
+
+/* --- Os 5 blocos de dor (05 a 09) --- */
+.pain { position: relative; overflow: hidden; }
+.pain-grid {
+  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: start;
+  position: relative; z-index: 1;
+}
+.pain-num {
+  position: absolute; top: -18px; right: 0; z-index: 0;
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(120px, 18vw, 220px);
+  line-height: 1; letter-spacing: -0.04em;
+  color: color-mix(in srgb, var(--ciano) 7%, transparent);
+  pointer-events: none; user-select: none;
+}
+.pain-kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: color-mix(in oklab, var(--ciano) 62%, var(--claro-escuro));
+}
+.pain-h2 {
+  margin: 18px 0 22px; max-width: 22ch;
+  font-size: clamp(28px, 3.6vw, 46px); line-height: 1.08; letter-spacing: -0.02em;
+  color: var(--branco);
+}
+.pain-fato, .pain-cons {
+  font-size: var(--fs-lead); line-height: 1.55;
+  color: color-mix(in srgb, var(--branco) 84%, transparent); margin: 0 0 18px;
+}
+.pain-risco {
+  margin: 22px 0 0; padding: 16px 20px;
+  border-left: 3px solid var(--risco-amber);
+  background: color-mix(in srgb, var(--risco-terracota) 12%, transparent);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  font-weight: 500; font-style: italic; line-height: 1.5;
+  color: color-mix(in srgb, var(--branco) 90%, transparent);
+}
+/* "O que o Kontiva faz": visualmente subordinado, em claro (alivio) */
+.pain-solucao {
+  margin-top: 28px; padding: 22px 24px; border-radius: var(--r-md);
+  background: var(--branco); border: 1px solid var(--border-on-light);
+}
+.pain-solucao-label {
+  font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary);
+}
+.pain-solucao p { margin: 8px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--text-body); }
+.pain-visual { position: relative; }
+
+/* Comparativo de duas propostas (Dor 2) */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.compare-col {
+  background: var(--branco); border: 1px solid var(--border-on-light);
+  border-radius: var(--r-md); padding: 18px 18px 20px;
+}
+.compare-col.win { border-color: color-mix(in oklab, var(--ciano) 45%, transparent); box-shadow: var(--shadow-glow); }
+.compare-name { font-weight: 600; font-size: 13px; color: var(--text-primary); }
+.compare-tag { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-secondary); }
+.compare-line { display: flex; justify-content: space-between; align-items: baseline; margin-top: 12px; font-size: 13px; color: var(--text-body); }
+.compare-line b { font-weight: 600; color: var(--text-primary); }
+.compare-final { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border-on-light-strong); }
+.compare-final .compare-line { font-size: 14px; }
+.compare-final b { font-size: 22px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.compare-col.win .compare-final b { color: color-mix(in oklab, var(--ciano) 30%, var(--azul-profundo)); }
+
+/* Mini telas de produto dos blocos de dor (leves, tagueadas) */
+.mini {
+  background: var(--branco); border: 1px solid var(--border-on-light);
+  border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-card);
+}
+.mini-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-bottom: 1px solid var(--border-on-light);
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--text-primary);
+}
+.mini-live { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; color: color-mix(in oklab, var(--ciano) 40%, var(--azul-profundo)); }
+.mini-body { padding: 8px 0; }
+.mini-row {
+  display: grid; grid-template-columns: 1.4fr 1fr auto; gap: 10px; align-items: center;
+  padding: 11px 16px; font-size: 13px; color: var(--text-body); border-top: 1px solid var(--border-on-light);
+}
+.mini-row:first-child { border-top: none; }
+.mini-row b { color: var(--text-primary); font-weight: 600; }
+.mini-badge {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+  padding: 3px 9px; border-radius: var(--r-pill); white-space: nowrap;
+}
+.mini-badge.ok { color: #0F7A3D; background: color-mix(in srgb, var(--positivo) 12%, transparent); }
+.mini-badge.risk { color: var(--risco-terracota); background: color-mix(in srgb, var(--risco-terracota) 12%, transparent); }
+.mini-badge.neutral { color: var(--text-secondary); background: var(--cinza-claro); }
+.mini-toggle {
+  display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--border-on-light);
+  font-size: 12.5px; color: var(--text-body); align-items: center;
+}
+.mini-toggle .sw { width: 34px; height: 20px; border-radius: 99px; background: color-mix(in oklab, var(--ciano) 40%, var(--cinza-claro)); position: relative; flex: none; }
+.mini-toggle .sw::after { content: ""; position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--branco); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+.selo {
+  display: block; margin-top: 10px; font-size: 11px;
+  color: color-mix(in srgb, var(--claro-escuro) 60%, transparent);
+}
+.pain .selo { color: color-mix(in srgb, var(--branco) 55%, transparent); }
+
+@media (max-width: 900px) {
+  .pain-grid { grid-template-columns: 1fr; gap: 34px; }
+  .pain-num { font-size: 120px; top: -8px; }
+  .compare { grid-template-columns: 1fr; }
+}

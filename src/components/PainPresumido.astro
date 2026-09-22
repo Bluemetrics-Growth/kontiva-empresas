@@ -1,0 +1,39 @@
+---
+// 08 - Dor 4: Lucro Presumido (PRD 6.4). Copy canonica. Os numeros (3,65%,
+// 9,2% e o caso da Secretaria de Financas de Rondonia) vem de content/facts.ts,
+// com a fonte visivel. Visual: mini simulacao em massa com peso no Presumido.
+import { facts, seloExemplo } from "../../content/facts";
+const f = facts;
+---
+<section class="bg-dark grain pain" aria-labelledby="dor4-h">
+  <div class="shell">
+    <span class="pain-num" aria-hidden="true">04</span>
+    <div class="pain-grid">
+      <div class="pain-copy reveal">
+        <div class="pain-kicker">Dor 04 · Regime</div>
+        <h2 class="pain-h2" id="dor4-h">Se a sua empresa está no Presumido, a conta pode mais que dobrar.</h2>
+        <p class="pain-fato">Hoje, no Lucro Presumido, PIS e Cofins somam {f.pisCofinsPresumido.value} sobre a receita bruta, no regime cumulativo, sem direito a crédito. Em 2027 os dois somem e entra a CBS, não cumulativa, com alíquota de referência estimada em torno de {f.cbsEstimadaPresumido.value}. Na teoria, você desconta crédito. Na prática, se o seu maior custo é folha de pagamento, não há o que descontar: salário não gera crédito de CBS nem de IBS.</p>
+        <p class="pain-cons">Em um caso divulgado pela Secretaria de Finanças de Rondônia, uma consultoria de tecnologia no Presumido, com {f.casoRondoniaFaturamento.value} de faturamento, sai de {f.casoRondoniaHoje.value} de PIS e Cofins hoje para uma projeção de {f.casoRondoniaProjecao.value} de CBS em 2027. São {f.casoRondoniaAumento.value} por ano que eram lucro ou capital de giro. Serviços intensivos em mão de obra, consultoria, marketing e tecnologia estão no centro disso.</p>
+        <small class="pressao-fonte" style="color:color-mix(in srgb, var(--claro-escuro) 60%, transparent);">Fonte: {f.casoRondoniaProjecao.source}. {f.casoRondoniaProjecao.caveat}</small>
+        <p class="pain-risco">E tem o segundo golpe, que quase ninguém comenta: o Presumido perde a apuração simplificada dos tributos indiretos. O regime que você escolheu para ser simples fica caro e complexo ao mesmo tempo.</p>
+        <div class="pain-solucao">
+          <div class="pain-solucao-label">O que o Kontiva faz</div>
+          <p>Simula a sua operação inteira, unidade a unidade, entre regimes e ao longo dos anos, de 2026 a 2033. Mostra em quais CNPJs migrar compensa, em quais o repasse de preço resolve e em quais a conta não fecha de jeito nenhum. Ranqueado por impacto no caixa, com o cenário pronto para levar ao board.</p>
+        </div>
+      </div>
+
+      <div class="pain-visual reveal delay-1">
+        <div class="mini" aria-hidden="true">
+          <div class="mini-head">Simulação por unidade <span class="mini-live">Ranqueado por impacto</span></div>
+          <div class="mini-body">
+            <div class="mini-row"><b>Meridiano Consultoria</b><span>Presumido</span><span class="mini-badge risk">Impacto alto</span></div>
+            <div class="mini-row"><b>Meridiano Tech</b><span>Presumido</span><span class="mini-badge risk">Impacto alto</span></div>
+            <div class="mini-row"><b>Meridiano Indústria</b><span>Lucro Real</span><span class="mini-badge neutral">Impacto médio</span></div>
+            <div class="mini-row"><b>Meridiano Serviços</b><span>Simples</span><span class="mini-badge ok">Impacto baixo</span></div>
+          </div>
+        </div>
+        <small class="selo">{seloExemplo}</small>
+      </div>
+    </div>
+  </div>
+</section>

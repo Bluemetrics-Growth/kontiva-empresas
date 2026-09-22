@@ -1,0 +1,38 @@
+---
+// 09 - Dor 5: Caixa (PRD 6.4). Copy canonica. O prazo "ate 60 dias" vem de
+// content/facts.ts. Visual: mini tela de Fluxo de caixa com o toggle novo
+// "Comparar: guia tradicional x split payment" (PRD 6.4). Selo ilustrativo.
+import { facts, seloExemplo } from "../../content/facts";
+const dias = facts.ate60Dias.value;
+---
+<section class="bg-dark grain pain" aria-labelledby="dor5-h">
+  <div class="shell">
+    <span class="pain-num" aria-hidden="true">05</span>
+    <div class="pain-grid">
+      <div class="pain-copy reveal">
+        <div class="pain-kicker">Dor 05 · Caixa</div>
+        <h2 class="pain-h2" id="dor5-h">O float tributário acabou. Os dois caminhos de 2027 levam ao mesmo lugar.</h2>
+        <p class="pain-fato">Hoje você vende, recebe e recolhe depois. Esse intervalo financia a sua operação em silêncio. Em 2027, esse colchão some por um de dois caminhos. Na guia tradicional, o crédito pode levar {dias} para ser processado e voltar. No split payment, o imposto sai na liquidação da venda e você recebe o valor já líquido.</p>
+        <p class="pain-cons">Nenhum dos dois caminhos devolve o float. Empresa com venda a prazo, margem apertada ou ciclo de estoque longo sente primeiro. E a necessidade de capital de giro sobe justamente no ano em que a alíquota ainda não está fechada.</p>
+        <p class="pain-risco">Quando o seu financeiro descobrir o tamanho do buraco, o orçamento de 2027 já vai estar aprovado.</p>
+        <div class="pain-solucao">
+          <div class="pain-solucao-label">O que o Kontiva faz</div>
+          <p>Projeta o caixa mês a mês nos dois cenários, com e sem split, por unidade, e entrega o relatório pronto para a diretoria. Dá para levar o número antes de ele acontecer.</p>
+        </div>
+      </div>
+
+      <div class="pain-visual reveal delay-1">
+        <div class="mini" aria-hidden="true">
+          <div class="mini-head">Fluxo de caixa <span class="mini-live">Projeção mês a mês</span></div>
+          <div class="mini-body">
+            <div class="mini-row"><b>Guia tradicional</b><span>crédito volta em até 60 dias</span><span class="mini-badge risk">Capital preso</span></div>
+            <div class="mini-row"><b>Split payment</b><span>recebe já líquido</span><span class="mini-badge risk">Sem float</span></div>
+            <div class="mini-row"><b>Necessidade de capital de giro</b><span>sobe em 2027</span><span class="mini-badge neutral">Projetada</span></div>
+          </div>
+          <div class="mini-toggle"><span class="sw"></span> Comparar: guia tradicional × split payment</div>
+        </div>
+        <small class="selo">{seloExemplo}</small>
+      </div>
+    </div>
+  </div>
+</section>
