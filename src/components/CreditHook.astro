@@ -1,11 +1,43 @@
 ---
-// 03 - Gancho regulatorio (PRD revisao, secoes 4.2 e 5.4). Logo apos o
-// contador: o credito passa a depender do recolhimento do fornecedor.
-const cards = [
-  { k: "Fornecedor", t: "Recolhimento sem confirmação", d: "O crédito fica em risco até alguém checar.", ico: '<path d="M3 6h11v9H3z"/><path d="M14 9h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>' },
-  { k: "Compras", t: "Preço bruto menor", d: "Pode sair mais caro depois do crédito.", ico: '<path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/>' },
-  { k: "Pagamento", t: "Pagamento sem proteção", d: "Em algumas operações, split ou RAD protegem o crédito.", ico: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 14h4"/>' },
-  { k: "Caixa", t: "Crédito travado", d: "O capital de giro fica menos previsível.", ico: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>' },
+// 03 - Gancho regulatorio em forma de esquema. Mostra o circuito do credito
+// de IBS/CBS em quatro etapas (compra, pagamento, recolhimento, credito), o
+// ponto de risco de cada etapa e onde a Kontiva atua. Desktop: fluxo
+// horizontal com faixa da Kontiva embaixo. Mobile: fluxo vertical.
+const etapas = [
+  {
+    n: "01",
+    titulo: "Compra",
+    texto: "O fornecedor vende e emite a nota.",
+    ico: '<path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/>',
+    risco: { k: "Compras", t: "Preço bruto menor", d: "Pode sair mais caro depois do crédito." },
+    kontiva: "Compara fornecedores pelo custo real.",
+  },
+  {
+    n: "02",
+    titulo: "Pagamento",
+    texto: "Sua empresa paga pela guia tradicional, split ou RAD.",
+    ico: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 14h4"/>',
+    risco: { k: "Pagamento", t: "Pagamento sem proteção", d: "Em algumas operações, split ou RAD protegem o crédito." },
+    kontiva: "Simula cada forma de pagamento.",
+  },
+  {
+    n: "03",
+    titulo: "Recolhimento",
+    texto: "O fornecedor recolhe IBS/CBS, e isso precisa ser confirmado.",
+    ico: '<path d="M3 6h11v9H3z"/><path d="M14 9h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>',
+    risco: { k: "Fornecedor", t: "Recolhimento sem confirmação", d: "O crédito fica em risco até alguém checar." },
+    kontiva: "Monitora o recolhimento de cada fornecedor.",
+    fora: true,
+  },
+  {
+    n: "04",
+    titulo: "Crédito",
+    texto: "O crédito é liberado e volta para o caixa.",
+    ico: '<path d="M12 3v18M17 7.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 2.2 2.8 5 3.5 5 1.6 5 3.5-2.2 3-5 3-5-1.1-5-3"/>',
+    risco: { k: "Caixa", t: "Crédito travado", d: "O capital de giro fica menos previsível." },
+    kontiva: "Projeta o efeito no caixa, mês a mês.",
+    depende: "Só com a etapa 03 confirmada",
+  },
 ];
 ---
 <section class="bg-alt" id="credito" aria-labelledby="hook-h">
@@ -13,20 +45,43 @@ const cards = [
     <div class="section-head reveal">
       <div class="eyebrow"><span class="dot-cyan"></span> A nova lógica do crédito</div>
       <h2 id="hook-h">Seu crédito depende do recolhimento do seu <span class="serif-accent">fornecedor</span>.</h2>
-      <p class="hook-lead">Com IBS e CBS, uma compra com nota correta ainda pode deixar de gerar crédito se o fornecedor não recolher. A decisão sai do fiscal e passa por compras, pagamento e caixa.</p>
+      <p class="hook-lead">Com IBS e CBS, a nota correta não basta. O crédito só chega ao caixa se cada etapa abaixo fechar, e uma delas está nas mãos de quem vende para você.</p>
     </div>
-    <div class="prob-grid">
-      {cards.map((c, i) => (
-        <article class={`prob-card reveal delay-${i % 3}`}>
-          <span class="prob-ico" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={c.ico} />
-          </span>
-          <div class="prob-kicker">{c.k}</div>
-          <h3 class="prob-title">{c.t}</h3>
-          <p class="prob-desc">{c.d}</p>
-        </article>
+
+    <div class="flow-legend reveal" aria-hidden="true">
+      <span><i class="lg-step"></i> Etapa do crédito</span>
+      <span><i class="lg-risk"></i> Ponto de risco</span>
+      <span><i class="lg-k"></i> Onde a Kontiva atua</span>
+    </div>
+
+    <div class="flow reveal delay-1" role="list" aria-label="Circuito do crédito de IBS/CBS">
+      {etapas.map((e) => (
+        <div class="flow-step" role="listitem">
+          <div class={`flow-node${e.fora ? " is-fora" : ""}`}>
+            <div class="fn-top">
+              <span class="fn-ico" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={e.ico} />
+              </span>
+              <span class="fn-n">Etapa {e.n}</span>
+            </div>
+            <h3>{e.titulo}</h3>
+            <p>{e.texto}</p>
+            {e.fora && <span class="fn-tag">Depende do fornecedor</span>}
+            {e.depende && <span class="fn-tag fn-tag-dep">{e.depende}</span>}
+          </div>
+          <div class="flow-risk">
+            <span class="fr-k">Risco · {e.risco.k}</span>
+            <strong>{e.risco.t}</strong>
+            <p>{e.risco.d}</p>
+          </div>
+          <div class="flow-k">
+            <span class="fk-lbl">Kontiva</span>
+            <p>{e.kontiva}</p>
+          </div>
+        </div>
       ))}
     </div>
+
     <small class="hook-src reveal">Nova lógica de crédito de IBS/CBS. Fonte: LC 214/2025.</small>
   </div>
 </section>
