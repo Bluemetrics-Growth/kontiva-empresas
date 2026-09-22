@@ -1,0 +1,62 @@
+---
+// 05 - Telas reais do sistema. Capturas do Kontiva em uso, com dados de
+// demonstracao. Recortadas na area de conteudo (sem barra lateral nem
+// usuario logado) e com nomes de fornecedores pixelados.
+const telas = [
+  {
+    id: "fornecedores",
+    w: 1145, h: 575,
+    url: "app.kontiva.ai/fornecedores",
+    titulo: "Fornecedores",
+    legenda: "Cada fornecedor com regime, ramo (CNAE) e situação de crédito de IBS/CBS.",
+    alt: "Tela de fornecedores do Kontiva com indicadores de ativos, sem regime e crédito presumido, e a lista de fornecedores com regime, ramo e situação de crédito de IBS/CBS. Nomes ocultados.",
+  },
+  {
+    id: "nova-simulacao",
+    w: 466, h: 590,
+    url: "app.kontiva.ai/simulacoes",
+    titulo: "Nova simulação",
+    legenda: "Um cenário por ano e por regime tributário, montado em poucos campos.",
+    alt: "Formulário de nova simulação do Kontiva com empresa, nome da simulação, ano do cenário e regime tributário Lucro Presumido.",
+  },
+  {
+    id: "cronograma",
+    w: 626, h: 592,
+    url: "app.kontiva.ai/simulacoes/cronograma",
+    titulo: "Cronograma da reforma",
+    legenda: "As alíquotas de IBS, CBS e ICMS/ISS que o cálculo usa em cada ano, até 2033.",
+    alt: "Tabela do cronograma da reforma no Kontiva com as alíquotas de IBS, CBS e a fração de ICMS/ISS cobrada de 2026 a 2033.",
+  },
+];
+const [destaque, ...demais] = telas;
+---
+<section class="bg-alt" id="telas" aria-labelledby="telas-h">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="dot-cyan"></span> Telas reais</div>
+      <h2 id="telas-h">A Kontiva por <span class="serif-accent">dentro</span>.</h2>
+      <p class="urg3-copy">Capturas do sistema em funcionamento, com dados de demonstração. É isso que você vê na demo, rodando com a sua empresa.</p>
+    </div>
+
+    <div class="scr-grid">
+      {[destaque, ...demais].map((t, i) => (
+        <figure class={`scr reveal delay-${i % 3}${i === 0 ? " scr-wide" : ""}`}>
+          <div class="scr-frame">
+            <div class="scr-bar" aria-hidden="true">
+              <span class="scr-dots"><i></i><i></i><i></i></span>
+              <span class="scr-url">{t.url}</span>
+            </div>
+            <a href={`/images/telas/${t.id}.webp`} target="_blank" rel="noopener" class="scr-img" aria-label={`Abrir a tela ${t.titulo} em tamanho real`}>
+              <picture>
+                <source srcset={`/images/telas/${t.id}.webp`} type="image/webp" />
+                <img src={`/images/telas/${t.id}.jpg`} width={t.w} height={t.h} alt={t.alt} loading="lazy" decoding="async" style={`max-width:${t.w}px`} />
+              </picture>
+            </a>
+          </div>
+          <figcaption><b>{t.titulo}.</b> {t.legenda}{i === 0 && <span class="scr-hint"> Arraste para ver a tela inteira.</span>}</figcaption>
+        </figure>
+      ))}
+    </div>
+    <small class="scr-note reveal">Telas reais do Kontiva · dados de demonstração · nomes de fornecedores ocultados.</small>
+  </div>
+</section>
