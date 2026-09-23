@@ -216,15 +216,20 @@ export const slides: Slide[] = [
 
 export type Celula = "yes" | "no" | "part";
 export const comparativo = {
-  cols: ["Responde dúvidas", "Simula cenários", "Monitora fornecedores", "Opera todo mês"],
-  rows: [
-    { name: "Chatbot", cells: ["yes", "no", "no", "no"] as Celula[] },
-    { name: "Consultoria", cells: ["yes", "yes", "part", "no"] as Celula[] },
-    { name: "ERP", cells: ["part", "part", "part", "part"] as Celula[] },
-    { name: "Kontiva", cells: ["yes", "yes", "yes", "yes"] as Celula[], hl: true },
+  criterios: [
+    { k: "Responde dúvidas", curto: "Dúvidas" },
+    { k: "Simula cenários", curto: "Cenários" },
+    { k: "Monitora fornecedores", curto: "Fornec." },
+    { k: "Opera todo mês", curto: "Todo mês" },
   ],
+  solucoes: [
+    { name: "Chatbot", icon: "messageSquare", frase: "Responde quando você pergunta.", cells: ["yes", "no", "no", "no"] as Celula[] },
+    { name: "Consultoria", icon: "fileText", frase: "Entrega um relatório com data.", cells: ["yes", "yes", "part", "no"] as Celula[] },
+    { name: "ERP", icon: "database", frase: "Registra o que já aconteceu.", cells: ["part", "part", "part", "part"] as Celula[] },
+  ],
+  kontiva: { name: "Kontiva", frase: "Acompanha, simula e avisa, todo mês.", cells: ["yes", "yes", "yes", "yes"] as Celula[] },
   label: { yes: "Sim", no: "Não", part: "Parcial" } as Record<Celula, string>,
-};
+} as const;
 
 /* ---------- Demo gratuita ---------- */
 

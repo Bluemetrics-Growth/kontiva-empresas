@@ -1,0 +1,15 @@
+---
+// Marcador do comparativo: Sim (check em circulo preenchido), Parcial
+// (circulo meio preenchido) e Nao (X discreto). O texto fica em sr-only
+// para nao depender so de icone ou cor.
+import Icon from "./Icon.astro";
+import type { Celula } from "../../content/secoes";
+
+interface Props { v: Celula; label: string }
+const { v, label } = Astro.props;
+---
+<span class={`mk is-${v}`}>
+  {v === "yes" && <Icon name="check" size={14} />}
+  {v === "no" && <Icon name="x" size={15} />}
+  <span class="sr-only">{label}</span>
+</span>
