@@ -1,24 +1,51 @@
 ---
 // 09 - CTA + formulario da demo gratuita em duas etapas.
-// Etapa 1: Nome, E-mail corporativo, WhatsApp, Empresa, Site. Etapa 2: ERP,
-// CNPJs, Regime, Faturamento, Principal dor. Destino do lead inalterado: sem
-// FORM_ENDPOINT, o envio abre o WhatsApp com os dados preenchidos. Se um
-// endpoint (HubSpot) for configurado em FORM_ENDPOINT, o POST passa a valer
-// com os mesmos campos. Os atributos name sao os mesmos da versao anterior.
-import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
+// Etapa 1: Nome, E-mail corporativo (so dominio corporativo), WhatsApp, Cargo.
+// Etapa 2: Nome da empresa, Segmento, Faturamento anual, Regime tributario.
+// Destino do lead inalterado: sem FORM_ENDPOINT, o envio abre o WhatsApp com
+// os dados preenchidos. Se um endpoint (HubSpot) for configurado em
+// FORM_ENDPOINT, o POST envia o mesmo payload. Selects com value em slug e o
+// label amigavel na interface.
+import { WHATSAPP_NUM, WHATSAPP_MSG, DOMINIOS_PESSOAIS, ERRO_EMAIL_PESSOAL } from "../../content/site";
 
-const sistemas = ["SAP", "TOTVS", "Oracle", "Senior", "Planilhas", "Outro"];
-const regimes = ["Lucro Presumido", "Lucro Real", "Simples", "Não sei"];
-const faixas = ["até R$ 20M", "R$ 20M a R$ 80M", "R$ 80M a R$ 300M", "acima de R$ 300M"];
-// value fica igual ao anterior (CRM/GTM); so o texto visivel muda.
-const dores = [
-  { v: "Crédito", l: "Crédito" },
-  { v: "Fornecedor", l: "Fornecedores" },
-  { v: "Preço", l: "Preço e margem" },
-  { v: "Caixa", l: "Caixa" },
-  { v: "Notas", l: "Notas" },
-  { v: "Não sei", l: "Não sei" },
+const cargos = [
+  { v: "socio_ceo", l: "Sócio(a) ou CEO" },
+  { v: "cfo", l: "Diretor(a) financeiro(a) ou CFO" },
+  { v: "controller", l: "Controller" },
+  { v: "gerente_fiscal", l: "Gerente fiscal ou tributário" },
+  { v: "contador_interno", l: "Contador(a) interno(a)" },
+  { v: "compras", l: "Compras ou suprimentos" },
+  { v: "outro", l: "Outro" },
 ];
+const segmentos = [
+  { v: "industria", l: "Indústria" },
+  { v: "atacado_distribuicao", l: "Comércio atacadista e distribuição" },
+  { v: "varejo", l: "Comércio varejista" },
+  { v: "servicos", l: "Serviços" },
+  { v: "construcao_incorporacao", l: "Construção e incorporação" },
+  { v: "agronegocio", l: "Agronegócio" },
+  { v: "logistica_transporte", l: "Logística e transporte" },
+  { v: "saude", l: "Saúde" },
+  { v: "tecnologia", l: "Tecnologia" },
+  { v: "outro", l: "Outro" },
+];
+const faixas = [
+  { v: "ate_20m", l: "Até R$ 20 milhões" },
+  { v: "20m_80m", l: "R$ 20 a 80 milhões" },
+  { v: "80m_300m", l: "R$ 80 a 300 milhões" },
+  { v: "acima_300m", l: "Acima de R$ 300 milhões" },
+];
+const regimes = [
+  { v: "lucro_presumido", l: "Lucro Presumido" },
+  { v: "lucro_real", l: "Lucro Real" },
+  { v: "simples_nacional", l: "Simples Nacional" },
+  { v: "nao_sei", l: "Não sei" },
+];
+// label de cada value, para a mensagem de WhatsApp ficar legivel
+const LABELS = Object.fromEntries(
+  Object.entries({ cargo: cargos, segmento: segmentos, faturamento: faixas, regime: regimes })
+    .map(([k, list]) => [k, Object.fromEntries(list.map((o) => [o.v, o.l]))])
+);
 const ERR_SELECT = "Selecione uma opção.";
 ---
 <section class="final grain" id="agendar" aria-labelledby="final-h">
@@ -32,7 +59,7 @@ const ERR_SELECT = "Selecione uma opção.";
         <li class="setup-step"><span class="sn" aria-hidden="true">2</span><p>A gente monta o cenário com o seu regime e perfil.</p></li>
         <li class="setup-step"><span class="sn" aria-hidden="true">3</span><p>Na demo, você vê o resultado em reais. Depois decide.</p></li>
       </ol>
-      <p class="form-honesty">Demos assistidas em turmas limitadas pela capacidade do nosso time.</p>
+      <p class="form-honesty">Agenda de demos limitada à capacidade do nosso time.</p>
     </div>
 
     <div class="form-card" id="form-card">
@@ -48,7 +75,7 @@ const ERR_SELECT = "Selecione uma opção.";
             <p class="lf2-stepnote">Etapa 1 de 2, seus dados</p>
             <div class="f-field" data-field="nome">
               <label for="lf-nome">Nome</label>
-              <input id="lf-nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required aria-describedby="err-nome">
+              <input id="lf-nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required minlength="2" aria-describedby="err-nome">
               <div class="f-error" id="err-nome">Preencha este campo para continuar.</div>
             </div>
             <div class="f-field" data-field="email">
@@ -61,16 +88,13 @@ const ERR_SELECT = "Selecione uma opção.";
               <input id="lf-whats" name="whatsapp" type="tel" inputmode="tel" placeholder="(00) 00000-0000" autocomplete="tel" required aria-describedby="err-whats">
               <div class="f-error" id="err-whats">Número incompleto. Inclua o DDD.</div>
             </div>
-            <div class="f-row">
-              <div class="f-field" data-field="empresa">
-                <label for="lf-empresa">Empresa</label>
-                <input id="lf-empresa" name="empresa" type="text" placeholder="Nome da empresa" autocomplete="organization" required aria-describedby="err-empresa">
-                <div class="f-error" id="err-empresa">Informe o nome da empresa.</div>
-              </div>
-              <div class="f-field" data-field="site">
-                <label for="lf-site">Site da empresa <span class="f-opt">(opcional)</span></label>
-                <input id="lf-site" name="site" type="text" inputmode="url" placeholder="suaempresa.com.br" autocomplete="url">
-              </div>
+            <div class="f-field" data-field="cargo">
+              <label for="lf-cargo">Cargo</label>
+              <select id="lf-cargo" name="cargo" required aria-describedby="err-cargo">
+                <option value="">Selecione</option>
+                {cargos.map((o) => <option value={o.v}>{o.l}</option>)}
+              </select>
+              <div class="f-error" id="err-cargo">{ERR_SELECT}</div>
             </div>
             <button type="button" class="btn btn-primary btn-block btn-lg" id="lf-next" data-cta="form-next">Continuar</button>
           </div>
@@ -79,44 +103,34 @@ const ERR_SELECT = "Selecione uma opção.";
           <div class="f-step" id="step-2" data-step="2">
             <button type="button" class="lf2-back" id="lf-back">Voltar</button>
             <p class="lf2-stepnote">Etapa 2 de 2, usamos isso para montar o seu cenário</p>
-            <div class="f-field" data-field="sistema">
-              <label for="lf-sistema">Sistema / ERP</label>
-              <select id="lf-sistema" name="sistema" required aria-describedby="err-sistema">
-                <option value="">Selecione</option>
-                {sistemas.map((o) => <option>{o}</option>)}
-              </select>
-              <div class="f-error" id="err-sistema">{ERR_SELECT}</div>
+            <div class="f-field" data-field="empresa">
+              <label for="lf-empresa">Nome da empresa</label>
+              <input id="lf-empresa" name="empresa" type="text" placeholder="Nome da empresa" autocomplete="organization" required minlength="2" aria-describedby="err-empresa">
+              <div class="f-error" id="err-empresa">Informe o nome da empresa.</div>
             </div>
-            <div class="f-row">
-              <div class="f-field" data-field="carteira">
-                <label for="lf-carteira">Número de CNPJs</label>
-                <input id="lf-carteira" name="carteira" type="number" inputmode="numeric" min="1" step="1" placeholder="Ex: 22" required aria-describedby="err-carteira">
-                <div class="f-error" id="err-carteira">Informe um número maior que zero.</div>
-              </div>
-              <div class="f-field" data-field="regime">
-                <label for="lf-regime">Regime tributário</label>
-                <select id="lf-regime" name="regime" required aria-describedby="err-regime">
-                  <option value="">Selecione</option>
-                  {regimes.map((o) => <option>{o}</option>)}
-                </select>
-                <div class="f-error" id="err-regime">{ERR_SELECT}</div>
-              </div>
+            <div class="f-field" data-field="segmento">
+              <label for="lf-segmento">Segmento</label>
+              <select id="lf-segmento" name="segmento" required aria-describedby="err-segmento">
+                <option value="">Selecione</option>
+                {segmentos.map((o) => <option value={o.v}>{o.l}</option>)}
+              </select>
+              <div class="f-error" id="err-segmento">{ERR_SELECT}</div>
             </div>
             <div class="f-field" data-field="faturamento">
-              <label for="lf-faturamento">Faixa de faturamento</label>
+              <label for="lf-faturamento">Faturamento anual</label>
               <select id="lf-faturamento" name="faturamento" required aria-describedby="err-faturamento">
                 <option value="">Selecione</option>
-                {faixas.map((o) => <option>{o}</option>)}
+                {faixas.map((o) => <option value={o.v}>{o.l}</option>)}
               </select>
               <div class="f-error" id="err-faturamento">{ERR_SELECT}</div>
             </div>
-            <div class="f-field" data-field="dor">
-              <label for="lf-dor">Principal dor hoje</label>
-              <select id="lf-dor" name="dor" required aria-describedby="err-dor">
+            <div class="f-field" data-field="regime">
+              <label for="lf-regime">Regime tributário</label>
+              <select id="lf-regime" name="regime" required aria-describedby="err-regime">
                 <option value="">Selecione</option>
-                {dores.map((o) => <option value={o.v}>{o.l}</option>)}
+                {regimes.map((o) => <option value={o.v}>{o.l}</option>)}
               </select>
-              <div class="f-error" id="err-dor">{ERR_SELECT}</div>
+              <div class="f-error" id="err-regime">{ERR_SELECT}</div>
             </div>
             <button type="submit" class="btn btn-primary btn-block btn-lg" id="lf-submit" data-cta="form">Agendar demo gratuita</button>
           </div>
@@ -127,7 +141,7 @@ const ERR_SELECT = "Selecione uma opção.";
             <input id="lf-empresa-site" name="empresa_site" type="text" tabindex="-1" autocomplete="off">
           </div>
 
-          <p class="f-consent">{DEMO_LIMITE} Ao enviar, você concorda em ser contatado pela Kontiva e autoriza o uso das informações para análise inicial da sua operação. Você pode solicitar exclusão dos dados a qualquer momento.</p>
+          <p class="f-consent">Ao enviar, você concorda em ser contatado pela Kontiva e autoriza o uso das informações para análise inicial da sua operação. Você pode solicitar exclusão dos dados a qualquer momento.</p>
           <div class="form-sendfail" id="form-sendfail" role="alert">
             Não conseguimos enviar agora. Tente de novo, ou chame a gente no WhatsApp.
             <a href="#" class="btn btn-dark btn-block" id="sendfail-wa" target="_blank" rel="noreferrer" data-cta="whatsapp">Falar no WhatsApp</a>
@@ -146,7 +160,7 @@ const ERR_SELECT = "Selecione uma opção.";
   </div>
 </section>
 
-<script is:inline define:vars={{ WA_NUM: WHATSAPP_NUM, WA_MSG: WHATSAPP_MSG }}>
+<script is:inline define:vars={{ WA_NUM: WHATSAPP_NUM, WA_MSG: WHATSAPP_MSG, BLOCKED: DOMINIOS_PESSOAIS, ERR_PESSOAL: ERRO_EMAIL_PESSOAL, LABELS }}>
   (function () {
     var w = window;
     var track = function (n, d) { if (typeof w.__ktrack === "function") w.__ktrack(n, d); else { w.dataLayer = w.dataLayer || []; w.dataLayer.push(Object.assign({ event: n }, d || {})); } };
@@ -192,19 +206,27 @@ const ERR_SELECT = "Selecione uma opção.";
     form.addEventListener("focusin", function () { if (!started) { started = true; track("form_start"); } });
 
     // Regras por campo. Validacao no blur (depois do primeiro toque) e ao avancar.
+    var emailErr = document.getElementById("err-email");
+    var ERR_EMAIL_FORMATO = emailErr.textContent;
+    var dominio = function (v) { return v.trim().toLowerCase().split("@").pop(); };
+    var emailPessoal = function (v) { return BLOCKED.indexOf(dominio(v)) !== -1; }; // so o dominio exato
+    var filled = function (v) { return v !== ""; };
     var rules = {
-      nome: function (v) { return v.trim().length > 0; },
-      email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); },
+      nome: function (v) { return v.trim().length >= 2; },
+      email: function (v) {
+        var formato = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+        emailErr.textContent = formato ? ERR_PESSOAL : ERR_EMAIL_FORMATO;
+        return formato && !emailPessoal(v);
+      },
       whatsapp: function (v) { return v.replace(/\D/g, "").length >= 10; },
-      empresa: function (v) { return v.trim().length > 0; },
-      sistema: function (v) { return v !== ""; },
-      carteira: function (v) { var n = Number(v); return v.trim() !== "" && Number.isFinite(n) && n > 0; },
-      regime: function (v) { return v !== ""; },
-      faturamento: function (v) { return v !== ""; },
-      dor: function (v) { return v !== ""; }
+      cargo: filled,
+      empresa: function (v) { return v.trim().length >= 2; },
+      segmento: filled,
+      faturamento: filled,
+      regime: filled
     };
-    var STEP1 = ["nome", "email", "whatsapp", "empresa"];
-    var STEP2 = ["sistema", "carteira", "regime", "faturamento", "dor"];
+    var STEP1 = ["nome", "email", "whatsapp", "cargo"];
+    var STEP2 = ["empresa", "segmento", "faturamento", "regime"];
     var check = function (name) {
       var input = form.elements[name];
       var ok = rules[name](input.value);
@@ -239,16 +261,19 @@ const ERR_SELECT = "Selecione uma opção.";
     });
     backBtn.addEventListener("click", function () { goStep(1); }); // preserva dados
 
+    var label = function (campo, v) { return (LABELS[campo] && LABELS[campo][v]) || v || "não informado"; };
     var waWithData = function (d) {
       var msg = WA_MSG +
-        "%0A%0ANome: " + (d.nome || "") + "%0AWhatsApp: " + (d.whatsapp || "") + "%0AE-mail: " + (d.email || "") +
-        "%0AEmpresa: " + (d.empresa || "") + "%0ASite: " + (d.site || "não informado") +
-        "%0ASistema: " + (d.sistema || "não informado") + "%0ACNPJs: " + (d.carteira || "não informado") +
-        "%0ARegime: " + (d.regime || "não informado") + "%0AFaturamento: " + (d.faturamento || "não informado") +
-        "%0APrincipal dor: " + (d.dor || "não informado");
+        "%0A%0ANome: " + (d.nome || "") + "%0AE-mail: " + (d.email || "") + "%0AWhatsApp: " + (d.whatsapp || "") +
+        "%0ACargo: " + label("cargo", d.cargo) + "%0AEmpresa: " + (d.empresa || "") +
+        "%0ASegmento: " + label("segmento", d.segmento) + "%0AFaturamento: " + label("faturamento", d.faturamento) +
+        "%0ARegime: " + label("regime", d.regime);
       return "https://wa.me/" + WA_NUM + "?text=" + msg;
     };
-    var showSuccess = function () { card.classList.add("sent"); success.classList.add("show"); success.scrollIntoView({ behavior: "smooth", block: "center" }); track("form_submit_success"); };
+    var showSuccess = function (d) {
+      card.classList.add("sent"); success.classList.add("show"); success.scrollIntoView({ behavior: "smooth", block: "center" });
+      track("form_submit_success", d ? { cargo: d.cargo, segmento: d.segmento, faturamento: d.faturamento } : undefined);
+    };
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -256,11 +281,12 @@ const ERR_SELECT = "Selecione uma opção.";
       if (form.empresa_site.value) { showSuccess(); return; } // honeypot
       if (!STEP1.every(function (n) { return rules[n](form.elements[n].value); })) { goStep(1); checkAll(STEP1); return; }
       if (!checkAll(STEP2)) return;
+      // revalida tudo na funcao de envio (inclui o bloqueio de e-mail pessoal)
+      if (emailPessoal(form.email.value)) { goStep(1); checkAll(STEP1); return; }
       var data = {
-        nome: form.nome.value.trim(), email: form.email.value.trim(), whatsapp: whats.value.trim(),
-        empresa: form.empresa.value.trim(), site: form.site.value.trim(),
-        sistema: form.sistema.value, carteira: form.carteira.value.trim(), regime: form.regime.value, faturamento: form.faturamento.value,
-        dor: form.dor.value, page_url: location.href
+        nome: form.nome.value.trim(), email: form.email.value.trim(), whatsapp: whats.value.trim(), cargo: form.cargo.value,
+        empresa: form.empresa.value.trim(), segmento: form.segmento.value, faturamento: form.faturamento.value, regime: form.regime.value,
+        page_url: location.href
       };
       Object.assign(data, utm);
       submitBtn.classList.add("is-loading");
@@ -271,10 +297,10 @@ const ERR_SELECT = "Selecione uma opção.";
       };
       if (FORM_ENDPOINT) {
         fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
-          .then(function (r) { if (!r.ok) throw new Error("bad status"); showSuccess(); })
+          .then(function (r) { if (!r.ok) throw new Error("bad status"); showSuccess(data); })
           .catch(finishFail);
       } else {
-        try { w.open(waWithData(data), "_blank", "noopener"); showSuccess(); } catch (err) { finishFail(); }
+        try { w.open(waWithData(data), "_blank", "noopener"); showSuccess(data); } catch (err) { finishFail(); }
       }
     });
     sendfailWa.href = "https://wa.me/" + WA_NUM + "?text=" + encodeURIComponent(WA_MSG);

@@ -28,3 +28,17 @@ export const DEMO_LIMITE = "Gratuita, com os seus dados: 1 CNPJ, 1 cenário.";
 export const GTM_ID = "GTM-MNVPH77L";
 export const LP_ID = "empresas";
 export const LP_VERSION = "empresas-v4";
+
+/**
+ * Dominios de e-mail pessoal bloqueados no formulario (PRD v2, secao 7).
+ * Compara so o dominio exato, em minusculas: subdominios corporativos passam.
+ * Para bloquear outro dominio, basta incluir aqui.
+ */
+export const DOMINIOS_PESSOAIS = [
+  "gmail.com", "googlemail.com", "hotmail.com", "hotmail.com.br", "outlook.com", "outlook.com.br",
+  "live.com", "msn.com", "yahoo.com", "yahoo.com.br", "ymail.com", "icloud.com", "me.com", "mac.com",
+  "aol.com", "bol.com.br", "uol.com.br", "terra.com.br", "ig.com.br", "globo.com", "globomail.com",
+  "r7.com", "oi.com.br", "zipmail.com.br", "protonmail.com", "proton.me", "gmx.com", "yandex.com",
+  "mail.com", "zoho.com",
+];
+export const ERRO_EMAIL_PESSOAL = "Use seu e-mail corporativo, por exemplo nome@suaempresa.com.br.";
