@@ -143,29 +143,72 @@ export const jornada: EtapaJornada[] = [
   },
 ];
 
-/* ---------- Telas reais ---------- */
+/* ---------- Plataforma (carrossel) ---------- */
+/* Slides 1, 2 e 4 usam capturas da interface (public/images/telas). Nao ha
+   captura de comparacao de cenarios nem de acoes priorizadas nos repos da LP
+   de empresas e de escritorios: os slides 3 e 5 sao mockups em HTML/CSS com
+   dados ilustrativos coerentes com o resto da pagina. */
 
-export const telas = [
+export interface SlideBase { id: string; titulo: string; descricao: string; url: string }
+export interface SlideImagem extends SlideBase { tipo: "imagem"; w: number; h: number; alt: string }
+export interface SlideCenarios extends SlideBase {
+  tipo: "cenarios"; alt: string;
+  anos: string[];
+  linhas: { k: string; v: string[]; total?: boolean }[];
+}
+export interface SlideAcoes extends SlideBase {
+  tipo: "acoes"; alt: string;
+  acoes: { prioridade: "Alta" | "Média"; titulo: string; origem: string }[];
+}
+export type Slide = SlideImagem | SlideCenarios | SlideAcoes;
+
+export const slides: Slide[] = [
   {
-    id: "fornecedores", w: 1145, h: 575,
-    url: "app.kontiva.ai/fornecedores",
+    id: "fornecedores", tipo: "imagem", w: 1145, h: 575,
     titulo: "Fornecedores",
-    legenda: "Cada fornecedor classificado por regime, CNAE e situação de crédito de IBS/CBS.",
-    alt: "Tela de fornecedores do Kontiva com indicadores de ativos, sem regime e crédito presumido, e a lista de fornecedores com regime, ramo e situação de crédito de IBS/CBS. Nomes ocultados.",
+    descricao: "Veja quem gera crédito e quem precisa de revisão, por regime, CNAE e risco de IBS/CBS.",
+    url: "app.kontiva.ai/fornecedores",
+    alt: "Interface da plataforma Kontiva: fornecedores com indicadores de ativos, sem regime e crédito presumido, e a lista com regime, ramo e situação de crédito de IBS/CBS. Nomes ocultados.",
   },
   {
-    id: "nova-simulacao", w: 466, h: 590,
-    url: "app.kontiva.ai/simulacoes",
+    id: "nova-simulacao", tipo: "imagem", w: 466, h: 590,
     titulo: "Nova simulação",
-    legenda: "Ano e regime em poucos campos. O cenário sai pronto.",
-    alt: "Formulário de nova simulação do Kontiva com empresa, nome da simulação, ano do cenário e regime tributário Lucro Presumido.",
+    descricao: "Ano e regime em poucos campos. A Kontiva calcula IBS e CBS para o perfil da sua empresa.",
+    url: "app.kontiva.ai/simulacoes",
+    alt: "Interface da plataforma Kontiva: formulário de nova simulação com empresa, nome da simulação, ano do cenário e regime tributário Lucro Presumido.",
   },
   {
-    id: "cronograma", w: 626, h: 592,
-    url: "app.kontiva.ai/simulacoes/cronograma",
+    id: "comparar", tipo: "cenarios",
+    titulo: "Comparar cenários",
+    descricao: "2027, 2029 e 2033 lado a lado: como a carga tributária da sua empresa muda na transição.",
+    url: "app.kontiva.ai/simulacoes/comparar",
+    alt: "Interface da plataforma Kontiva: comparação da carga tributária em 2027, 2029 e 2033, com IBS/CBS, ICMS/ISS e carga total. Dados ilustrativos.",
+    anos: ["2027", "2029", "2033"],
+    linhas: [
+      { k: "Carga IBS/CBS", v: ["9,4%", "11,2%", "27,1%"] },
+      { k: "ICMS/ISS", v: ["17,2%", "15,5%", "0,0%"] },
+      { k: "Carga total", v: ["26,6%", "26,7%", "27,1%"], total: true },
+    ],
+  },
+  {
+    id: "cronograma", tipo: "imagem", w: 626, h: 592,
     titulo: "Cronograma da Reforma",
-    legenda: "As alíquotas de IBS, CBS, ICMS e ISS de cada ano, até 2033.",
-    alt: "Tabela do cronograma da reforma no Kontiva com as alíquotas de IBS, CBS e a fração de ICMS/ISS cobrada de 2026 a 2033.",
+    descricao: "As alíquotas de IBS, CBS, ICMS e ISS de cada ano, até 2033.",
+    url: "app.kontiva.ai/simulacoes/cronograma",
+    alt: "Interface da plataforma Kontiva: tabela do cronograma da Reforma com as alíquotas de IBS, CBS e a fração de ICMS/ISS cobrada de 2026 a 2033.",
+  },
+  {
+    id: "prioridades", tipo: "acoes",
+    titulo: "Prioridades",
+    descricao: "O que fazer primeiro, em ordem de impacto. Cada ação espera a aprovação do seu time.",
+    url: "app.kontiva.ai/acoes",
+    alt: "Interface da plataforma Kontiva: lista de ações priorizadas por impacto, todas aguardando aprovação do time. Dados ilustrativos.",
+    acoes: [
+      { prioridade: "Alta", titulo: "Revisar recolhimento de Vertex Peças", origem: "Crédito sob revisão" },
+      { prioridade: "Alta", titulo: "Revisar recolhimento de Meta Serviços", origem: "Crédito sob revisão" },
+      { prioridade: "Média", titulo: "Repassar IBS/CBS no contrato de 24 meses", origem: "Margem pressionada" },
+      { prioridade: "Média", titulo: "Simular split/RAD nas vendas para SP", origem: "Capital de giro" },
+    ],
   },
 ];
 
