@@ -186,7 +186,7 @@ export const comparativo = {
     { name: "Chatbot", cells: ["yes", "no", "no", "no"] as Celula[] },
     { name: "Consultoria", cells: ["yes", "yes", "part", "no"] as Celula[] },
     { name: "ERP", cells: ["part", "part", "part", "part"] as Celula[] },
-    { name: "Kontiva", cells: ["yes", "yes", "yes", "yes"] as Celula[], hl: true },
+    { name: "Agente Kontiva", cells: ["yes", "yes", "yes", "yes"] as Celula[], hl: true },
   ],
   label: { yes: "Sim", no: "Não", part: "Parcial" } as Record<Celula, string>,
 };
