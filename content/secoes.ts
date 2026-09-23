@@ -151,29 +151,29 @@ export const abas: Aba[] = [
   },
 ];
 
-/* ---------- Telas reais ---------- */
+/* ---------- Plataforma (telas do sistema) ---------- */
 
 export const telas = [
   {
     id: "fornecedores", w: 1145, h: 575,
     url: "app.kontiva.ai/fornecedores",
     titulo: "Fornecedores",
-    legenda: "Cada fornecedor com regime, ramo (CNAE) e situação de crédito de IBS/CBS.",
-    alt: "Tela de fornecedores do Kontiva com indicadores de ativos, sem regime e crédito presumido, e a lista de fornecedores com regime, ramo e situação de crédito de IBS/CBS. Nomes ocultados.",
+    legenda: "O agente classifica cada fornecedor por regime, CNAE e situação de crédito de IBS/CBS.",
+    alt: "Tela de fornecedores da Kontiva com indicadores de ativos, sem regime e crédito presumido, e a lista de fornecedores com regime, ramo e situação de crédito de IBS/CBS. Dados de demonstração, nomes ocultados.",
   },
   {
     id: "nova-simulacao", w: 466, h: 590,
     url: "app.kontiva.ai/simulacoes",
     titulo: "Nova simulação",
-    legenda: "Um cenário por ano e por regime tributário, montado em poucos campos.",
-    alt: "Formulário de nova simulação do Kontiva com empresa, nome da simulação, ano do cenário e regime tributário Lucro Presumido.",
+    legenda: "Você define ano e regime em poucos campos e o agente monta o cenário.",
+    alt: "Formulário de nova simulação da Kontiva com empresa, nome da simulação, ano do cenário e regime tributário Lucro Presumido. Dados de demonstração.",
   },
   {
     id: "cronograma", w: 626, h: 592,
     url: "app.kontiva.ai/simulacoes/cronograma",
-    titulo: "Cronograma da reforma",
-    legenda: "As alíquotas de IBS, CBS e ICMS/ISS que o cálculo usa em cada ano, até 2033.",
-    alt: "Tabela do cronograma da reforma no Kontiva com as alíquotas de IBS, CBS e a fração de ICMS/ISS cobrada de 2026 a 2033.",
+    titulo: "Cronograma da Reforma",
+    legenda: "As alíquotas de IBS, CBS, ICMS e ISS que o agente usa em cada ano, até 2033.",
+    alt: "Tabela do cronograma da reforma na Kontiva com as alíquotas de IBS, CBS e a fração de ICMS/ISS cobrada de 2026 a 2033. Dados de demonstração.",
   },
 ];
 
