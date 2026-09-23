@@ -216,10 +216,11 @@ export const passosIA = [
 /* ---------- FAQ ---------- */
 
 export const faqs = [
+  { q: "O que eu vejo na demo?", a: "O agente rodando um cenário da Reforma com o regime e o perfil da sua empresa: onde o crédito de IBS/CBS fica exposto, quais fornecedores pedem atenção e o efeito no caixa. A demo cobre uma empresa (1 CNPJ) e um cenário. A versão contratada roda vários CNPJs, vários cenários e o monitoramento mensal." },
+  { q: "O que o agente de IA faz sozinho?", a: "Lê documentos, cruza dados, simula cenários e aponta riscos. Qualquer ação que mude preço, pagamento ou cadastro espera a aprovação do seu time, e fica registrado quem aprovou." },
   { q: "A Kontiva substitui meu contador?", a: "Não. A Kontiva instrumenta, simula e monitora a operação. A decisão continua com sua empresa, e seu contador pode acompanhar os dados e a memória de cálculo." },
-  { q: "A demo gratuita é completa?", a: "Não. Ela usa 1 CNPJ, 1 cenário e mostra um resultado resumido. O simulador com vários cenários e o acompanhamento mensal fazem parte da versão contratada." },
+  { q: "Preciso trocar de ERP?", a: "Não. A Kontiva pode trabalhar com ERP, documentos fiscais, planilhas e integrações conforme o caso." },
+  { q: "Meus dados ficam seguros?", a: "O acesso é controlado e rastreável. Com certificado digital, o agente lê só o necessário para a simulação e a operação fiscal." },
   { q: "Split payment será obrigatório em 2027?", a: "Não. Split payment e RAD começam de forma gradual e facultativa, em operações elegíveis. A decisão depende da operação, do meio de pagamento e da estratégia de proteção de crédito e caixa." },
   { q: "A Kontiva garante economia tributária?", a: "Não. A Kontiva simula cenários a partir dos dados disponíveis, mostra riscos e apoia decisões. Ela não substitui contador, advogado tributarista ou decisão da empresa." },
-  { q: "Preciso trocar de ERP?", a: "Não. A Kontiva pode trabalhar com ERP, documentos fiscais, planilhas e integrações conforme o caso." },
-  { q: "A IA executa ações sozinha?", a: "Não. O agente aponta riscos e propõe ações. Seu time aprova pela interface e fica registrado quem aprovou o quê." },
 ];
