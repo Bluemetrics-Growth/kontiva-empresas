@@ -37,8 +37,8 @@ const total = slides.length;
         <div class="pl-viewport">
           <div class="pl-track" aria-live="polite">
             {slides.map((s, i) => (
-              <figure class="pl-slide" id={`pl-slide-${s.id}`} role="group" aria-roledescription="slide" aria-label={`${i + 1} de ${total}`} aria-hidden={i === 0 ? undefined : "true"} inert={i !== 0}>
-                <figcaption class="pl-cap"><b>{s.titulo}</b> {s.descricao}</figcaption>
+              <div class="pl-slide" id={`pl-slide-${s.id}`} role="group" aria-roledescription="slide" aria-label={`${i + 1} de ${total}`} aria-hidden={i === 0 ? undefined : "true"} inert={i !== 0}>
+                <p class="pl-cap"><b>{s.titulo}</b> {s.descricao}</p>
                 <div class="pl-frame">
                   <div class="scr-bar" aria-hidden="true">
                     <span class="scr-dots"><i></i><i></i><i></i></span>
@@ -84,7 +84,7 @@ const total = slides.length;
                     )}
                   </div>
                 </div>
-              </figure>
+              </div>
             ))}
           </div>
         </div>
