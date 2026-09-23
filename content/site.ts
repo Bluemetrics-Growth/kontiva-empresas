@@ -19,7 +19,7 @@ export const whatsappHref = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURICompo
  */
 export const CTA_PRIMARIO = "Agendar demo gratuita";
 export const CTA_SECUNDARIO = "Ver como funciona";
-export const CTA_HEADER = "Demo gratuita";
+export const CTA_HEADER = "Agendar demo";
 export const CTA_ANCORA = "#agendar";
 
 /** Fronteira gratuito x pago. Texto unico usado em toda a pagina. */
