@@ -7,6 +7,8 @@ import { seloExemplo } from "../../content/facts";
 
 interface Props { aba: Aba; active: boolean }
 const { aba: t, active } = Astro.props;
+// posicao no GTM: a aba "margem" e reportada como aba_preco (PRD de copy, secao 6)
+const ctaLocation = `aba_${t.id === "margem" ? "preco" : t.id}`;
 ---
 <div class="ptab-panel" id={`panel-${t.id}`} role="tabpanel" aria-labelledby={`tab-${t.id}`} tabindex="0" hidden={!active}>
   <div class="pt-copy">
@@ -22,7 +24,7 @@ const { aba: t, active } = Astro.props;
       </div>
     </dl>
     <p class="pt-metric"><span class="pt-metric-tag">Exemplo ilustrativo</span> {t.metric}</p>
-    <a href={CTA_ANCORA} class="link-cta" data-cta="product" data-tab-cta={t.id}>{t.cta}</a>
+    <a href={CTA_ANCORA} class="link-cta" data-cta="product" data-cta-location={ctaLocation}>{t.cta}</a>
   </div>
   <div class="pt-visual">
     <div class="sheet" aria-hidden="true">

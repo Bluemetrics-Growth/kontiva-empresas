@@ -124,7 +124,7 @@ const ERR_SELECT = "Selecione uma opção.";
           <p class="f-consent">Ao enviar, você concorda em ser contatado pela Kontiva e autoriza o uso das informações para preparar a demo. Você pode pedir a exclusão dos dados quando quiser.</p>
           <div class="form-sendfail" id="form-sendfail" role="alert">
             Não conseguimos enviar agora. Tente de novo ou fale com a gente no WhatsApp.
-            <a href="#" class="btn btn-dark btn-block" id="sendfail-wa" target="_blank" rel="noreferrer" data-cta="whatsapp">Falar no WhatsApp</a>
+            <a href="#" class="btn btn-dark btn-block" id="sendfail-wa" target="_blank" rel="noreferrer" data-cta="whatsapp" data-cta-location="form_erro">Falar no WhatsApp</a>
           </div>
         </form>
       </div>
@@ -228,7 +228,7 @@ const ERR_SELECT = "Selecione uma opção.";
     };
     nextBtn.addEventListener("click", function () {
       if (!checkAll(STEP1)) return;
-      if (!step1done) { step1done = true; track("form_step_1_complete"); }
+      if (!step1done) { step1done = true; track("form_step_1_complete"); track("form_step1_complete"); }
       goStep(2);
     });
     backBtn.addEventListener("click", function () { goStep(1); }); // preserva dados
@@ -243,12 +243,16 @@ const ERR_SELECT = "Selecione uma opção.";
       // texto inteiro URL-encoded (acentos, &, # e quebras de linha nao quebram o link)
       return "https://wa.me/" + WA_NUM + "?text=" + encodeURIComponent(msg);
     };
-    var showSuccess = function () { card.classList.add("sent"); success.classList.add("show"); success.scrollIntoView({ behavior: "smooth", block: "center" }); track("form_submit_success"); };
+    var showSuccess = function (isBot) {
+      card.classList.add("sent"); success.classList.add("show"); success.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (isBot) return; // honeypot: finge sucesso sem contar conversao
+      track("form_submit_success"); track("form_submit");
+    };
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       sendfail.classList.remove("show");
-      if (form.empresa_site.value) { showSuccess(); return; } // honeypot
+      if (form.empresa_site.value) { showSuccess(true); return; } // honeypot
       if (!STEP1.every(function (n) { return rules[n](form.elements[n].value); })) { goStep(1); checkAll(STEP1); return; }
       if (!checkAll(STEP2)) return;
       var data = {

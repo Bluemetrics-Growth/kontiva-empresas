@@ -117,9 +117,14 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
           var t = e.target.closest ? e.target.closest("[data-cta]") : null;
           if (!t) return;
           var pos = t.getAttribute("data-cta") || "unknown";
+          var loc = t.getAttribute("data-cta-location");
+          // cta_click (PRD de copy, secao 6): um evento para todos os CTAs de
+          // agendamento, com a posicao em cta_location
+          if (loc && pos !== "whatsapp") track("cta_click", { cta_location: loc });
+          // eventos anteriores mantidos para nao quebrar gatilhos existentes no GTM
           if (pos === "hero") track("hero_cta_click");
-          else if (pos === "whatsapp") track("whatsapp_click");
-          else if (pos === "hero-secondary" || pos === "header" || pos === "secondary") track("secondary_cta_click", { position: pos });
+          else if (pos === "whatsapp") track("whatsapp_click", loc ? { cta_location: loc } : undefined);
+          else if (pos === "header" || pos === "secondary") track("secondary_cta_click", { position: pos });
         });
 
         // scroll_25 / 50 / 75 / 90
