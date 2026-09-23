@@ -194,14 +194,14 @@ export const comparativo = {
 /* ---------- Demo gratuita ---------- */
 
 export const demoInclui = [
-  "1 CNPJ e 1 cenário, com os seus dados",
-  "Resultado resumido de crédito, fornecedores, preço e caixa",
-  "Próximos passos recomendados",
+  "O agente rodando um cenário de 2027 com o regime e o perfil da sua empresa",
+  "Onde o crédito de IBS/CBS fica exposto, fornecedor por fornecedor",
+  "Os próximos passos antes de janeiro",
 ];
 export const demoCompleta = [
-  "Simulador com vários cenários",
-  "Acompanhamento mensal",
-  "Vários CNPJs e reprecificação em lote",
+  "Vários CNPJs e cenários",
+  "Monitoramento mensal de fornecedores e recolhimento",
+  "Reprecificação em lote com aprovação do seu time",
 ];
 
 /* ---------- IA auditavel ---------- */

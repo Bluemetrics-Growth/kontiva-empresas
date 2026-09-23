@@ -23,7 +23,7 @@ export const CTA_ANCORA = "#agendar";
 
 /**
  * Microcopy da demo (PRD de copy, secao 4). A duracao ainda pode mudar: troque
- * so DEMO_DURACAO. DEMO_CURTA vai na oferta e no sticky; DEMO_MICROCOPY no
+ * DEMO_DURACAO e o "30 minutos" do texto da oferta (FreeDemo.astro). DEMO_CURTA vai na oferta e no sticky; DEMO_MICROCOPY no
  * hero e na secao Reforma 2027.
  */
 export const DEMO_DURACAO = "30 min";

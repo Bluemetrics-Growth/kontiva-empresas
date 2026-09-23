@@ -1,15 +1,15 @@
 ---
 // 07 - Demo gratuita e limitada. Um bloco dividido: o que entra na demo e o
 // que fica para a versao completa, sem expor precos.
-import { CTA_PRIMARIO, CTA_ANCORA, DEMO_LIMITE } from "../../content/site";
+import { CTA_PRIMARIO, CTA_ANCORA, DEMO_CURTA } from "../../content/site";
 import { demoInclui, demoCompleta } from "../../content/secoes";
 ---
 <section class="bg-alt" id="demo" aria-labelledby="demo-h">
   <div class="shell">
     <div class="section-head">
       <div class="eyebrow"><span class="dot-cyan"></span> Demo gratuita</div>
-      <h2 id="demo-h">Veja o tamanho do risco antes de <span class="serif-accent">decidir</span>.</h2>
-      <p class="lead">Sem trocar de ERP e sem projeto longo. Rodamos a Kontiva numa amostra da sua operação e mostramos o resultado ao vivo.</p>
+      <h2 id="demo-h">Veja o agente rodando com o <span class="serif-accent">perfil da sua empresa</span>.</h2>
+      <p class="lead">30 minutos, ao vivo. Sem trocar de ERP e sem projeto. Você sai sabendo onde o seu crédito está exposto.</p>
     </div>
 
     <div class="split">
@@ -25,7 +25,7 @@ import { demoInclui, demoCompleta } from "../../content/secoes";
 
     <div class="section-cta-l">
       <a href={CTA_ANCORA} class="btn btn-dark btn-lg" data-cta="demo">{CTA_PRIMARIO}</a>
-      <p class="cta-limit">{DEMO_LIMITE} A versão completa só é apresentada se fizer sentido para você.</p>
+      <p class="cta-limit">{DEMO_CURTA}. Você decide depois, sem compromisso.</p>
     </div>
   </div>
 </section>
