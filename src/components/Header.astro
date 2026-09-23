@@ -1,0 +1,22 @@
+---
+// Cabecalho: navegacao minima + CTA (PRD revisao, secao 5.1).
+import { CTA_HEADER, CTA_ANCORA } from "../../content/site";
+---
+<header class="nav">
+<div class="shell nav-inner">
+<a href="#topo" class="brand-lockup" aria-label="Kontiva.ai, início da página">
+<span class="k">Kontiva</span>
+<span class="dot">.</span>
+<span class="ai">ai</span>
+<span class="brand-note">uma empresa BlueMetrics</span>
+</a>
+<nav class="nav-links" aria-label="Navegação principal">
+<a href="#reforma-2027" class="nav-link">Reforma 2027</a>
+<a href="#credito" class="nav-link">Onde muda</a>
+<a href="#plataforma" class="nav-link">Plataforma</a>
+<a href="#confianca" class="nav-link">IA auditável</a>
+<a href="#faq" class="nav-link">FAQ</a>
+<a href={CTA_ANCORA} class="btn btn-primary" data-cta="header">{CTA_HEADER}</a>
+</nav>
+</div>
+</header>

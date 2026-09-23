@@ -1,0 +1,88 @@
+---
+// 06 - Comparativo. Quatro colunas (Chatbot, Consultoria, ERP, Kontiva) por
+// quatro criterios, com marcadores no lugar de "Sim/Nao/Parcial". A coluna
+// Kontiva e a unica em navy, mais alta que a linha de base e com todos os
+// marcadores em ciano. No mobile a Kontiva vem primeiro, em destaque, e as
+// alternativas aparecem abaixo em linhas compactas.
+import Icon from "./Icon.astro";
+import Mark from "./Mark.astro";
+import { comparativo as c } from "../../content/secoes";
+---
+<section class="bg-page" id="diferenciacao" aria-labelledby="cmp-h">
+  <div class="shell">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot-cyan"></span> Quem faz o trabalho todo mês?</div>
+      <h2 id="cmp-h">Chatbot responde. Consultoria entrega relatório. A Kontiva trabalha <span class="serif-accent">todo mês</span>.</h2>
+    </div>
+
+    <!-- desktop e tablet -->
+    <div class="cx-wrap">
+      <span class="cx-hl" aria-hidden="true"></span>
+      <table class="cx">
+        <caption class="sr-only">Comparativo entre chatbot, consultoria, ERP e Kontiva</caption>
+        <colgroup><col class="cx-col-k" /><col /><col /><col /><col /></colgroup>
+        <thead>
+          <tr>
+            <td></td>
+            {c.solucoes.map((s) => (
+              <th scope="col">
+                <span class="cx-ico"><Icon name={s.icon} size={20} /></span>
+                <span class="cx-name">{s.name}</span>
+                <span class="cx-def">{s.frase}</span>
+              </th>
+            ))}
+            <th scope="col" class="is-k">
+              <span class="cx-brand" aria-hidden="true"><span class="k">Kontiva</span><span class="dot">.</span><span class="ai">ai</span></span>
+              <span class="cx-name sr-only">{c.kontiva.name}</span>
+              <span class="cx-def">{c.kontiva.frase}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {c.criterios.map((cr, r) => (
+            <tr>
+              <th scope="row">{cr.k}</th>
+              {c.solucoes.map((s) => <td><Mark v={s.cells[r]} label={c.label[s.cells[r]]} /></td>)}
+              <td class="is-k"><Mark v={c.kontiva.cells[r]} label={c.label[c.kontiva.cells[r]]} /></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- mobile -->
+    <div class="cx-m">
+      <div class="cx-card">
+        <div class="cx-card-h">
+          <span class="cx-brand" aria-hidden="true"><span class="k">Kontiva</span><span class="dot">.</span><span class="ai">ai</span></span>
+          <span class="sr-only">{c.kontiva.name}</span>
+          <p>{c.kontiva.frase}</p>
+        </div>
+        <ul>
+          {c.criterios.map((cr, r) => (
+            <li><span>{cr.k}</span><Mark v={c.kontiva.cells[r]} label={c.label[c.kontiva.cells[r]]} /></li>
+          ))}
+        </ul>
+      </div>
+      <div class="cx-alt">
+        <div class="cx-alt-head" aria-hidden="true">
+          <span></span>
+          {c.criterios.map((cr) => <span>{cr.curto}</span>)}
+        </div>
+        {c.solucoes.map((s) => (
+          <div class="cx-alt-row">
+            <div class="cx-alt-n"><Icon name={s.icon} size={16} /><span><b>{s.name}</b><small>{s.frase}</small></span></div>
+            {s.cells.map((v, r) => <Mark v={v} label={`${c.criterios[r].k}: ${c.label[v]}`} />)}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <p class="cx-legend" aria-hidden="true">
+      <span><Mark v="yes" label="Sim" /> Sim</span>
+      <span><Mark v="part" label="Parcial" /> Parcial</span>
+      <span><Mark v="no" label="Não" /> Não</span>
+    </p>
+    <p class="cmp-note">Entender a Reforma é o começo. Conferir fornecedor, nota e caixa todo mês é trabalho contínuo. Com a Kontiva, esse trabalho não exige aumentar o time.</p>
+  </div>
+</section>

@@ -1,0 +1,29 @@
+---
+// Rodape. Link de WhatsApp centralizado em content/site.ts (bug #1).
+import { whatsappHref } from "../../content/site";
+---
+<footer class="site">
+<div class="shell">
+<div class="foot-top">
+<div>
+<div class="brand-lockup">
+<span class="k">Kontiva</span>
+<span class="dot">.</span>
+<span class="ai">ai</span>
+</div>
+<p class="foot-tag">A Reforma decide quem sai mais forte. A Kontiva mostra o número. A decisão continua com o seu time.</p>
+</div>
+<nav class="foot-links" aria-label="Contato e legal">
+<a href={whatsappHref} target="_blank" rel="noreferrer" data-cta="whatsapp">WhatsApp</a>
+<a href="mailto:contato@kontiva.ai">contato@kontiva.ai</a>
+<a href="/privacidade">Política de Privacidade</a>
+<a href="/termos">Termos de Uso</a>
+</nav>
+</div>
+<div class="foot-bottom">
+<span class="foot-seal">
+<b>Kontiva</b> é uma empresa BlueMetrics.</span>
+<span>&copy; 2026 Kontiva. Todos os direitos reservados.</span>
+</div>
+</div>
+</footer>

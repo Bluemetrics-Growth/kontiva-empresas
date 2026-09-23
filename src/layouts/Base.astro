@@ -1,0 +1,164 @@
+---
+import "../styles/tokens.css";
+import "../styles/lp.css";
+import { GTM_ID, LP_ID, LP_VERSION } from "../../content/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "Kontiva · IA fiscal-tributária para operar a Reforma Tributária na sua empresa",
+  description = "A Reforma muda compras, preço e caixa. A Kontiva cruza suas notas com cada fornecedor, contrato e pagamento e mostra onde agir antes de 2027. Demo gratuita.",
+} = Astro.props as Props;
+
+const canonical = "https://empresas.kontiva.ai/";
+const ogImage = "https://empresas.kontiva.ai/og/og.png";
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <!-- Google Tag Manager (PRD secao 20) -->
+    <script is:inline define:vars={{ GTM_ID }}>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',GTM_ID);
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0A1F3F" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kontiva" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Foto do hero (above the fold): preload por breakpoint para proteger o LCP -->
+    <link
+      rel="preload" as="image" media="(min-width: 861px)"
+      href="/images/hero-kontiva-empresas-1280.avif" type="image/avif"
+      imagesrcset="/images/hero-kontiva-empresas-800.avif 800w, /images/hero-kontiva-empresas-1280.avif 1280w, /images/hero-kontiva-empresas-1672.avif 1672w"
+      imagesizes="100vw" fetchpriority="high"
+    />
+    <link
+      rel="preload" as="image" media="(max-width: 860px)"
+      href="/images/hero-kontiva-empresas-m-640.avif" type="image/avif"
+      imagesrcset="/images/hero-kontiva-empresas-m-640.avif 640w, /images/hero-kontiva-empresas-m-900.avif 900w"
+      imagesizes="100vw" fetchpriority="high"
+    />
+
+    <!-- Fontes do design system -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org", "@type": "Organization", name: "Kontiva", url: canonical,
+      description: "IA fiscal-tributária para empresas operarem a Reforma Tributária: crédito, fornecedores, preço e caixa, com memória de cálculo e aprovação humana. Uma empresa BlueMetrics.",
+      parentOrganization: { "@type": "Organization", name: "BlueMetrics" },
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org", "@type": "WebSite", name: "Kontiva", url: canonical, inLanguage: "pt-BR",
+    })} />
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+
+    <slot />
+
+    <script is:inline define:vars={{ LP: LP_ID, LPV: LP_VERSION }}>
+      (function () {
+        var w = window;
+        // UTM + contexto compartilhado nos eventos (PRD secao 20)
+        var params = new URLSearchParams(location.search);
+        var utm = {};
+        ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(function (k) {
+          var v = params.get(k);
+          try { v = v || sessionStorage.getItem(k); if (v) sessionStorage.setItem(k, v); } catch (e) {}
+          if (v) utm[k] = v;
+        });
+        var device = w.matchMedia("(max-width: 860px)").matches ? "mobile" : "desktop";
+        w.__ktrack = function (name, data) {
+          w.dataLayer = w.dataLayer || [];
+          w.dataLayer.push(Object.assign({
+            event: name, lp: LP, lp_version: LPV, device: device,
+            source: utm.utm_source, medium: utm.utm_medium, campaign: utm.utm_campaign
+          }, data || {}));
+        };
+        var track = w.__ktrack;
+
+        track("lp_view");
+
+        // CTA clicks
+        document.addEventListener("click", function (e) {
+          var t = e.target.closest ? e.target.closest("[data-cta]") : null;
+          if (!t) return;
+          var pos = t.getAttribute("data-cta") || "unknown";
+          if (pos === "hero") track("hero_cta_click");
+          else if (pos === "whatsapp") track("whatsapp_click");
+          else if (pos === "hero-secondary" || pos === "header" || pos === "secondary") track("secondary_cta_click", { position: pos });
+        });
+
+        // scroll_25 / 50 / 75 / 90
+        var marks = [25, 50, 75, 90], fired = {};
+        w.addEventListener("scroll", function () {
+          var docH = document.documentElement.scrollHeight - w.innerHeight;
+          if (docH <= 0) return;
+          var pct = (w.scrollY / docH) * 100;
+          marks.forEach(function (m) { if (!fired[m] && pct >= m) { fired[m] = true; track("scroll_" + m); } });
+        }, { passive: true });
+
+        // faq_open
+        document.querySelectorAll(".faq-item").forEach(function (d) {
+          d.addEventListener("toggle", function () {
+            if (d.open) { var s = d.querySelector("summary"); track("faq_open", { title: s ? s.textContent.trim() : "" }); }
+          });
+        });
+
+        // Barra fixa mobile: aparece quando o hero sai da tela, some quando o agendamento aparece
+        var sticky = document.getElementById("sticky-cta");
+        if (sticky && "IntersectionObserver" in w) {
+          // Gatilho: os CTAs do hero saem da tela por cima (o hero inteiro, com a
+          // cadeia do credito, e alto demais no mobile para servir de gatilho).
+          var hero = document.querySelector("#topo .hero-cta-row") || document.getElementById("topo");
+          var formSec = document.getElementById("agendar");
+          var heroPassed = false, formVisible = false;
+          var apply = function () { var on = heroPassed && !formVisible; sticky.classList.toggle("show", on); document.body.classList.toggle("has-sticky", on); };
+          if (hero) {
+            new IntersectionObserver(function (e) {
+              heroPassed = !e[0].isIntersecting && e[0].boundingClientRect.top < 0; apply();
+            }, { threshold: 0 }).observe(hero);
+          }
+          if (formSec) {
+            new IntersectionObserver(function (e) {
+              formVisible = e[0].isIntersecting; apply();
+            }, { threshold: 0.05 }).observe(formSec);
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>

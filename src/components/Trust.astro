@@ -1,0 +1,27 @@
+---
+// 08 - IA auditavel. Fluxo de 4 passos sobre uma linha; o ultimo passo fica
+// em ciano porque e onde a decisao volta para o seu time. Abaixo, acesso aos
+// dados e a credencial BlueMetrics.
+import { passosIA } from "../../content/secoes";
+---
+<section class="bg-dark grain" id="confianca" aria-labelledby="trust-h">
+  <div class="shell">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot-cyan"></span> IA auditável</div>
+      <h2 id="trust-h">A IA calcula. Seu time <span class="serif-accent">decide</span>.</h2>
+    </div>
+    <ol class="flow">
+      {passosIA.map((p, i) => (
+        <li class={i === passosIA.length - 1 ? "is-human" : undefined}>
+          <span class="flow-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+          <h3>{p.t}</h3>
+          <p>{p.d}</p>
+        </li>
+      ))}
+    </ol>
+    <div class="trust-cols">
+      <p>Acesso controlado e rastreável. Com certificado digital, a Kontiva lê só o necessário para a simulação e a operação fiscal.</p>
+      <p>Kontiva é uma empresa BlueMetrics: 10 anos de dados e IA, mais de 200 projetos entregues e mais de 90 clientes.</p>
+    </div>
+  </div>
+</section>

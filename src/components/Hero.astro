@@ -1,0 +1,34 @@
+---
+// 01 - Hero. Foto de fundo com as pessoas no terco direito e espaco negativo
+// a esquerda para a copy (nada sobreposto a area das pessoas). Abaixo, a
+// cadeia do credito sobre o degrade navy da base da foto. Mobile: recorte
+// 4:5 no topo, que se dissolve no navy.
+import CreditChain from "./CreditChain.astro";
+import { CTA_PRIMARIO as CTA, CTA_ANCORA } from "../../content/site";
+---
+<section class="hero" id="topo" aria-labelledby="hero-h1">
+  <picture class="hero-bg" aria-hidden="true">
+    <source media="(max-width: 860px)" type="image/avif" srcset="/images/hero-kontiva-empresas-m-640.avif 640w, /images/hero-kontiva-empresas-m-900.avif 900w" sizes="100vw" />
+    <source media="(max-width: 860px)" type="image/webp" srcset="/images/hero-kontiva-empresas-m-640.webp 640w, /images/hero-kontiva-empresas-m-900.webp 900w" sizes="100vw" />
+    <source media="(max-width: 860px)" srcset="/images/hero-kontiva-empresas-m-640.jpg 640w, /images/hero-kontiva-empresas-m-900.jpg 900w" sizes="100vw" />
+    <source type="image/avif" srcset="/images/hero-kontiva-empresas-800.avif 800w, /images/hero-kontiva-empresas-1280.avif 1280w, /images/hero-kontiva-empresas-1672.avif 1672w" sizes="100vw" />
+    <source type="image/webp" srcset="/images/hero-kontiva-empresas-800.webp 800w, /images/hero-kontiva-empresas-1280.webp 1280w, /images/hero-kontiva-empresas-1672.webp 1672w" sizes="100vw" />
+    <img
+      src="/images/hero-kontiva-empresas-1280.jpg"
+      srcset="/images/hero-kontiva-empresas-800.jpg 800w, /images/hero-kontiva-empresas-1280.jpg 1280w, /images/hero-kontiva-empresas-1672.jpg 1672w"
+      sizes="100vw" width="1672" height="941" alt="" fetchpriority="high" decoding="async"
+    />
+  </picture>
+
+  <div class="shell">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="dot-cyan"></span> Reforma Tributária · 2027</div>
+      <h1 id="hero-h1">A Reforma vai decidir se a sua empresa sai dela <span class="accent">mais forte</span> ou mais fraca.</h1>
+      <p class="lead hero-sub">Imposto deixa de ser assunto só do contador. A Kontiva cruza suas notas com cada fornecedor, contrato e pagamento, mostra em reais onde agir primeiro e espera a aprovação do seu time.</p>
+      <div class="hero-cta-row">
+        <a href={CTA_ANCORA} class="btn btn-primary btn-lg" data-cta="hero">{CTA}</a>
+      </div>
+    </div>
+    <CreditChain />
+  </div>
+</section>
