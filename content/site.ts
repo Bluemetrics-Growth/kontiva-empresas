@@ -6,7 +6,7 @@
 
 export const WHATSAPP_NUM = "5551926343014";
 export const WHATSAPP_MSG =
-  "Olá, quero agendar a demo gratuita da Kontiva com os dados da minha empresa.";
+  "Olá, quero agendar a demo gratuita do agente de IA da Kontiva.";
 
 /** Link de WhatsApp com a mensagem pre-preenchida. */
 export const whatsappHref = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(

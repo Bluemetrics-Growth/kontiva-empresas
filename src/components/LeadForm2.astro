@@ -235,12 +235,13 @@ const ERR_SELECT = "Selecione uma opção.";
 
     var waWithData = function (d) {
       var msg = WA_MSG +
-        "%0A%0ANome: " + (d.nome || "") + "%0AWhatsApp: " + (d.whatsapp || "") + "%0AE-mail: " + (d.email || "") +
-        "%0AEmpresa: " + (d.empresa || "") + "%0ASite: " + (d.site || "não informado") +
-        "%0ASistema: " + (d.sistema || "não informado") + "%0ACNPJs: " + (d.carteira || "não informado") +
-        "%0ARegime: " + (d.regime || "não informado") + "%0AFaturamento: " + (d.faturamento || "não informado") +
-        "%0APrincipal dor: " + (d.dor || "não informado");
-      return "https://wa.me/" + WA_NUM + "?text=" + msg;
+        "\n\nNome: " + (d.nome || "") + "\nWhatsApp: " + (d.whatsapp || "") + "\nE-mail: " + (d.email || "") +
+        "\nEmpresa: " + (d.empresa || "") + "\nSite: " + (d.site || "não informado") +
+        "\nSistema: " + (d.sistema || "não informado") + "\nCNPJs: " + (d.carteira || "não informado") +
+        "\nRegime: " + (d.regime || "não informado") + "\nFaturamento: " + (d.faturamento || "não informado") +
+        "\nPrincipal dor: " + (d.dor || "não informado");
+      // texto inteiro URL-encoded (acentos, &, # e quebras de linha nao quebram o link)
+      return "https://wa.me/" + WA_NUM + "?text=" + encodeURIComponent(msg);
     };
     var showSuccess = function () { card.classList.add("sent"); success.classList.add("show"); success.scrollIntoView({ behavior: "smooth", block: "center" }); track("form_submit_success"); };
 
