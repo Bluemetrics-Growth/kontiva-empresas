@@ -14,13 +14,21 @@ export const whatsappHref = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURICompo
 )}`;
 
 /**
- * CTAs padronizados. O CTA principal e sempre a demo gratuita, e o limite da
- * demo aparece junto dos CTAs principais.
+ * CTAs padronizados. O CTA principal e sempre a demo, e todo CTA leva ao
+ * agendamento (#agendar).
  */
-export const CTA_PRIMARIO = "Agendar demo gratuita";
-export const CTA_SECUNDARIO = "Ver como funciona";
+export const CTA_PRIMARIO = "Agendar minha demo";
 export const CTA_HEADER = "Agendar demo";
 export const CTA_ANCORA = "#agendar";
+
+/**
+ * Microcopy da demo (PRD de copy, secao 4). A duracao ainda pode mudar: troque
+ * so DEMO_DURACAO. DEMO_CURTA vai na oferta e no sticky; DEMO_MICROCOPY no
+ * hero e na secao Reforma 2027.
+ */
+export const DEMO_DURACAO = "30 min";
+export const DEMO_CURTA = `Gratuita · ${DEMO_DURACAO}`;
+export const DEMO_MICROCOPY = `${DEMO_CURTA} · com o perfil da sua empresa`;
 
 /** Fronteira gratuito x pago. Texto unico usado em toda a pagina. */
 export const DEMO_LIMITE = "Demo com seus dados: 1 CNPJ, 1 cenário e resultado resumido.";
