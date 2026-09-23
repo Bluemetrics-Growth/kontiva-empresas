@@ -5,7 +5,7 @@
 // atualiza a cada segundo, nunca abaixo de zero.
 import { facts } from "../../content/facts";
 import { marcos } from "../../content/secoes";
-import { CTA_PRIMARIO, CTA_ANCORA, DEMO_LIMITE } from "../../content/site";
+import { CTA_PRIMARIO, CTA_ANCORA } from "../../content/site";
 
 const TARGET = "2027-01-01T00:00:00-03:00";
 const unidades = [
@@ -45,7 +45,6 @@ const unidades = [
       </ol>
       <div class="cd-cta">
         <a href={CTA_ANCORA} class="btn btn-dark btn-lg" data-cta="countdown">{CTA_PRIMARIO}</a>
-        <p class="cta-limit">{DEMO_LIMITE}</p>
       </div>
     </div>
   </div>

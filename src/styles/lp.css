@@ -95,8 +95,6 @@ p.lead{font-size:var(--fs-lead);line-height:1.5;color:var(--cinza-escuro)}
 .nav-links a.nav-link{font-size:14px;font-weight:500;color:var(--cinza-escuro);white-space:nowrap}
 .nav-links a.nav-link:hover{color:var(--azul-profundo)}
 .nav a.btn{color:var(--azul-profundo);padding:12px 20px;white-space:nowrap}
-@media (max-width: 1180px){.nav-links{gap:18px}}
-@media (max-width: 1040px){.nav .brand-note{display:none}}
 @media (max-width: 900px){.nav-links .nav-link,.nav .brand-note{display:none}}
 
 /* =========================================================
