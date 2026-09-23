@@ -3,7 +3,7 @@
  * so renderiza o que esta aqui. Copy revisada no tom da campanha Reforma 2027.
  */
 
-/* ---------- Etapas do credito (hero e tabela da nova logica) ---------- */
+/* ---------- Etapas do credito (card do hero) ---------- */
 
 export type EstadoEtapa = "done" | "pending" | "locked";
 
@@ -14,8 +14,6 @@ export interface Etapa {
   ico: string; // paths SVG (viewBox 24)
   estado: EstadoEtapa;
   status: string;
-  risco: { k: string; t: string; d: string };
-  ajuda: { t: string; tag: string };
 }
 
 const icoCompra = '<path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/>';
@@ -24,30 +22,10 @@ const icoForn = '<path d="M3 6h11v9H3z"/><path d="M14 9h4l3 3v3h-7z"/><circle cx
 const icoCadeado = '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>';
 
 export const etapas: Etapa[] = [
-  {
-    n: "01", titulo: "Compra", texto: "O fornecedor vende e emite a nota.", ico: icoCompra,
-    estado: "done", status: "Nota emitida",
-    risco: { k: "Compras", t: "O mais barato pode sair mais caro.", d: "Menos crédito, custo final maior." },
-    ajuda: { t: "Compara fornecedores pelo custo depois do crédito, não pelo preço da nota.", tag: "Análise por IA" },
-  },
-  {
-    n: "02", titulo: "Pagamento", texto: "Você paga por guia, split ou RAD.", ico: icoPag,
-    estado: "done", status: "Pago",
-    risco: { k: "Pagamento", t: "Forma de pagamento errada.", d: "Em algumas operações, split ou RAD protegem melhor o crédito." },
-    ajuda: { t: "Simula guia, split e RAD e indica a opção mais segura para cada operação.", tag: "Aprovação humana" },
-  },
-  {
-    n: "03", titulo: "Recolhimento", texto: "O fornecedor precisa recolher IBS/CBS.", ico: icoForn,
-    estado: "pending", status: "Sem confirmação",
-    risco: { k: "Fornecedor", t: "Recolhimento sem confirmação", d: "Se o fornecedor não recolhe, o crédito fica em risco." },
-    ajuda: { t: "Acompanha o recolhimento de cada fornecedor e avisa quando algo não bate.", tag: "Fonte verificada" },
-  },
-  {
-    n: "04", titulo: "Crédito", texto: "Só então o crédito volta para o caixa.", ico: icoCadeado,
-    estado: "locked", status: "Travado na etapa 3",
-    risco: { k: "Caixa", t: "Crédito fora do prazo.", d: "O caixa sente antes de todo mundo." },
-    ajuda: { t: "Projeta o efeito no caixa mês a mês e mostra onde aperta.", tag: "Análise por IA" },
-  },
+  { n: "01", titulo: "Compra", texto: "O fornecedor vende e emite a nota.", ico: icoCompra, estado: "done", status: "Nota emitida" },
+  { n: "02", titulo: "Pagamento", texto: "Você paga por guia, split ou RAD.", ico: icoPag, estado: "done", status: "Pago" },
+  { n: "03", titulo: "Recolhimento", texto: "O fornecedor precisa recolher IBS/CBS.", ico: icoForn, estado: "pending", status: "Sem confirmação" },
+  { n: "04", titulo: "Crédito", texto: "Só então o crédito volta para o caixa.", ico: icoCadeado, estado: "locked", status: "Travado na etapa 3" },
 ];
 
 export const mudancas = [
@@ -64,90 +42,104 @@ export const marcos = [
   { when: "2027 em diante", what: "Split payment e RAD entram aos poucos e são facultativos. Cada operação pede uma escolha." },
 ];
 
-/* ---------- Como opera (abas) ---------- */
+/* ---------- Jornada do credito (secao #credito) ---------- */
+/* Etapas e frentes numa jornada so. Cada etapa abre um painel com o risco, a
+   acao da Kontiva e o mockup que antes ficava na aba correspondente. Os
+   status repetem os do card do hero, de proposito. */
 
 export type Tom = "ok" | "risk" | "neutral";
-export interface Aba {
+export type EstadoJornada = "neutral" | "critical" | "attention";
+
+export interface EtapaJornada {
   id: string;
-  label: string;
-  title: string;
-  risk: string;
-  how: string;
-  metric: string;
+  n: string;
+  nome: string;
+  icon: "shoppingCart" | "wallet" | "shieldAlert" | "trendingDown";
+  status: string;
+  estado: EstadoJornada;
+  falha: { t: string; d: string };
+  kontiva: string;
+  tag: string;
+  exemplo: string;
   cta: string;
-  screen: string;
-  screenTag: string;
-  rows: { b: string; s: string; badge: string; tone: Tom }[];
-  toggle?: string;
+  mock: {
+    screen: string;
+    screenTag: string;
+    rows: { b: string; s: string; badge: string; tone: Tom }[];
+    toggle?: string;
+  };
 }
 
-export const abas: Aba[] = [
+export const jornada: EtapaJornada[] = [
   {
-    id: "credito",
-    label: "Crédito",
-    title: "Seu crédito depende de quem vende para você.",
-    risk: "Você descobre o crédito que não veio quando o caixa já sentiu.",
-    how: "Confere nota e recolhimento de cada fornecedor e mostra quem gera crédito e quem precisa de revisão.",
-    metric: "R$ 214.700 em crédito sob revisão. 7 fornecedores exigem revisão.",
-    cta: "Ver meu risco de crédito",
-    screen: "Fornecedores",
-    screenTag: "Risco de crédito",
-    rows: [
-      { b: "Aurora Insumos", s: "recolhimento confirmado", badge: "Gera crédito", tone: "ok" },
-      { b: "Nordeste Log", s: "crédito parcial", badge: "Simples", tone: "neutral" },
-      { b: "Vertex Peças", s: "sem confirmação", badge: "Revisar", tone: "risk" },
-      { b: "Meta Serviços", s: "sem confirmação", badge: "Revisar", tone: "risk" },
-    ],
-  },
-  {
-    id: "compras",
-    label: "Compras",
-    title: "O fornecedor mais barato pode sair mais caro.",
-    risk: "Comparar pelo preço da nota esconde o custo real depois do crédito.",
-    how: "Compara fornecedores pelo custo real, com crédito, regime e forma de pagamento na conta.",
-    metric: "Fornecedor A × Fornecedor B, custo depois do crédito.",
+    id: "compra", n: "01", nome: "Compra", icon: "shoppingCart", status: "Nota emitida", estado: "neutral",
+    falha: { t: "O mais barato pode sair mais caro.", d: "Menos crédito, custo final maior." },
+    kontiva: "Compara fornecedores pelo custo real, com crédito, regime e forma de pagamento na conta.",
+    tag: "Análise por IA",
+    exemplo: "Fornecedor A × Fornecedor B, custo depois do crédito.",
     cta: "Comparar meus fornecedores",
-    screen: "Comparativo de compra",
-    screenTag: "Custo depois do crédito",
-    rows: [
-      { b: "Fornecedor A", s: "menor preço bruto", badge: "Maior risco de crédito", tone: "risk" },
-      { b: "Fornecedor B", s: "preço maior", badge: "Crédito mais previsível", tone: "ok" },
-      { b: "Custo real", s: "mesmo cenário, mesmo prazo", badge: "Para decisão", tone: "neutral" },
-    ],
+    mock: {
+      screen: "Comparativo de compra", screenTag: "Custo depois do crédito",
+      rows: [
+        { b: "Fornecedor A", s: "menor preço bruto", badge: "Maior risco de crédito", tone: "risk" },
+        { b: "Fornecedor B", s: "preço maior", badge: "Crédito mais previsível", tone: "ok" },
+        { b: "Custo real", s: "mesmo cenário, mesmo prazo", badge: "Para decisão", tone: "neutral" },
+      ],
+    },
   },
   {
-    id: "margem",
-    label: "Preço",
-    title: "O contrato pode perder margem sem o preço mudar.",
-    risk: "Contrato reajustado só por índice não enxerga o novo custo tributário.",
-    how: "Cruza contratos e custos com IBS/CBS e aponta quais preços revisar. O reajuste só sai com aprovação do seu time.",
-    metric: "Contrato de 24 meses, margem pressionada, revisão recomendada.",
-    cta: "Avaliar minha margem",
-    screen: "Contratos e preços",
-    screenTag: "Memória de cálculo",
-    rows: [
-      { b: "Contrato 24 meses", s: "reajuste por IPCA", badge: "Margem pressionada", tone: "risk" },
-      { b: "Custo tributário novo", s: "IBS/CBS por fora", badge: "Recalculado", tone: "neutral" },
-      { b: "Preço sob revisão", s: "com memória de cálculo", badge: "Para aprovação", tone: "ok" },
-    ],
-    toggle: "Nada é aplicado sem aprovação do seu time",
-  },
-  {
-    id: "caixa",
-    label: "Caixa",
-    title: "O caixa sente antes de todo mundo.",
-    risk: "Prazo de crédito e forma de recolhimento mudam o capital de giro sem aviso.",
-    how: "Simula recolhimento tradicional, split e RAD nas operações elegíveis e mostra o efeito no caixa mês a mês.",
-    metric: "Cenário tradicional × split/RAD, impacto mês a mês.",
+    id: "pagamento", n: "02", nome: "Pagamento", icon: "wallet", status: "Pago", estado: "neutral",
+    falha: { t: "Forma de pagamento errada.", d: "Em algumas operações, split ou RAD protegem melhor o crédito." },
+    kontiva: "Simula guia, split e RAD nas operações elegíveis e mostra o efeito no capital de giro mês a mês.",
+    tag: "Aprovação humana",
+    exemplo: "Cenário tradicional × split/RAD, impacto mês a mês.",
     cta: "Simular meu caixa",
-    screen: "Fluxo de caixa",
-    screenTag: "Simulação mês a mês",
-    rows: [
-      { b: "Recolhimento tradicional", s: "crédito com prazo de restituição", badge: "Cenário 1", tone: "neutral" },
-      { b: "Split/RAD", s: "operações elegíveis: crédito mais protegido, possível impacto no capital de giro", badge: "Facultativo", tone: "neutral" },
-      { b: "Capital de giro", s: "em jogo conforme fornecedor, forma de pagamento e estratégia de recolhimento", badge: "A simular", tone: "risk" },
-    ],
-    toggle: "Comparar: cenário tradicional × split/RAD",
+    mock: {
+      screen: "Fluxo de caixa", screenTag: "Simulação mês a mês",
+      rows: [
+        { b: "Recolhimento tradicional", s: "crédito com prazo de restituição", badge: "Cenário 1", tone: "neutral" },
+        { b: "Split/RAD", s: "operações elegíveis: crédito mais protegido, possível impacto no capital de giro", badge: "Facultativo", tone: "neutral" },
+        { b: "Capital de giro", s: "em jogo conforme fornecedor, forma de pagamento e estratégia de recolhimento", badge: "A simular", tone: "risk" },
+      ],
+      toggle: "Comparar: cenário tradicional × split/RAD",
+    },
+  },
+  {
+    id: "recolhimento", n: "03", nome: "Recolhimento", icon: "shieldAlert", status: "Sem confirmação", estado: "critical",
+    falha: { t: "Recolhimento sem confirmação.", d: "Se o fornecedor não recolhe, o crédito fica em risco." },
+    kontiva: "Acompanha o recolhimento de cada fornecedor e mostra quem gera crédito e quem precisa de revisão.",
+    tag: "Fonte verificada",
+    exemplo: "R$ 214.700 em crédito sob revisão. 7 fornecedores exigem revisão.",
+    cta: "Ver meu risco de crédito",
+    mock: {
+      screen: "Fornecedores", screenTag: "Risco de crédito",
+      rows: [
+        { b: "Aurora Insumos", s: "recolhimento confirmado", badge: "Gera crédito", tone: "ok" },
+        { b: "Nordeste Log", s: "crédito parcial", badge: "Simples", tone: "neutral" },
+        { b: "Vertex Peças", s: "sem confirmação", badge: "Revisar", tone: "risk" },
+        { b: "Meta Serviços", s: "sem confirmação", badge: "Revisar", tone: "risk" },
+      ],
+    },
+  },
+  {
+    id: "caixa-margem", n: "04", nome: "Caixa e margem", icon: "trendingDown", status: "Travado na etapa 3", estado: "attention",
+    falha: {
+      t: "O caixa sente antes de todo mundo.",
+      d: "O crédito que atrasa aperta o capital de giro, e o contrato que não foi revisto perde margem sem o preço mudar.",
+    },
+    kontiva: "Projeta o efeito no caixa mês a mês, cruza contratos com IBS/CBS e aponta quais preços revisar. O reajuste só sai com aprovação do seu time.",
+    tag: "Análise por IA",
+    exemplo: "Contrato de 24 meses, margem pressionada, revisão recomendada.",
+    cta: "Avaliar minha margem",
+    mock: {
+      screen: "Contratos e preços", screenTag: "Memória de cálculo",
+      rows: [
+        { b: "Contrato 24 meses", s: "reajuste por IPCA", badge: "Margem pressionada", tone: "risk" },
+        { b: "Custo tributário novo", s: "IBS/CBS por fora", badge: "Recalculado", tone: "neutral" },
+        { b: "Preço sob revisão", s: "com memória de cálculo", badge: "Para aprovação", tone: "ok" },
+      ],
+      toggle: "Nada é aplicado sem aprovação do seu time",
+    },
   },
 ];
 

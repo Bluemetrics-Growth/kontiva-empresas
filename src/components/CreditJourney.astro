@@ -1,0 +1,188 @@
+---
+// 03 - Jornada do credito. Funde as etapas do credito (antiga tabela) com as
+// frentes (antigas abas de #produto): cada etapa e uma aba que abre o painel
+// com onde pode falhar, o que a Kontiva faz e o mockup da frente.
+// Desktop: padrao ARIA de tabs (setas, Home, End). Ate 860px vira acordeao
+// (aria-expanded) e o script move cada painel para logo abaixo da etapa.
+// A linha do trilho e solida ate a etapa 02 e tracejada a partir da 03, onde
+// o credito trava.
+import Icon from "./Icon.astro";
+import { jornada, mudancas } from "../../content/secoes";
+import { CTA_ANCORA } from "../../content/site";
+import { seloExemplo } from "../../content/facts";
+
+const segs = ["solid", "fade", "broken"];
+---
+<section class="bg-alt" id="credito" aria-labelledby="hook-h">
+  <div class="shell">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot-cyan"></span> O número que você não acompanha</div>
+      <h2 id="hook-h">Nota certa não garante mais <span class="serif-accent">crédito</span>.</h2>
+      <p class="lead">Com IBS e CBS, uma nota correta pode não gerar crédito se o fornecedor não recolher. Quem não acompanha acaba pagando o imposto dos outros.</p>
+    </div>
+
+    <ul class="mud" aria-label="O que mudou com a reforma">
+      {mudancas.map((m) => <li>{m}</li>)}
+    </ul>
+
+    <div class="jr" data-journey>
+      <p class="jr-sub" id="jr-sub">Onde o crédito pode travar, e o que a Kontiva faz em cada etapa.</p>
+
+      <div class="jr-rail" id="produto" role="tablist" aria-labelledby="jr-sub">
+        {jornada.map((e, i) => (
+          <button
+            type="button" class={`jr-tab is-${e.estado}`} role="tab"
+            id={`jr-tab-${e.id}`} aria-controls={`jr-panel-${e.id}`}
+            aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? "0" : "-1"}
+            data-step={e.id} data-name={e.nome} data-seg={segs[i]} data-seg-prev={segs[i - 1]}
+          >
+            <span class="jr-node"><Icon name={e.icon} size={20} /></span>
+            <span class="jr-meta">
+              <span class="jr-n">Etapa {e.n}</span>
+              <span class="jr-name">{e.nome}</span>
+              <span class="jr-status"><i aria-hidden="true"></i>{e.status}</span>
+              {e.estado === "critical" && <span class="jr-flag">Ponto crítico</span>}
+            </span>
+            <Icon name="chevronDown" size={18} class="jr-chev" />
+          </button>
+        ))}
+      </div>
+
+      <div class="jr-panels">
+        {jornada.map((e, i) => (
+          <div class={`jr-panel is-${e.estado}`} id={`jr-panel-${e.id}`} role="tabpanel" aria-labelledby={`jr-tab-${e.id}`} tabindex="0" data-seg={segs[i]} hidden={i !== 0}>
+            <div class="jr-copy">
+              <div class="jr-fail">
+                <Icon name="alertTriangle" size={18} class="jr-ico" />
+                <div>
+                  <span class="jr-k">Onde pode falhar</span>
+                  <strong>{e.falha.t}</strong>
+                  <p>{e.falha.d}</p>
+                </div>
+              </div>
+              <div class="jr-do">
+                <Icon name="checkCircle" size={22} class="jr-ico" />
+                <div>
+                  <span class="jr-k">O que a Kontiva faz</span>
+                  <p>{e.kontiva}</p>
+                  <span class="jr-chip">{e.tag}</span>
+                </div>
+              </div>
+              <p class="jr-ex"><span class="jr-ex-tag">Exemplo ilustrativo</span> {e.exemplo}</p>
+              <a href={CTA_ANCORA} class="link-cta" data-cta="journey" data-step={e.id}>{e.cta}</a>
+            </div>
+            <div class="jr-visual">
+              <div class="sheet" aria-hidden="true">
+                <div class="sheet-head">{e.mock.screen} <span class="sheet-tag">{e.mock.screenTag}</span></div>
+                <div class="sheet-body">
+                  {e.mock.rows.map((r) => (
+                    <div class="sheet-row"><b>{r.b}</b><span>{r.s}</span><span class={`pill is-${r.tone}`}>{r.badge}</span></div>
+                  ))}
+                </div>
+                {e.mock.toggle && <div class="sheet-toggle"><span class="sw"></span> {e.mock.toggle}</div>}
+                <div class="sheet-foot">{seloExemplo}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p class="etp-note">Basta <b>um fornecedor</b> falhar para o crédito travar.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-journey]");
+  if (root) {
+    const rail = root.querySelector<HTMLElement>(".jr-rail")!;
+    const panelsWrap = root.querySelector<HTMLElement>(".jr-panels")!;
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>(".jr-tab"));
+    const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls") || "") as HTMLElement);
+    const mq = window.matchMedia("(max-width: 860px)");
+    let active = 0;
+    let accordion = false;
+
+    const viewed = new Set<string>();
+    const fireView = (i: number) => {
+      const name = tabs[i].dataset.name || "";
+      if (viewed.has(name)) return;
+      viewed.add(name);
+      const w = window as any;
+      if (typeof w.__ktrack === "function") w.__ktrack("product_tab_view", { tab: name });
+    };
+
+    const render = () => {
+      tabs.forEach((t, i) => {
+        const on = i === active;
+        panels[i].hidden = !on;
+        if (accordion) {
+          t.setAttribute("aria-expanded", on ? "true" : "false");
+          t.tabIndex = 0;
+        } else {
+          t.setAttribute("aria-selected", on ? "true" : "false");
+          t.tabIndex = on ? 0 : -1;
+        }
+        t.classList.toggle("is-open", on);
+      });
+    };
+
+    const setMode = () => {
+      accordion = mq.matches;
+      root.classList.toggle("is-accordion", accordion);
+      if (accordion) {
+        rail.removeAttribute("role");
+        tabs.forEach((t, i) => {
+          t.removeAttribute("role");
+          t.removeAttribute("aria-selected");
+          panels[i].setAttribute("role", "region");
+          t.after(panels[i]);
+        });
+      } else {
+        rail.setAttribute("role", "tablist");
+        tabs.forEach((t, i) => {
+          t.setAttribute("role", "tab");
+          t.removeAttribute("aria-expanded");
+          panels[i].setAttribute("role", "tabpanel");
+          panelsWrap.appendChild(panels[i]);
+        });
+        if (active < 0) active = 0; // no desktop sempre ha uma etapa aberta
+      }
+      render();
+    };
+
+    const select = (i: number, focus = false) => {
+      active = accordion && active === i ? -1 : i; // no acordeao, clicar na aberta fecha
+      render();
+      if (focus) tabs[i].focus();
+      if (active >= 0) fireView(active);
+    };
+
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(i));
+      t.addEventListener("keydown", (e) => {
+        if (accordion) return;
+        const last = tabs.length - 1;
+        let next = -1;
+        if (e.key === "ArrowRight") next = i === last ? 0 : i + 1;
+        else if (e.key === "ArrowLeft") next = i === 0 ? last : i - 1;
+        else if (e.key === "Home") next = 0;
+        else if (e.key === "End") next = last;
+        if (next < 0) return;
+        e.preventDefault();
+        select(next, true);
+      });
+    });
+
+    mq.addEventListener("change", setMode);
+    setMode();
+
+    // primeira etapa: product_tab_view quando a jornada entra na tela
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((en) => {
+        if (en[0].isIntersecting) { if (active >= 0) fireView(active); io.disconnect(); }
+      }, { threshold: 0.3 });
+      io.observe(root);
+    }
+  }
+</script>

@@ -212,63 +212,104 @@ p.lead{font-size:var(--fs-lead);line-height:1.5;color:var(--cinza-escuro)}
 @media (max-width: 420px){.cd-unit{padding:0 8px}.cd-lbl{font-size:9.5px;letter-spacing:.06em}}
 
 /* =========================================================
-   03 A NOVA LOGICA DO CREDITO
+   03 JORNADA DO CREDITO (etapas + frentes)
    ========================================================= */
-.mud{list-style:none;margin:0 0 40px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.mud{list-style:none;margin:0 0 64px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
 .mud li{padding-top:16px;border-top:3px solid var(--azul-profundo);font-size:18px;line-height:1.35;font-weight:700;letter-spacing:-.01em;color:var(--azul-profundo);max-width:26ch}
-.etp-wrap{background:var(--branco);border:1px solid var(--border-on-light-strong);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-card)}
-.etp{width:100%;border-collapse:collapse;text-align:left}
-.etp thead th{padding:14px 24px;background:#f9fafc;border-bottom:1px solid var(--border-on-light-strong);font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-secondary)}
-.etp thead th:first-child{width:24%}
-.etp tbody th,.etp tbody td{padding:22px 24px;vertical-align:top;border-top:1px solid var(--border-on-light)}
-.etp tbody tr:first-child th,.etp tbody tr:first-child td{border-top:none}
-.etp-n{display:block;font-family:var(--font-mono);font-size:12px;font-weight:600;color:color-mix(in oklab,var(--ciano) 45%,var(--azul-profundo))}
-.etp-t{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:4px;font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--azul-profundo)}
-.etp-flag{font-style:normal;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:var(--r-pill);color:var(--risco-fg);background:color-mix(in srgb,var(--risco-amber) 20%,transparent)}
-.etp td strong{display:block;font-size:15.5px;line-height:1.35;color:var(--azul-profundo)}
-.etp td p{margin-top:4px;font-size:14.5px;line-height:1.55;color:var(--text-body);max-width:46ch}
-.etp td strong+p{margin-top:4px}
-.etp tr.is-crit th,.etp tr.is-crit td{background:color-mix(in srgb,var(--risco-amber) 9%,white)}
-.etp tr.is-crit th{box-shadow:inset 4px 0 0 var(--risco-amber)}
-.etp tr.is-crit .etp-n{color:var(--risco-fg)}
-.etp-note{margin-top:20px;font-size:15px;font-weight:600;color:var(--azul-profundo)}
-.etp-note b{color:var(--risco-terracota)}
-@media (max-width: 860px){
-  .mud{grid-template-columns:1fr;gap:18px}
-  .mud li{max-width:none}
-  .etp,.etp tbody,.etp tr,.etp th,.etp td{display:block}
-  .etp thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-  .etp tbody tr{padding:20px;border-top:1px solid var(--border-on-light-strong)}
-  .etp tbody tr:first-child{border-top:none}
-  .etp tbody th,.etp tbody td{padding:0;border:none;background:none!important}
-  .etp tr.is-crit{background:color-mix(in srgb,var(--risco-amber) 9%,white);box-shadow:inset 4px 0 0 var(--risco-amber)}
-  .etp tr.is-crit th{box-shadow:none}
-  .etp tbody td{margin-top:14px}
-  .etp tbody td:before{content:attr(data-l);display:block;margin-bottom:4px;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-secondary)}
-}
+.jr{--node:48px;--pad:18px;--gap:12px;--seg-solid:color-mix(in oklab,var(--ciano) 55%,var(--azul-profundo))}
+.jr-sub{font-size:clamp(20px,2vw,26px);line-height:1.25;font-weight:700;letter-spacing:-.02em;color:var(--azul-profundo);max-width:34ch;margin-bottom:28px}
 
-/* =========================================================
-   04 COMO OPERA (abas)
-   ========================================================= */
-.ptab-btns{display:flex;gap:4px;border-bottom:1px solid var(--border-on-light-strong);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.ptab-btns::-webkit-scrollbar{display:none}
-.ptab-btn{appearance:none;background:transparent;border:none;cursor:pointer;white-space:nowrap;font-family:var(--font-body);font-size:15px;font-weight:600;color:var(--text-secondary);padding:14px 16px;position:relative;border-radius:var(--r-sm) var(--r-sm) 0 0}
-.ptab-btn:hover{color:var(--azul-profundo)}
-.ptab-btn[aria-selected="true"]{color:var(--azul-profundo)}
-.ptab-btn[aria-selected="true"]:after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:3px;background:var(--ciano);border-radius:3px 3px 0 0}
-.ptab-btn:focus-visible{outline-offset:-3px}
-.ptab-panel{margin-top:40px}
-.ptab-panel:not([hidden]){display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(32px,5vw,64px);align-items:center}
-.ptab-panel:focus-visible{outline-offset:8px}
-.pt-copy h3{font-size:clamp(22px,2.4vw,30px);line-height:1.15}
-.pt-pair{margin:22px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.pt-pair>div{padding-left:14px;border-left:2px solid var(--border-on-light-strong)}
-.pt-pair>.pt-how{border-left-color:var(--ciano)}
-.pt-pair dt{font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-secondary)}
-.pt-pair dd{margin:6px 0 0;font-size:15px;line-height:1.55;color:var(--text-body)}
-.pt-metric{margin:22px 0;font-family:var(--font-mono);font-size:13px;font-weight:600;line-height:1.6;color:color-mix(in oklab,var(--ciano) 35%,var(--azul-profundo))}
-.pt-metric-tag{display:inline-block;margin-right:6px;padding:2px 8px;border-radius:var(--r-pill);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-secondary);background:var(--cinza-claro);vertical-align:1px}
-.pt-visual{min-width:0}
+/* trilho: 4 etapas ligadas por uma linha que quebra na 03 */
+.jr-rail{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+.jr-tab{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:16px;min-width:0;padding:var(--pad);border:1px solid transparent;border-radius:var(--r-lg);background:transparent;font:inherit;text-align:left;color:var(--azul-profundo);cursor:pointer;transition:background .18s ease,border-color .18s ease}
+.jr-tab:hover{background:var(--branco);border-color:var(--border-on-light-strong)}
+.jr-tab:focus-visible{outline-offset:3px}
+.jr-node{position:relative;z-index:2;flex:none;width:var(--node);height:var(--node);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--branco);border:1.5px solid var(--border-on-light-strong);color:var(--azul-profundo)}
+.jr-meta{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+.jr-n{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary)}
+.jr-name{font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.jr-status{display:inline-flex;align-items:center;gap:7px;margin-top:4px;font-family:var(--font-mono);font-size:11.5px;font-weight:600;color:var(--text-secondary)}
+.jr-status i{width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.jr-flag{margin-top:8px;padding:3px 9px;border-radius:var(--r-pill);font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--risco-fg);background:color-mix(in srgb,var(--risco-amber) 20%,transparent)}
+.jr-chev{display:none}
+/* segmentos da linha (desktop: do no desta etapa ao no da proxima) */
+.jr-tab[data-seg]:after{content:"";position:absolute;z-index:1;top:calc(var(--pad) + var(--node) / 2 - 1px);left:calc(var(--pad) + var(--node));width:calc(100% - var(--node) + var(--gap));height:2px;border-radius:2px;background:var(--seg-solid)}
+.jr-tab[data-seg="fade"]:after{background:linear-gradient(90deg,var(--seg-solid),var(--risco-amber))}
+.jr-tab[data-seg="broken"]:after{background:repeating-linear-gradient(90deg,var(--risco-amber) 0 6px,transparent 6px 13px);left:calc(var(--pad) + var(--node) + 10px);width:calc(100% - var(--node) + var(--gap) - 10px)}
+/* estados */
+.jr-tab.is-critical .jr-node{border:2px solid var(--risco-amber);color:var(--risco-fg);box-shadow:0 0 0 5px color-mix(in srgb,var(--risco-amber) 18%,transparent)}
+.jr-tab.is-critical .jr-status{color:var(--risco-fg)}
+.jr-tab.is-attention .jr-node{border:1.5px dashed color-mix(in srgb,var(--risco-amber) 75%,var(--azul-profundo));color:var(--risco-fg)}
+.jr-tab.is-attention .jr-status{color:var(--risco-fg)}
+/* etapa selecionada: fundo navy, icone ciano */
+.jr-tab[aria-selected="true"],.jr-tab.is-open{background:var(--azul-profundo);border-color:var(--azul-profundo);color:var(--branco);box-shadow:var(--shadow-dark)}
+.jr-tab[aria-selected="true"] .jr-node,.jr-tab.is-open .jr-node{background:var(--azul-profundo-2);border-color:var(--ciano);color:var(--ciano)}
+.jr-tab.is-critical[aria-selected="true"] .jr-node,.jr-tab.is-critical.is-open .jr-node{border-color:var(--risco-amber)}
+.jr-tab[aria-selected="true"] .jr-n,.jr-tab.is-open .jr-n{color:color-mix(in oklab,var(--ciano) 60%,var(--claro-escuro))}
+.jr-tab[aria-selected="true"] .jr-status,.jr-tab.is-open .jr-status{color:color-mix(in srgb,var(--claro-escuro) 78%,transparent)}
+.jr-tab.is-critical[aria-selected="true"] .jr-status,.jr-tab.is-critical.is-open .jr-status,.jr-tab.is-attention[aria-selected="true"] .jr-status,.jr-tab.is-attention.is-open .jr-status{color:var(--risco-amber)}
+.jr-tab[aria-selected="true"] .jr-flag,.jr-tab.is-open .jr-flag{color:#FBD3B4;background:color-mix(in srgb,var(--risco-amber) 26%,transparent)}
+
+/* painel da etapa */
+.jr-panels{margin-top:36px}
+.jr-panel:not([hidden]){display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(28px,4.5vw,64px);align-items:start}
+.jr-panel:focus-visible{outline-offset:8px}
+.jr-copy{display:flex;flex-direction:column;align-items:flex-start}
+.jr-fail,.jr-do{display:grid;grid-template-columns:auto 1fr;gap:14px;width:100%}
+.jr-k{display:block;font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+/* falha: contido, sem caixa */
+.jr-fail{padding:0 4px 22px}
+.jr-fail .jr-ico{margin-top:1px;color:var(--risco-amber)}
+.jr-fail .jr-k{color:var(--risco-fg)}
+.jr-fail strong{display:block;margin-top:6px;font-size:16px;line-height:1.35;color:var(--azul-profundo)}
+.jr-fail p{margin-top:4px;font-size:14.5px;line-height:1.55;color:var(--text-body);max-width:46ch}
+/* o que a Kontiva faz: o protagonista */
+.jr-do{padding:22px 24px;border-radius:var(--r-lg);background:var(--azul-profundo);box-shadow:var(--shadow-dark)}
+.jr-do .jr-ico{margin-top:1px;color:var(--ciano)}
+.jr-do .jr-k{color:color-mix(in oklab,var(--ciano) 70%,var(--claro-escuro))}
+.jr-do p{margin-top:8px;font-size:17px;line-height:1.5;font-weight:500;color:var(--branco);max-width:44ch}
+.jr-chip{display:inline-block;margin-top:14px;padding:4px 11px;border-radius:var(--r-pill);font-family:var(--font-mono);font-size:10.5px;font-weight:600;color:var(--ciano);border:1px solid color-mix(in srgb,var(--ciano) 45%,transparent)}
+.jr-ex{margin:22px 0 18px;font-family:var(--font-mono);font-size:13px;font-weight:600;line-height:1.6;color:color-mix(in oklab,var(--ciano) 35%,var(--azul-profundo))}
+.jr-ex-tag{display:inline-block;margin-right:6px;padding:2px 8px;border-radius:var(--r-pill);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-secondary);background:var(--branco);vertical-align:1px}
+.jr-visual{min-width:0}
+.etp-note{margin-top:40px;font-size:15px;font-weight:600;color:var(--azul-profundo)}
+.etp-note b{color:var(--risco-terracota)}
+@media (prefers-reduced-motion: no-preference){
+  .jr-panel:not([hidden]){animation:jr-in .18s ease both}
+}
+@keyframes jr-in{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion: reduce){.jr-tab{transition:none}}
+
+/* ate 860px: acordeao vertical, linha a esquerda passando pelos paineis */
+@media (max-width: 860px){
+  .mud{grid-template-columns:1fr;gap:18px;margin-bottom:48px}
+  .mud li{max-width:none}
+  .jr{--node:44px;--pad:14px}
+  .jr-rail{grid-template-columns:1fr;gap:0}
+  .jr-tab{flex-direction:row;align-items:flex-start;gap:14px;width:100%;border-radius:var(--r-md)}
+  .jr-tab:hover{background:transparent;border-color:transparent}
+  .jr-meta{flex:1;padding-top:2px}
+  .jr-chev{display:block;flex:none;margin-top:12px;color:var(--text-secondary);transition:transform .18s ease}
+  .jr-tab.is-open .jr-chev{transform:rotate(180deg);color:var(--ciano)}
+  .jr-tab[data-seg]:after{top:calc(var(--pad) + var(--node));bottom:0;left:calc(var(--pad) + var(--node) / 2 - 1px);width:2px;height:auto}
+  .jr-tab[data-seg-prev]:before{content:"";position:absolute;z-index:1;top:0;height:var(--pad);left:calc(var(--pad) + var(--node) / 2 - 1px);width:2px;background:var(--seg-solid)}
+  .jr-tab[data-seg-prev="fade"]:before{background:var(--risco-amber)}
+  .jr-tab[data-seg-prev="broken"]:before{background:repeating-linear-gradient(180deg,var(--risco-amber) 0 6px,transparent 6px 13px)}
+  .jr-tab[data-seg="fade"]:after{background:linear-gradient(180deg,var(--seg-solid),var(--risco-amber))}
+  .jr-tab[data-seg="broken"]:after{top:calc(var(--pad) + var(--node) + 8px);left:calc(var(--pad) + var(--node) / 2 - 1px);width:2px;background:repeating-linear-gradient(180deg,var(--risco-amber) 0 6px,transparent 6px 13px)}
+  .jr-tab.is-open:after,.jr-tab.is-open:before{opacity:.9}
+  .jr-panels{margin-top:0}
+  .jr.is-accordion .jr-panel:not([hidden]){display:block;margin-left:calc(var(--pad) + var(--node) / 2 - 1px);padding:18px 0 28px calc(var(--node) / 2 + 13px);border-left:2px solid var(--seg-solid)}
+  .jr.is-accordion .jr-panel[data-seg="fade"]{border-left-color:var(--risco-amber)}
+  .jr.is-accordion .jr-panel[data-seg="broken"]{border-left:2px dashed var(--risco-amber)}
+  .jr.is-accordion .jr-panel:last-child{border-left-color:transparent}
+  .jr-visual{margin-top:22px}
+  .jr-do{padding:18px}
+  .jr-do p{font-size:16px}
+  .etp-note{margin-top:28px}
+}
+@media (prefers-reduced-motion: reduce){.jr-chev{transition:none}}
+
 .sheet{background:var(--branco);border:1px solid var(--border-on-light-strong);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-card)}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 18px;border-bottom:1px solid var(--border-on-light);font-family:var(--font-mono);font-size:11.5px;font-weight:600;color:var(--azul-profundo)}
 .sheet-tag{font-size:10.5px;color:color-mix(in oklab,var(--ciano) 40%,var(--azul-profundo))}
@@ -281,8 +322,7 @@ p.lead{font-size:var(--fs-lead);line-height:1.5;color:var(--cinza-escuro)}
 .sheet-toggle .sw{width:34px;height:20px;border-radius:99px;background:color-mix(in oklab,var(--ciano) 40%,var(--cinza-claro));position:relative;flex:none}
 .sheet-toggle .sw:after{content:"";position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:var(--branco);box-shadow:0 1px 2px rgba(0,0,0,.2)}
 .sheet-foot{padding:10px 18px;border-top:1px solid var(--border-on-light);background:#f9fafc;font-size:11.5px;color:var(--text-secondary)}
-@media (max-width: 900px){.ptab-panel:not([hidden]){grid-template-columns:1fr}}
-@media (max-width: 520px){.pt-pair{grid-template-columns:1fr}}
+@media (max-width: 520px){.sheet-row{grid-template-columns:1fr}.sheet-row .pill{grid-column:1;grid-row:auto;justify-self:start;margin-top:8px}}
 
 /* =========================================================
    05 TELAS REAIS
