@@ -50,6 +50,20 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
+    <!-- Foto do hero (above the fold): preload por breakpoint para proteger o LCP -->
+    <link
+      rel="preload" as="image" media="(min-width: 861px)"
+      href="/images/hero-kontiva-empresas-1280.avif" type="image/avif"
+      imagesrcset="/images/hero-kontiva-empresas-800.avif 800w, /images/hero-kontiva-empresas-1280.avif 1280w, /images/hero-kontiva-empresas-1672.avif 1672w"
+      imagesizes="100vw" fetchpriority="high"
+    />
+    <link
+      rel="preload" as="image" media="(max-width: 860px)"
+      href="/images/hero-kontiva-empresas-m-640.avif" type="image/avif"
+      imagesrcset="/images/hero-kontiva-empresas-m-640.avif 640w, /images/hero-kontiva-empresas-m-900.avif 900w"
+      imagesizes="100vw" fetchpriority="high"
+    />
+
     <!-- Fontes do design system -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

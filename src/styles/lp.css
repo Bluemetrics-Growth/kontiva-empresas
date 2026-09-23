@@ -100,17 +100,32 @@ p.lead{font-size:var(--fs-lead);line-height:1.5;color:var(--cinza-escuro)}
 /* =========================================================
    01 HERO + CADEIA DO CREDITO
    ========================================================= */
-.hero{background:var(--azul-profundo);color:var(--claro-escuro);padding:clamp(56px,8vw,104px) 0 clamp(56px,7vw,88px);overflow:hidden;isolation:isolate}
-.hero:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--grid-on-dark) 1px,transparent 1px),linear-gradient(90deg,var(--grid-on-dark) 1px,transparent 1px);background-size:var(--grid-size) var(--grid-size);-webkit-mask-image:radial-gradient(90% 90% at 20% 0%,#000 0%,transparent 75%);mask-image:radial-gradient(90% 90% at 20% 0%,#000 0%,transparent 75%)}
-.hero:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(760px circle at 88% 0%,color-mix(in oklab,var(--ciano) 14%,transparent),transparent 60%),radial-gradient(620px circle at 0% 100%,color-mix(in oklab,var(--ciano) 7%,transparent),transparent 60%)}
-.hero-top{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,72px);align-items:end}
+.hero{background:var(--azul-profundo);color:var(--claro-escuro);padding:clamp(72px,9vw,120px) 0 clamp(56px,7vw,88px);overflow:hidden;isolation:isolate}
+/* foto full-bleed: pessoas no terco direito, topo ancorado para nao cortar cabecas */
+.hero-bg{position:absolute;inset:0;z-index:-3;pointer-events:none}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:78% top}
+/* overlay navy: escuro a esquerda (copy) e na base (cadeia), aberto sobre as pessoas */
+.hero:before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:
+  linear-gradient(180deg,transparent 0%,transparent 34%,color-mix(in srgb,var(--azul-profundo) 70%,transparent) 54%,color-mix(in srgb,var(--azul-profundo) 96%,transparent) 70%,var(--azul-profundo) 100%),
+  linear-gradient(101deg,color-mix(in srgb,var(--azul-profundo) 97%,transparent) 0%,color-mix(in srgb,var(--azul-profundo) 94%,transparent) 30%,color-mix(in srgb,var(--azul-profundo) 78%,transparent) 46%,color-mix(in srgb,var(--azul-profundo) 38%,transparent) 60%,color-mix(in srgb,var(--azul-profundo) 8%,transparent) 80%,transparent 100%)}
+/* grade do design system, mascarada so no lado esquerdo */
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.14;background-image:linear-gradient(rgba(255,255,255,.55) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.55) 1px,transparent 1px);background-size:var(--grid-size) var(--grid-size);-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 26%,transparent 60%);mask-image:linear-gradient(90deg,#000 0%,#000 26%,transparent 60%)}
+.hero-copy{width:min(56%,640px)}
 .hero .eyebrow{color:color-mix(in oklab,var(--ciano) 60%,var(--claro-escuro))}
-.hero h1{margin-top:22px;color:var(--branco);font-size:clamp(40px,5.4vw,76px);line-height:.98}
+.hero h1{margin-top:22px;color:var(--branco);font-size:clamp(40px,4.8vw,68px);line-height:1.02}
 .hero h1 .accent{font-family:var(--font-serif-italic);font-style:italic;font-weight:400;font-size:1.06em;padding-right:.04em;letter-spacing:-.01em;color:color-mix(in oklab,var(--ciano) 78%,white)}
-.hero p.hero-sub{color:color-mix(in srgb,var(--branco) 86%,transparent);max-width:34ch}
+.hero p.hero-sub{margin-top:22px;color:color-mix(in srgb,var(--branco) 86%,transparent);max-width:46ch}
 .hero-cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.hero-cta-note{margin-top:14px;font-size:13.5px;color:color-mix(in srgb,var(--branco) 72%,transparent);max-width:44ch}
-@media (max-width: 960px){.hero-top{grid-template-columns:1fr;gap:24px}.hero p.hero-sub{max-width:52ch}}
+.hero-cta-note{margin-top:14px;font-size:13.5px;color:color-mix(in srgb,var(--branco) 72%,transparent);max-width:52ch}
+@media (max-width: 860px){
+  .hero{padding-top:84px}
+  /* recorte 4:5 so no topo, dissolvendo no navy (mascara); overlay forte para contraste AA */
+  .hero-bg{bottom:auto;height:min(125vw,1100px)}
+  .hero-bg img{object-position:68% center;-webkit-mask-image:linear-gradient(180deg,#000 45%,transparent 100%);mask-image:linear-gradient(180deg,#000 45%,transparent 100%)}
+  .hero:before{background:color-mix(in srgb,var(--azul-profundo) 82%,transparent)}
+  .hero:after{opacity:.1;-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 40%);mask-image:linear-gradient(180deg,#000 0%,transparent 40%)}
+  .hero-copy{width:100%}
+}
 @media (max-width: 520px){.hero-cta-row .btn{width:100%}}
 
 .chain{--node:44px;--gap:24px;margin-top:clamp(48px,6vw,72px);padding-top:clamp(28px,3vw,40px);border-top:1px solid var(--hairline-dark)}
