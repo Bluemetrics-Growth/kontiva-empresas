@@ -18,7 +18,6 @@ export const whatsappHref = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURICompo
  * demo aparece junto dos CTAs principais.
  */
 export const CTA_PRIMARIO = "Agendar demo gratuita";
-export const CTA_SECUNDARIO = "Ver como funciona";
 export const CTA_HEADER = "Demo gratuita";
 export const CTA_ANCORA = "#agendar";
 

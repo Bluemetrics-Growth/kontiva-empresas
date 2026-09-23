@@ -4,7 +4,7 @@
 // cadeia do credito sobre o degrade navy da base da foto. Mobile: recorte
 // 4:5 no topo, que se dissolve no navy.
 import CreditChain from "./CreditChain.astro";
-import { CTA_PRIMARIO as CTA, CTA_SECUNDARIO, CTA_ANCORA } from "../../content/site";
+import { CTA_PRIMARIO as CTA, CTA_ANCORA } from "../../content/site";
 ---
 <section class="hero" id="topo" aria-labelledby="hero-h1">
   <picture class="hero-bg" aria-hidden="true">
@@ -27,9 +27,7 @@ import { CTA_PRIMARIO as CTA, CTA_SECUNDARIO, CTA_ANCORA } from "../../content/s
       <p class="lead hero-sub">Imposto deixa de ser assunto só do contador. A Kontiva cruza suas notas com cada fornecedor, contrato e pagamento, mostra em reais onde agir primeiro e espera a aprovação do seu time.</p>
       <div class="hero-cta-row">
         <a href={CTA_ANCORA} class="btn btn-primary btn-lg" data-cta="hero">{CTA}</a>
-        <a href="#produto" class="btn btn-ghost btn-lg" data-cta="hero-secondary">{CTA_SECUNDARIO}</a>
       </div>
-      <p class="hero-cta-note">Gratuita, com os seus dados. 1 CNPJ, 1 cenário. Para Lucro Presumido e Lucro Real.</p>
     </div>
     <CreditChain />
   </div>
