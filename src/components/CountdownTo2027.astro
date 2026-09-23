@@ -5,7 +5,7 @@
 // atualiza a cada segundo, nunca abaixo de zero.
 import { facts } from "../../content/facts";
 import { marcos } from "../../content/secoes";
-import { CTA_PRIMARIO, CTA_ANCORA, DEMO_LIMITE } from "../../content/site";
+import { CTA_PRIMARIO, CTA_ANCORA, DEMO_MICROCOPY } from "../../content/site";
 
 const TARGET = "2027-01-01T00:00:00-03:00";
 const unidades = [
@@ -19,8 +19,8 @@ const unidades = [
   <div class="shell cd-grid">
     <div class="cd-copy">
       <div class="eyebrow"><span class="dot-cyan"></span> Reforma 2027</div>
-      <h2 id="cd-h">Tempo para sua empresa chegar em 2027 com a operação <span class="serif-accent">preparada</span>.</h2>
-      <p class="cd-text">Em janeiro a CBS entra em regime pleno. Quem mapear a operação agora chega lá decidindo com número, não com susto.</p>
+      <h2 id="cd-h">Faltam poucos meses para o seu crédito depender de <span class="serif-accent">outra empresa</span>.</h2>
+      <p class="cd-text">Em 1º de janeiro a CBS entra em regime pleno e PIS e Cofins deixam de existir. Quem coloca o agente para mapear fornecedores agora chega em 2027 sabendo o número. Quem espera descobre no caixa.</p>
 
       <div class="cd-clock" id="cd-2027" data-target={TARGET} role="timer" aria-live="off" aria-label="Contagem regressiva até 1º de janeiro de 2027">
         {unidades.map((u) => (
@@ -45,7 +45,7 @@ const unidades = [
       </ol>
       <div class="cd-cta">
         <a href={CTA_ANCORA} class="btn btn-dark btn-lg" data-cta="countdown">{CTA_PRIMARIO}</a>
-        <p class="cta-limit">{DEMO_LIMITE}</p>
+        <p class="cta-limit">{DEMO_MICROCOPY}</p>
       </div>
     </div>
   </div>

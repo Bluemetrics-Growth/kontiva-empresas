@@ -60,7 +60,7 @@ export const mudancas = [
 /* ---------- Reforma 2027 ---------- */
 
 export const marcos = [
-  { when: "2026", what: "Hora de mapear fornecedores e créditos.", now: true },
+  { when: "2026", what: "O agente mapeia fornecedores e créditos.", now: true },
   { when: "Jan/2027", what: "CBS plena. Seu crédito passa a depender do recolhimento de quem vende para você." },
   { when: "A partir de 2027", what: "Split payment e RAD entram aos poucos e são facultativos. Cada operação pede uma escolha." },
 ];
