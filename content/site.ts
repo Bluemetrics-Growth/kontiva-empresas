@@ -23,7 +23,7 @@ export const CTA_HEADER = "Demo gratuita";
 export const CTA_ANCORA = "#agendar";
 
 /** Fronteira gratuito x pago. Texto unico usado em toda a pagina. */
-export const DEMO_LIMITE = "Demo com seus dados: 1 CNPJ, 1 cenário e resultado resumido.";
+export const DEMO_LIMITE = "Gratuita, com os seus dados: 1 CNPJ, 1 cenário.";
 
 /** Container GTM e identificador da LP nos eventos (PRD secao 10 e 20). */
 export const GTM_ID = "GTM-MNVPH77L";

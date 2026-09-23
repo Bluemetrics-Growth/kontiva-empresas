@@ -10,19 +10,27 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
 const sistemas = ["SAP", "TOTVS", "Oracle", "Senior", "Planilhas", "Outro"];
 const regimes = ["Lucro Presumido", "Lucro Real", "Simples", "Não sei"];
 const faixas = ["até R$ 20M", "R$ 20M a R$ 80M", "R$ 80M a R$ 300M", "acima de R$ 300M"];
-const dores = ["Crédito", "Fornecedor", "Preço", "Caixa", "Notas", "Não sei"];
+// value fica igual ao anterior (CRM/GTM); so o texto visivel muda.
+const dores = [
+  { v: "Crédito", l: "Crédito" },
+  { v: "Fornecedor", l: "Fornecedores" },
+  { v: "Preço", l: "Preço e margem" },
+  { v: "Caixa", l: "Caixa" },
+  { v: "Notas", l: "Notas" },
+  { v: "Não sei", l: "Não sei" },
+];
 const ERR_SELECT = "Selecione uma opção.";
 ---
 <section class="final grain" id="agendar" aria-labelledby="final-h">
   <div class="shell final-grid">
     <div class="final-copy">
       <div class="eyebrow"><span class="dot-cyan"></span> Demo gratuita</div>
-      <h2 id="final-h">Decida com número, <span class="hl">não com susto.</span></h2>
-      <p class="final-sub">O copiloto fiscal-tributário da sua operação na reforma, rodando com os seus dados.</p>
+      <h2 id="final-h">Chegue em 2027 decidindo <span class="serif-accent">com número</span>.</h2>
+      <p class="final-sub">Não com susto. Demo gratuita com os seus dados: 1 CNPJ, 1 cenário.</p>
       <ol class="setup-steps">
-        <li class="setup-step"><span class="sn" aria-hidden="true">1</span><p>Você preenche o formulário. Sem custo.</p></li>
-        <li class="setup-step"><span class="sn" aria-hidden="true">2</span><p>Preparamos a demo com 1 CNPJ e 1 cenário da sua empresa.</p></li>
-        <li class="setup-step"><span class="sn" aria-hidden="true">3</span><p>Você vê a simulação em reais e decide se quer seguir.</p></li>
+        <li class="setup-step"><span class="sn" aria-hidden="true">1</span><p>Você preenche o formulário em 1 minuto.</p></li>
+        <li class="setup-step"><span class="sn" aria-hidden="true">2</span><p>A gente monta o cenário com o seu regime e perfil.</p></li>
+        <li class="setup-step"><span class="sn" aria-hidden="true">3</span><p>Na demo, você vê o resultado em reais. Depois decide.</p></li>
       </ol>
       <p class="form-honesty">Demos assistidas em turmas limitadas pela capacidade do nosso time.</p>
     </div>
@@ -70,7 +78,7 @@ const ERR_SELECT = "Selecione uma opção.";
           <!-- Etapa 2 -->
           <div class="f-step" id="step-2" data-step="2">
             <button type="button" class="lf2-back" id="lf-back">Voltar</button>
-            <p class="lf2-stepnote">Etapa 2 de 2, para preparar a demo</p>
+            <p class="lf2-stepnote">Etapa 2 de 2, usamos isso para montar o seu cenário</p>
             <div class="f-field" data-field="sistema">
               <label for="lf-sistema">Sistema / ERP</label>
               <select id="lf-sistema" name="sistema" required aria-describedby="err-sistema">
@@ -106,7 +114,7 @@ const ERR_SELECT = "Selecione uma opção.";
               <label for="lf-dor">Principal dor hoje</label>
               <select id="lf-dor" name="dor" required aria-describedby="err-dor">
                 <option value="">Selecione</option>
-                {dores.map((o) => <option>{o}</option>)}
+                {dores.map((o) => <option value={o.v}>{o.l}</option>)}
               </select>
               <div class="f-error" id="err-dor">{ERR_SELECT}</div>
             </div>
@@ -131,8 +139,8 @@ const ERR_SELECT = "Selecione uma opção.";
         <span class="ok-ico">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
         </span>
-        <h3>Recebemos seu contato.</h3>
-        <p>Nossa equipe responde em até 1 dia útil para marcar a demo e combinar a amostra da sua operação (1 CNPJ, 1 cenário).</p>
+        <h3>Pedido recebido. Agora é com a gente.</h3>
+        <p>Em até 1 dia útil entramos em contato para marcar o horário e confirmar o perfil da empresa. A demo cobre 1 CNPJ e 1 cenário.</p>
       </div>
     </div>
   </div>

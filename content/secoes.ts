@@ -1,7 +1,6 @@
 /**
  * Dados das secoes da LP (PRD de redesign, secao 7). O markup dos componentes
- * so renderiza o que esta aqui. A copy e a mesma da versao anterior; a unica
- * troca e o "·" por virgula nos metadados.
+ * so renderiza o que esta aqui. Copy revisada no tom da campanha Reforma 2027.
  */
 
 /* ---------- Etapas do credito (hero e tabela da nova logica) ---------- */
@@ -27,42 +26,42 @@ const icoCadeado = '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M
 export const etapas: Etapa[] = [
   {
     n: "01", titulo: "Compra", texto: "O fornecedor vende e emite a nota.", ico: icoCompra,
-    estado: "done", status: "Emissão concluída",
-    risco: { k: "Compras", t: "Preço bruto engana", d: "O fornecedor mais barato pode gerar menos crédito e custar mais no final." },
-    ajuda: { t: "Compara fornecedores pelo custo real, e não só pelo preço bruto.", tag: "Análise por IA" },
+    estado: "done", status: "Nota emitida",
+    risco: { k: "Compras", t: "O mais barato pode sair mais caro.", d: "Menos crédito, custo final maior." },
+    ajuda: { t: "Compara fornecedores pelo custo depois do crédito, não pelo preço da nota.", tag: "Análise por IA" },
   },
   {
-    n: "02", titulo: "Pagamento", texto: "Sua empresa paga pela guia tradicional, split ou RAD.", ico: icoPag,
-    estado: "done", status: "Pagamento processado",
-    risco: { k: "Pagamento", t: "Forma de pagamento mal escolhida", d: "Em algumas operações, split ou RAD protegem melhor o crédito." },
-    ajuda: { t: "Simula a forma de pagamento que protege melhor o crédito.", tag: "Aprovação humana" },
+    n: "02", titulo: "Pagamento", texto: "Você paga por guia, split ou RAD.", ico: icoPag,
+    estado: "done", status: "Pago",
+    risco: { k: "Pagamento", t: "Forma de pagamento errada.", d: "Em algumas operações, split ou RAD protegem melhor o crédito." },
+    ajuda: { t: "Simula guia, split e RAD e indica a opção mais segura para cada operação.", tag: "Aprovação humana" },
   },
   {
-    n: "03", titulo: "Recolhimento", texto: "O fornecedor recolhe IBS/CBS, e isso precisa ser confirmado.", ico: icoForn,
-    estado: "pending", status: "Aguardando confirmação",
-    risco: { k: "Fornecedor", t: "Recolhimento sem confirmação", d: "Se o fornecedor não recolhe certo, o crédito fica em risco." },
-    ajuda: { t: "Monitora o recolhimento e sinaliza inconsistências do fornecedor.", tag: "Fonte verificada" },
+    n: "03", titulo: "Recolhimento", texto: "O fornecedor precisa recolher IBS/CBS.", ico: icoForn,
+    estado: "pending", status: "Sem confirmação",
+    risco: { k: "Fornecedor", t: "Recolhimento sem confirmação", d: "Se o fornecedor não recolhe, o crédito fica em risco." },
+    ajuda: { t: "Acompanha o recolhimento de cada fornecedor e avisa quando algo não bate.", tag: "Fonte verificada" },
   },
   {
-    n: "04", titulo: "Crédito", texto: "O crédito é liberado e volta para o caixa.", ico: icoCadeado,
-    estado: "locked", status: "Aguarda a etapa 3",
-    risco: { k: "Caixa", t: "Crédito travado", d: "Sem o crédito no prazo, o capital de giro fica menos previsível." },
-    ajuda: { t: "Projeta o efeito no caixa e mostra onde o crédito pode ficar pressionado.", tag: "Análise por IA" },
+    n: "04", titulo: "Crédito", texto: "Só então o crédito volta para o caixa.", ico: icoCadeado,
+    estado: "locked", status: "Travado na etapa 3",
+    risco: { k: "Caixa", t: "Crédito fora do prazo.", d: "O caixa sente antes de todo mundo." },
+    ajuda: { t: "Projeta o efeito no caixa mês a mês e mostra onde aperta.", tag: "Análise por IA" },
   },
 ];
 
 export const mudancas = [
-  "A nota sozinha não garante o crédito.",
-  "O fornecedor entra no seu risco.",
+  "Um fornecedor que não recolhe leva o seu crédito junto.",
+  "Crédito travado é capital de giro parado.",
   "O crédito passa a mexer no caixa.",
 ];
 
 /* ---------- Reforma 2027 ---------- */
 
 export const marcos = [
-  { when: "2026", what: "Hora de mapear fornecedores e créditos.", now: true },
-  { when: "Jan/2027", what: "CBS plena. Seu crédito passa a depender do recolhimento de quem vende para você." },
-  { when: "A partir de 2027", what: "Split payment e RAD entram aos poucos e são facultativos. Cada operação pede uma escolha." },
+  { when: "2026", what: "Mapeie fornecedores, contratos e créditos.", now: true },
+  { when: "Jan/2027", what: "CBS plena. Seu crédito passa a depender do fornecedor." },
+  { when: "2027 em diante", what: "Split payment e RAD entram aos poucos e são facultativos. Cada operação pede uma escolha." },
 ];
 
 /* ---------- Como opera (abas) ---------- */
@@ -85,12 +84,12 @@ export interface Aba {
 export const abas: Aba[] = [
   {
     id: "credito",
-    label: "Crédito e fornecedores",
+    label: "Crédito",
     title: "Seu crédito depende de quem vende para você.",
-    risk: "Sem acompanhamento, você descobre o crédito que não veio quando o caixa já sentiu.",
-    how: "A Kontiva acompanha notas e recolhimento de cada fornecedor e avisa onde há crédito em risco.",
-    metric: "R$ 214.700 em crédito potencial sob revisão, 7 fornecedores exigem revisão",
-    cta: "Ver risco de crédito",
+    risk: "Você descobre o crédito que não veio quando o caixa já sentiu.",
+    how: "Confere nota e recolhimento de cada fornecedor e mostra quem gera crédito e quem precisa de revisão.",
+    metric: "R$ 214.700 em crédito sob revisão. 7 fornecedores exigem revisão.",
+    cta: "Ver meu risco de crédito",
     screen: "Fornecedores",
     screenTag: "Risco de crédito",
     rows: [
@@ -102,12 +101,12 @@ export const abas: Aba[] = [
   },
   {
     id: "compras",
-    label: "Compras e custo real",
-    title: "O menor preço bruto pode não ser o menor custo.",
-    risk: "O fornecedor mais barato na tabela pode custar mais depois do crédito.",
-    how: "A Kontiva compara fornecedores pelo custo real, com crédito, regime e forma de pagamento na conta.",
-    metric: "Fornecedor A × Fornecedor B, custo comparado depois do crédito",
-    cta: "Comparar fornecedores",
+    label: "Compras",
+    title: "O fornecedor mais barato pode sair mais caro.",
+    risk: "Comparar pelo preço da nota esconde o custo real depois do crédito.",
+    how: "Compara fornecedores pelo custo real, com crédito, regime e forma de pagamento na conta.",
+    metric: "Fornecedor A × Fornecedor B, custo depois do crédito.",
+    cta: "Comparar meus fornecedores",
     screen: "Comparativo de compra",
     screenTag: "Custo depois do crédito",
     rows: [
@@ -118,12 +117,12 @@ export const abas: Aba[] = [
   },
   {
     id: "margem",
-    label: "Preço, contratos e margem",
-    title: "Sua margem pode mudar sem o seu preço mudar.",
-    risk: "Contratos longos e tabelas antigas perdem margem aos poucos, e ninguém vê a tempo.",
-    how: "A Kontiva cruza contratos e custos com IBS/CBS e aponta quais preços revisar. O reajuste só sai com aprovação do seu time.",
-    metric: "Contrato 24 meses, margem pressionada, revisão recomendada",
-    cta: "Avaliar margem",
+    label: "Preço",
+    title: "O contrato pode perder margem sem o preço mudar.",
+    risk: "Contrato reajustado só por índice não enxerga o novo custo tributário.",
+    how: "Cruza contratos e custos com IBS/CBS e aponta quais preços revisar. O reajuste só sai com aprovação do seu time.",
+    metric: "Contrato de 24 meses, margem pressionada, revisão recomendada.",
+    cta: "Avaliar minha margem",
     screen: "Contratos e preços",
     screenTag: "Memória de cálculo",
     rows: [
@@ -135,12 +134,12 @@ export const abas: Aba[] = [
   },
   {
     id: "caixa",
-    label: "Caixa e capital de giro",
-    title: "A reforma muda quando o dinheiro entra e quando o crédito aparece.",
-    risk: "Split payment e RAD são graduais e facultativos, mas cada operação pede uma escolha entre proteger o crédito e preservar caixa.",
-    how: "A Kontiva simula recolhimento tradicional, split e RAD nas operações elegíveis e mostra o efeito no capital de giro mês a mês.",
-    metric: "Cenário tradicional × split/RAD, impacto mês a mês no caixa",
-    cta: "Simular caixa",
+    label: "Caixa",
+    title: "O caixa sente antes de todo mundo.",
+    risk: "Prazo de crédito e forma de recolhimento mudam o capital de giro sem aviso.",
+    how: "Simula recolhimento tradicional, split e RAD nas operações elegíveis e mostra o efeito no caixa mês a mês.",
+    metric: "Cenário tradicional × split/RAD, impacto mês a mês.",
+    cta: "Simular meu caixa",
     screen: "Fluxo de caixa",
     screenTag: "Simulação mês a mês",
     rows: [
@@ -159,21 +158,21 @@ export const telas = [
     id: "fornecedores", w: 1145, h: 575,
     url: "app.kontiva.ai/fornecedores",
     titulo: "Fornecedores",
-    legenda: "Cada fornecedor com regime, ramo (CNAE) e situação de crédito de IBS/CBS.",
+    legenda: "Cada fornecedor classificado por regime, CNAE e situação de crédito de IBS/CBS.",
     alt: "Tela de fornecedores do Kontiva com indicadores de ativos, sem regime e crédito presumido, e a lista de fornecedores com regime, ramo e situação de crédito de IBS/CBS. Nomes ocultados.",
   },
   {
     id: "nova-simulacao", w: 466, h: 590,
     url: "app.kontiva.ai/simulacoes",
     titulo: "Nova simulação",
-    legenda: "Um cenário por ano e por regime tributário, montado em poucos campos.",
+    legenda: "Ano e regime em poucos campos. O cenário sai pronto.",
     alt: "Formulário de nova simulação do Kontiva com empresa, nome da simulação, ano do cenário e regime tributário Lucro Presumido.",
   },
   {
     id: "cronograma", w: 626, h: 592,
     url: "app.kontiva.ai/simulacoes/cronograma",
-    titulo: "Cronograma da reforma",
-    legenda: "As alíquotas de IBS, CBS e ICMS/ISS que o cálculo usa em cada ano, até 2033.",
+    titulo: "Cronograma da Reforma",
+    legenda: "As alíquotas de IBS, CBS, ICMS e ISS de cada ano, até 2033.",
     alt: "Tabela do cronograma da reforma no Kontiva com as alíquotas de IBS, CBS e a fração de ICMS/ISS cobrada de 2026 a 2033.",
   },
 ];
@@ -195,9 +194,9 @@ export const comparativo = {
 /* ---------- Demo gratuita ---------- */
 
 export const demoInclui = [
-  "1 CNPJ e 1 cenário, com os seus dados",
-  "Resultado resumido de crédito, fornecedores, preço e caixa",
-  "Próximos passos recomendados",
+  "Um cenário de 2027 com o regime e o perfil da sua empresa",
+  "Onde o crédito de IBS/CBS fica exposto, fornecedor por fornecedor",
+  "O que fazer antes de janeiro",
 ];
 export const demoCompleta = [
   "Simulador com vários cenários",
@@ -210,17 +209,18 @@ export const demoCompleta = [
 export const passosIA = [
   { t: "Lê", d: "XML, PDF, SPED e dados financeiros." },
   { t: "Cruza e simula", d: "Fornecedor, crédito, preço e caixa, por cenário." },
-  { t: "Mostra a origem", d: "Cada número vem com fonte e memória de cálculo." },
-  { t: "Espera sua aprovação", d: "Nada é aplicado sem revisão, e fica registrado quem aprovou." },
+  { t: "Mostra a origem", d: "Cada número com fonte e memória de cálculo." },
+  { t: "Espera aprovação", d: "Nada é aplicado sem o seu time, e fica registrado quem aprovou." },
 ];
 
 /* ---------- FAQ ---------- */
 
 export const faqs = [
-  { q: "A Kontiva substitui meu contador?", a: "Não. A Kontiva instrumenta, simula e monitora a operação. A decisão continua com sua empresa, e seu contador pode acompanhar os dados e a memória de cálculo." },
-  { q: "A demo gratuita é completa?", a: "Não. Ela usa 1 CNPJ, 1 cenário e mostra um resultado resumido. O simulador com vários cenários e o acompanhamento mensal fazem parte da versão contratada." },
+  { q: "A Kontiva substitui meu contador?", a: "Não. Imposto passa a ser assunto de compras, comercial e financeiro também, e a Kontiva dá o número para essas conversas. Seu contador acompanha os dados e a memória de cálculo." },
+  { q: "O que eu vejo na demo?", a: "Um cenário da Reforma rodando com o regime e o perfil da sua empresa: onde o crédito de IBS/CBS fica exposto, quais fornecedores pedem atenção e o efeito no caixa. A demo cobre 1 CNPJ e 1 cenário. A versão contratada roda vários CNPJs, vários cenários e o monitoramento mensal." },
   { q: "Split payment será obrigatório em 2027?", a: "Não. Split payment e RAD começam de forma gradual e facultativa, em operações elegíveis. A decisão depende da operação, do meio de pagamento e da estratégia de proteção de crédito e caixa." },
   { q: "A Kontiva garante economia tributária?", a: "Não. A Kontiva simula cenários a partir dos dados disponíveis, mostra riscos e apoia decisões. Ela não substitui contador, advogado tributarista ou decisão da empresa." },
   { q: "Preciso trocar de ERP?", a: "Não. A Kontiva pode trabalhar com ERP, documentos fiscais, planilhas e integrações conforme o caso." },
-  { q: "A IA executa ações sozinha?", a: "Não. O agente aponta riscos e propõe ações. Seu time aprova pela interface e fica registrado quem aprovou o quê." },
+  { q: "O que a Kontiva faz sozinha?", a: "Lê documentos, cruza dados, simula cenários e aponta riscos. Qualquer ação que mude preço, pagamento ou cadastro espera a aprovação do seu time, e fica registrado quem aprovou." },
+  { q: "Meus dados ficam seguros?", a: "Sim, o acesso é controlado e rastreável. Com certificado digital, a Kontiva lê só o necessário para a simulação e a operação fiscal." },
 ];

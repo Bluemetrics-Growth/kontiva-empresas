@@ -19,8 +19,8 @@ const unidades = [
   <div class="shell cd-grid">
     <div class="cd-copy">
       <div class="eyebrow"><span class="dot-cyan"></span> Reforma 2027</div>
-      <h2 id="cd-h">Tempo para sua empresa chegar em 2027 com a operação <span class="serif-accent">preparada</span>.</h2>
-      <p class="cd-text">Em janeiro a CBS entra em regime pleno. Quem mapear a operação agora chega lá decidindo com número, não com susto.</p>
+      <h2 id="cd-h">1º de janeiro de 2027. A contagem <span class="serif-accent">já começou</span>.</h2>
+      <p class="cd-text">A CBS entra em regime pleno e PIS e Cofins deixam de existir. A partir daí, o seu crédito depende do recolhimento de quem vende para você. Quem mapeia agora chega em 2027 decidindo com número. Quem espera descobre no caixa.</p>
 
       <div class="cd-clock" id="cd-2027" data-target={TARGET} role="timer" aria-live="off" aria-label="Contagem regressiva até 1º de janeiro de 2027">
         {unidades.map((u) => (
@@ -30,7 +30,7 @@ const unidades = [
           </div>
         ))}
       </div>
-      <p class="cd-target">até <b>{facts.cbsPlena.value}</b>, {facts.cbsPlena.label}.</p>
+      <p class="cd-target">até <b>{facts.cbsPlena.value}</b>. {facts.cbsPlena.label}.</p>
       <small class="cd-src">Fonte: {facts.cbsPlena.source}</small>
     </div>
 

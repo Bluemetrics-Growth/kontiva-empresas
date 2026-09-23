@@ -23,7 +23,7 @@ export const facts = {
   cbsPlena: {
     value: "01/01/2027",
     label: "CBS em regime pleno, PIS e Cofins extintos",
-    source: "LC 214/2025, arts. 126 e 127 do ADCT",
+    source: "EC 132/2023 (ADCT, arts. 126 e 127) e LC 214/2025",
     sourceDate: "2025-01-16",
   },
   ibsAvanco: {
