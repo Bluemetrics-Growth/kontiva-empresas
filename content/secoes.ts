@@ -210,7 +210,7 @@ export const passosIA = [
   { t: "Lê", d: "XML, PDF, SPED e dados financeiros." },
   { t: "Cruza e simula", d: "Fornecedor, crédito, preço e caixa, por cenário." },
   { t: "Mostra a origem", d: "Cada número vem com fonte e memória de cálculo." },
-  { t: "Espera sua aprovação", d: "Nada é aplicado sem revisão, e fica registrado quem aprovou." },
+  { t: "Espera sua aprovação", d: "Nada é aplicado sem revisão do seu time, e fica registrado quem aprovou." },
 ];
 
 /* ---------- FAQ ---------- */
