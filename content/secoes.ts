@@ -29,32 +29,31 @@ export const etapas: Etapa[] = [
     n: "01", titulo: "Compra", texto: "O fornecedor vende e emite a nota.", ico: icoCompra,
     estado: "done", status: "Emissão concluída",
     risco: { k: "Compras", t: "Preço bruto engana", d: "O fornecedor mais barato pode gerar menos crédito e custar mais no final." },
-    ajuda: { t: "Compara fornecedores pelo custo real, e não só pelo preço bruto.", tag: "Análise por IA" },
+    ajuda: { t: "Compara fornecedores pelo custo depois do crédito, e não pelo preço da nota.", tag: "Análise por IA" },
   },
   {
     n: "02", titulo: "Pagamento", texto: "Sua empresa paga pela guia tradicional, split ou RAD.", ico: icoPag,
     estado: "done", status: "Pagamento processado",
     risco: { k: "Pagamento", t: "Forma de pagamento mal escolhida", d: "Em algumas operações, split ou RAD protegem melhor o crédito." },
-    ajuda: { t: "Simula a forma de pagamento que protege melhor o crédito.", tag: "Aprovação humana" },
+    ajuda: { t: "Simula guia, split e RAD e indica a forma que protege melhor o crédito.", tag: "Aprovação humana" },
   },
   {
     n: "03", titulo: "Recolhimento", texto: "O fornecedor recolhe IBS/CBS, e isso precisa ser confirmado.", ico: icoForn,
     estado: "pending", status: "Aguardando confirmação",
     risco: { k: "Fornecedor", t: "Recolhimento sem confirmação", d: "Se o fornecedor não recolhe certo, o crédito fica em risco." },
-    ajuda: { t: "Monitora o recolhimento e sinaliza inconsistências do fornecedor.", tag: "Fonte verificada" },
+    ajuda: { t: "Confere o recolhimento de cada fornecedor e avisa quando algo não bate.", tag: "Fonte verificada" },
   },
   {
     n: "04", titulo: "Crédito", texto: "O crédito é liberado e volta para o caixa.", ico: icoCadeado,
     estado: "locked", status: "Aguarda a etapa 3",
     risco: { k: "Caixa", t: "Crédito travado", d: "Sem o crédito no prazo, o capital de giro fica menos previsível." },
-    ajuda: { t: "Projeta o efeito no caixa e mostra onde o crédito pode ficar pressionado.", tag: "Análise por IA" },
+    ajuda: { t: "Projeta o efeito no caixa mês a mês e mostra onde o crédito aperta.", tag: "Análise por IA" },
   },
 ];
 
 export const mudancas = [
-  "A nota sozinha não garante o crédito.",
-  "O fornecedor entra no seu risco.",
-  "O crédito passa a mexer no caixa.",
+  "O fornecedor que não recolhe leva o seu crédito junto.",
+  "Crédito travado vira capital de giro parado.",
 ];
 
 /* ---------- Reforma 2027 ---------- */

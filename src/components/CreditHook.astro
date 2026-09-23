@@ -1,7 +1,7 @@
 ---
 // 03 - A nova logica do credito. O hero ja mostra as 4 etapas; aqui cada
-// etapa aparece uma vez so, numa tabela: onde pode falhar e como a Kontiva
-// ajuda. A etapa 3 (recolhimento) e o ponto critico. Abaixo de 860px a
+// etapa aparece uma vez so, numa tabela: onde pode falhar e o que o agente
+// faz. A etapa 3 (recolhimento) e o ponto critico. Abaixo de 860px a
 // tabela vira blocos e cada celula mostra o nome da coluna (data-l).
 import { etapas, mudancas } from "../../content/secoes";
 ---
@@ -9,8 +9,8 @@ import { etapas, mudancas } from "../../content/secoes";
   <div class="shell">
     <div class="section-head">
       <div class="eyebrow"><span class="dot-cyan"></span> A nova lógica do crédito</div>
-      <h2 id="hook-h">Seu crédito pode <span class="serif-accent">travar</span> mesmo com a nota correta.</h2>
-      <p class="lead">Na reforma tributária, uma parte do problema sai da sua empresa e passa a depender do fornecedor. Se ninguém acompanha a cadeia inteira, o impacto aparece no crédito e no caixa.</p>
+      <h2 id="hook-h">Nota certa <span class="serif-accent">não garante</span> mais crédito.</h2>
+      <p class="lead">Na Reforma, parte do risco sai da sua empresa e vai para o fornecedor. Seu time não tem como conferir o recolhimento de cada um, todo mês. O agente tem.</p>
     </div>
 
     <ul class="mud" aria-label="O que mudou com a reforma">
@@ -19,12 +19,12 @@ import { etapas, mudancas } from "../../content/secoes";
 
     <div class="etp-wrap">
       <table class="etp">
-        <caption class="sr-only">Onde a operação pode falhar em cada etapa do crédito e como a Kontiva ajuda</caption>
+        <caption class="sr-only">Onde a operação pode falhar em cada etapa do crédito e o que o agente faz</caption>
         <thead>
           <tr>
             <th scope="col">Etapa</th>
             <th scope="col">Onde pode falhar</th>
-            <th scope="col">Como a Kontiva ajuda</th>
+            <th scope="col">O que o agente faz</th>
           </tr>
         </thead>
         <tbody>
@@ -38,7 +38,7 @@ import { etapas, mudancas } from "../../content/secoes";
                 <strong>{e.risco.t}</strong>
                 <p>{e.risco.d}</p>
               </td>
-              <td data-l="Como a Kontiva ajuda">
+              <td data-l="O que o agente faz">
                 <p>{e.ajuda.t}</p>
                 <span class="tag-ai">{e.ajuda.tag}</span>
               </td>
@@ -47,6 +47,6 @@ import { etapas, mudancas } from "../../content/secoes";
         </tbody>
       </table>
     </div>
-    <p class="etp-note"><b>1 falha</b> na cadeia pode travar o crédito.</p>
+    <p class="etp-note">Basta <b>um fornecedor</b> falhar para o crédito travar.</p>
   </div>
 </section>

@@ -215,8 +215,8 @@ p.lead{font-size:var(--fs-lead);line-height:1.5;color:var(--cinza-escuro)}
 /* =========================================================
    03 A NOVA LOGICA DO CREDITO
    ========================================================= */
-.mud{list-style:none;margin:0 0 40px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-.mud li{padding-top:16px;border-top:3px solid var(--azul-profundo);font-size:18px;line-height:1.35;font-weight:700;letter-spacing:-.01em;color:var(--azul-profundo);max-width:26ch}
+.mud{list-style:none;margin:0 0 40px;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.mud li{padding-top:16px;border-top:3px solid var(--azul-profundo);font-size:18px;line-height:1.35;font-weight:700;letter-spacing:-.01em;color:var(--azul-profundo);max-width:34ch}
 .etp-wrap{background:var(--branco);border:1px solid var(--border-on-light-strong);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-card)}
 .etp{width:100%;border-collapse:collapse;text-align:left}
 .etp thead th{padding:14px 24px;background:#f9fafc;border-bottom:1px solid var(--border-on-light-strong);font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-secondary)}
