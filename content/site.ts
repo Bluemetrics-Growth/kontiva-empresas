@@ -30,9 +30,6 @@ export const DEMO_DURACAO = "30 min";
 export const DEMO_CURTA = `Gratuita · ${DEMO_DURACAO}`;
 export const DEMO_MICROCOPY = `${DEMO_CURTA} · com o perfil da sua empresa`;
 
-/** Fronteira gratuito x pago. Texto unico usado em toda a pagina. */
-export const DEMO_LIMITE = "Demo com seus dados: 1 CNPJ, 1 cenário e resultado resumido.";
-
 /** Container GTM e identificador da LP nos eventos (PRD secao 10 e 20). */
 export const GTM_ID = "GTM-MNVPH77L";
 export const LP_ID = "empresas";

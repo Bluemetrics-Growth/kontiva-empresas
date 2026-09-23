@@ -5,7 +5,7 @@
 // FORM_ENDPOINT, o envio abre o WhatsApp com os dados preenchidos. Se um
 // endpoint (HubSpot) for configurado em FORM_ENDPOINT, o POST passa a valer
 // com os mesmos campos. Os atributos name sao os mesmos da versao anterior.
-import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
+import { WHATSAPP_NUM, WHATSAPP_MSG, CTA_PRIMARIO } from "../../content/site";
 
 const sistemas = ["SAP", "TOTVS", "Oracle", "Senior", "Planilhas", "Outro"];
 const regimes = ["Lucro Presumido", "Lucro Real", "Simples", "Não sei"];
@@ -18,13 +18,15 @@ const ERR_SELECT = "Selecione uma opção.";
     <div class="final-copy">
       <div class="eyebrow"><span class="dot-cyan"></span> Demo gratuita</div>
       <h2 id="final-h">Decida com número, <span class="hl">não com susto.</span></h2>
-      <p class="final-sub">O copiloto fiscal-tributário da sua operação na reforma, rodando com os seus dados.</p>
+      <p class="final-sub">O agente de IA fiscal-tributário rodando com o perfil da sua empresa.</p>
       <ol class="setup-steps">
-        <li class="setup-step"><span class="sn" aria-hidden="true">1</span><p>Você preenche o formulário. Sem custo.</p></li>
-        <li class="setup-step"><span class="sn" aria-hidden="true">2</span><p>Preparamos a demo com 1 CNPJ e 1 cenário da sua empresa.</p></li>
-        <li class="setup-step"><span class="sn" aria-hidden="true">3</span><p>Você vê a simulação em reais e decide se quer seguir.</p></li>
+        <li class="setup-step"><span class="sn" aria-hidden="true">1</span><p>Você preenche o formulário em 1 minuto.</p></li>
+        <li class="setup-step"><span class="sn" aria-hidden="true">2</span><p>A gente prepara o cenário com o regime e o perfil da sua empresa.</p></li>
+        <li class="setup-step"><span class="sn" aria-hidden="true">3</span><p>Na demo, você vê o agente trabalhando e o resultado em reais. Depois decide.</p></li>
       </ol>
-      <p class="form-honesty">Demos assistidas em turmas limitadas pela capacidade do nosso time.</p>
+      <!-- TODO(PRD de copy 5.10): linha de escassez, so se for real (confirmar com
+           Denis e Erik). Entra aqui, com a classe form-honesty: "Abrimos poucas
+           demos por semana para preparar cada uma com os dados certos." -->
     </div>
 
     <div class="form-card" id="form-card">
@@ -37,11 +39,11 @@ const ERR_SELECT = "Selecione uma opção.";
         <form id="lead-form" novalidate action="" method="post">
           <!-- Etapa 1 -->
           <div class="f-step active" id="step-1" data-step="1">
-            <p class="lf2-stepnote">Etapa 1 de 2, seus dados</p>
+            <p class="lf2-stepnote">Etapa 1 de 2: seus dados</p>
             <div class="f-field" data-field="nome">
               <label for="lf-nome">Nome</label>
               <input id="lf-nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required aria-describedby="err-nome">
-              <div class="f-error" id="err-nome">Preencha este campo para continuar.</div>
+              <div class="f-error" id="err-nome">Informe seu nome.</div>
             </div>
             <div class="f-field" data-field="email">
               <label for="lf-email">E-mail corporativo</label>
@@ -70,7 +72,7 @@ const ERR_SELECT = "Selecione uma opção.";
           <!-- Etapa 2 -->
           <div class="f-step" id="step-2" data-step="2">
             <button type="button" class="lf2-back" id="lf-back">Voltar</button>
-            <p class="lf2-stepnote">Etapa 2 de 2, para preparar a demo</p>
+            <p class="lf2-stepnote">Etapa 2 de 2: o agente usa isso para montar o seu cenário</p>
             <div class="f-field" data-field="sistema">
               <label for="lf-sistema">Sistema / ERP</label>
               <select id="lf-sistema" name="sistema" required aria-describedby="err-sistema">
@@ -103,14 +105,14 @@ const ERR_SELECT = "Selecione uma opção.";
               <div class="f-error" id="err-faturamento">{ERR_SELECT}</div>
             </div>
             <div class="f-field" data-field="dor">
-              <label for="lf-dor">Principal dor hoje</label>
+              <label for="lf-dor">Onde dói mais hoje?</label>
               <select id="lf-dor" name="dor" required aria-describedby="err-dor">
                 <option value="">Selecione</option>
                 {dores.map((o) => <option>{o}</option>)}
               </select>
               <div class="f-error" id="err-dor">{ERR_SELECT}</div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block btn-lg" id="lf-submit" data-cta="form">Agendar demo gratuita</button>
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="lf-submit" data-cta="form">{CTA_PRIMARIO}</button>
           </div>
 
           <!-- honeypot anti-spam -->
@@ -119,9 +121,9 @@ const ERR_SELECT = "Selecione uma opção.";
             <input id="lf-empresa-site" name="empresa_site" type="text" tabindex="-1" autocomplete="off">
           </div>
 
-          <p class="f-consent">{DEMO_LIMITE} Ao enviar, você concorda em ser contatado pela Kontiva e autoriza o uso das informações para análise inicial da sua operação. Você pode solicitar exclusão dos dados a qualquer momento.</p>
+          <p class="f-consent">Ao enviar, você concorda em ser contatado pela Kontiva e autoriza o uso das informações para preparar a demo. Você pode pedir a exclusão dos dados quando quiser.</p>
           <div class="form-sendfail" id="form-sendfail" role="alert">
-            Não conseguimos enviar agora. Tente de novo, ou chame a gente no WhatsApp.
+            Não conseguimos enviar agora. Tente de novo ou fale com a gente no WhatsApp.
             <a href="#" class="btn btn-dark btn-block" id="sendfail-wa" target="_blank" rel="noreferrer" data-cta="whatsapp">Falar no WhatsApp</a>
           </div>
         </form>
@@ -131,14 +133,14 @@ const ERR_SELECT = "Selecione uma opção.";
         <span class="ok-ico">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
         </span>
-        <h3>Recebemos seu contato.</h3>
-        <p>Nossa equipe responde em até 1 dia útil para marcar a demo e combinar a amostra da sua operação (1 CNPJ, 1 cenário).</p>
+        <h3>Recebemos seu pedido de demo.</h3>
+        <p>Em até 1 dia útil a gente chama você para marcar o horário e confirmar o perfil da empresa. A demo cobre uma empresa (1 CNPJ) e um cenário.</p>
       </div>
     </div>
   </div>
 </section>
 
-<script is:inline define:vars={{ WA_NUM: WHATSAPP_NUM, WA_MSG: WHATSAPP_MSG }}>
+<script is:inline define:vars={{ WA_NUM: WHATSAPP_NUM, WA_MSG: WHATSAPP_MSG, CTA_LABEL: CTA_PRIMARIO }}>
   (function () {
     var w = window;
     var track = function (n, d) { if (typeof w.__ktrack === "function") w.__ktrack(n, d); else { w.dataLayer = w.dataLayer || []; w.dataLayer.push(Object.assign({ event: n }, d || {})); } };
@@ -258,7 +260,7 @@ const ERR_SELECT = "Selecione uma opção.";
       submitBtn.classList.add("is-loading");
       submitBtn.innerHTML = '<span class="spinner"></span> Enviando...';
       var finishFail = function () {
-        submitBtn.classList.remove("is-loading"); submitBtn.textContent = "Agendar demo gratuita";
+        submitBtn.classList.remove("is-loading"); submitBtn.textContent = CTA_LABEL;
         sendfailWa.href = waWithData(data); sendfail.classList.add("show"); track("form_submit_error");
       };
       if (FORM_ENDPOINT) {
