@@ -1,25 +1,17 @@
 ---
-// 11 - FAQ (PRD revisao, secao 5.10). Perguntas obrigatorias do PRD + a
-// pergunta sobre execucao automatica (IA auditavel).
-const faqs = [
-  { q: "A Kontiva substitui meu contador?", a: "Não. A Kontiva instrumenta, simula e monitora a operação. A decisão continua com sua empresa, e seu contador pode acompanhar os dados e a memória de cálculo." },
-  { q: "A demo gratuita é completa?", a: "Não. Ela usa 1 CNPJ, 1 cenário e mostra um resultado resumido. O simulador com vários cenários e o acompanhamento mensal fazem parte da versão contratada." },
-  { q: "Split payment será obrigatório em 2027?", a: "Não. Split payment e RAD começam de forma gradual e facultativa, em operações elegíveis. A decisão depende da operação, do meio de pagamento e da estratégia de proteção de crédito e caixa." },
-  { q: "A Kontiva garante economia tributária?", a: "Não. A Kontiva simula cenários a partir dos dados disponíveis, mostra riscos e apoia decisões. Ela não substitui contador, advogado tributarista ou decisão da empresa." },
-  { q: "Preciso trocar de ERP?", a: "Não. A Kontiva pode trabalhar com ERP, documentos fiscais, planilhas e integrações conforme o caso." },
-  { q: "A IA executa ações sozinha?", a: "Não. O agente aponta riscos e propõe ações. Seu time aprova pela interface e fica registrado quem aprovou o quê." },
-];
+// 10 - FAQ. <details> nativo; o "+" gira para "×" ao abrir.
+import { faqs } from "../../content/secoes";
 ---
 <section class="bg-page" id="faq" aria-labelledby="faq-h">
-  <div class="shell">
-    <div class="section-head reveal" style="text-align:center; margin-left:auto; margin-right:auto;">
-      <div class="eyebrow" style="justify-content:center;"><span class="dot-cyan"></span> Perguntas frequentes</div>
-      <h2 id="faq-h" style="margin-top:18px;">Ainda tem dúvida? A gente responde.</h2>
+  <div class="shell faq-grid">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot-cyan"></span> Perguntas frequentes</div>
+      <h2 id="faq-h">Ainda tem dúvida? A gente responde.</h2>
     </div>
-    <div class="faq-list reveal delay-1">
+    <div class="faq-list">
       {faqs.map((f) => (
         <details class="faq-item">
-          <summary>{f.q} <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <summary>{f.q} <span class="faq-x" aria-hidden="true"></span></summary>
           <div class="faq-a"><p>{f.a}</p></div>
         </details>
       ))}

@@ -28,4 +28,4 @@ export const DEMO_LIMITE = "Demo com seus dados: 1 CNPJ, 1 cenário e resultado 
 /** Container GTM e identificador da LP nos eventos (PRD secao 10 e 20). */
 export const GTM_ID = "GTM-MNVPH77L";
 export const LP_ID = "empresas";
-export const LP_VERSION = "empresas-v3";
+export const LP_VERSION = "empresas-v4";

@@ -19,7 +19,7 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
     <!-- Google Tag Manager (PRD secao 20) -->
     <script is:inline define:vars={{ GTM_ID }}>
@@ -50,20 +50,6 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-    <!-- Foto do hero (above the fold): preload por breakpoint para proteger o LCP -->
-    <link
-      rel="preload" as="image" media="(min-width: 861px)"
-      href="/images/hero-kontiva-empresas-1280.avif" type="image/avif"
-      imagesrcset="/images/hero-kontiva-empresas-800.avif 800w, /images/hero-kontiva-empresas-1280.avif 1280w, /images/hero-kontiva-empresas-1672.avif 1672w"
-      imagesizes="100vw" fetchpriority="high"
-    />
-    <link
-      rel="preload" as="image" media="(max-width: 860px)"
-      href="/images/hero-kontiva-empresas-m-640.avif" type="image/avif"
-      imagesrcset="/images/hero-kontiva-empresas-m-640.avif 640w, /images/hero-kontiva-empresas-m-900.avif 900w"
-      imagesizes="100vw" fetchpriority="high"
-    />
-
     <!-- Fontes do design system -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -71,10 +57,6 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-
-    <noscript>
-      <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
-    </noscript>
 
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org", "@type": "Organization", name: "Kontiva", url: canonical,
@@ -100,8 +82,9 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
         var params = new URLSearchParams(location.search);
         var utm = {};
         ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(function (k) {
-          var v = params.get(k) || sessionStorage.getItem(k);
-          if (v) { utm[k] = v; try { sessionStorage.setItem(k, v); } catch (e) {} }
+          var v = params.get(k);
+          try { v = v || sessionStorage.getItem(k); if (v) sessionStorage.setItem(k, v); } catch (e) {}
+          if (v) utm[k] = v;
         });
         var device = w.matchMedia("(max-width: 860px)").matches ? "mobile" : "desktop";
         w.__ktrack = function (name, data) {
@@ -112,18 +95,6 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
           }, data || {}));
         };
         var track = w.__ktrack;
-
-        // Reveal on scroll (respeita prefers-reduced-motion)
-        var reduce = w.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        var reveals = document.querySelectorAll(".reveal");
-        if (reduce || !("IntersectionObserver" in w)) {
-          reveals.forEach(function (el) { el.classList.add("in"); });
-        } else {
-          var ro = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); ro.unobserve(en.target); } });
-          }, { threshold: 0.12 });
-          reveals.forEach(function (el) { ro.observe(el); });
-        }
 
         track("lp_view");
 
@@ -153,17 +124,19 @@ const ogImage = "https://empresas.kontiva.ai/og/og.png";
           });
         });
 
-        // Sticky CTA mobile: aparece apos 60% do hero, some quando o form aparece
+        // Barra fixa mobile: aparece quando o hero sai da tela, some quando o agendamento aparece
         var sticky = document.getElementById("sticky-cta");
         if (sticky && "IntersectionObserver" in w) {
-          var hero = document.getElementById("topo");
+          // Gatilho: os CTAs do hero saem da tela por cima (o hero inteiro, com a
+          // cadeia do credito, e alto demais no mobile para servir de gatilho).
+          var hero = document.querySelector("#topo .hero-cta-row") || document.getElementById("topo");
           var formSec = document.getElementById("agendar");
           var heroPassed = false, formVisible = false;
-          var apply = function () { sticky.classList.toggle("show", heroPassed && !formVisible); };
+          var apply = function () { var on = heroPassed && !formVisible; sticky.classList.toggle("show", on); document.body.classList.toggle("has-sticky", on); };
           if (hero) {
             new IntersectionObserver(function (e) {
-              heroPassed = e[0].intersectionRatio < 0.4; apply();
-            }, { threshold: [0, 0.4, 1] }).observe(hero);
+              heroPassed = !e[0].isIntersecting && e[0].boundingClientRect.top < 0; apply();
+            }, { threshold: 0 }).observe(hero);
           }
           if (formSec) {
             new IntersectionObserver(function (e) {

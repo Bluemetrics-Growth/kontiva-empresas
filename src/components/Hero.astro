@@ -1,66 +1,26 @@
 ---
-// 01 - Hero. Uma frase de risco, uma frase de produto e o CTA da demo.
-// Foto de fundo com pessoas no terco direito e espaco negativo a esquerda
-// para a copy. Nada sobreposto a area das pessoas. Recorte 4:5 no mobile.
+// 01 - Hero. Sem foto: a dor do credito aparece desenhada logo abaixo da
+// promessa (CreditChain). Fundo navy com a grade e o brilho ciano do design
+// system. H1 a esquerda, lead e CTAs a direita, alinhados na base.
+import CreditChain from "./CreditChain.astro";
 import { CTA_PRIMARIO as CTA, CTA_SECUNDARIO, CTA_ANCORA } from "../../content/site";
 ---
-<section class="hero hero-photo" id="topo" aria-labelledby="hero-h1">
-  <picture class="hero-photo-bg" aria-hidden="true">
-    <!-- Mobile: recorte 4:5 focado nas pessoas -->
-    <source
-      media="(max-width: 860px)"
-      type="image/avif"
-      srcset="/images/hero-kontiva-empresas-m-640.avif 640w, /images/hero-kontiva-empresas-m-900.avif 900w"
-      sizes="100vw"
-    />
-    <source
-      media="(max-width: 860px)"
-      type="image/webp"
-      srcset="/images/hero-kontiva-empresas-m-640.webp 640w, /images/hero-kontiva-empresas-m-900.webp 900w"
-      sizes="100vw"
-    />
-    <!-- Desktop: composicao completa 16:9 -->
-    <source
-      type="image/avif"
-      srcset="/images/hero-kontiva-empresas-800.avif 800w, /images/hero-kontiva-empresas-1280.avif 1280w, /images/hero-kontiva-empresas-1672.avif 1672w"
-      sizes="100vw"
-    />
-    <source
-      type="image/webp"
-      srcset="/images/hero-kontiva-empresas-800.webp 800w, /images/hero-kontiva-empresas-1280.webp 1280w, /images/hero-kontiva-empresas-1672.webp 1672w"
-      sizes="100vw"
-    />
-    <img
-      src="/images/hero-kontiva-empresas-1280.jpg"
-      srcset="/images/hero-kontiva-empresas-800.jpg 800w, /images/hero-kontiva-empresas-1280.jpg 1280w, /images/hero-kontiva-empresas-1672.jpg 1672w"
-      sizes="100vw"
-      width="1672"
-      height="941"
-      alt=""
-      fetchpriority="high"
-      decoding="async"
-    />
-  </picture>
-  <div class="hero-photo-overlay" aria-hidden="true"></div>
-  <div class="hero-photo-grid" aria-hidden="true"></div>
-
-  <div class="shell hero-photo-inner">
-    <div class="hero-copy">
-      <div class="eyebrow reveal"><span class="dot-cyan"></span> IA fiscal-tributária para empresas</div>
-
-      <h1 id="hero-h1" class="reveal delay-1">
-        A Reforma Tributária vai bater no seu <span class="accent">caixa</span>.
-      </h1>
-
-      <p class="lead hero-sub reveal delay-2">
-        E começa pelo crédito que depende do seu fornecedor. A Kontiva simula o impacto com os dados da sua empresa antes de 2027.
-      </p>
-
-      <div class="hero-cta-row reveal delay-2">
-        <a href={CTA_ANCORA} class="btn btn-primary btn-lg" data-cta="hero">{CTA}</a>
-        <a href="#produto" class="btn btn-ghost btn-lg" data-cta="hero-secondary">{CTA_SECUNDARIO}</a>
+<section class="hero" id="topo" aria-labelledby="hero-h1">
+  <div class="shell">
+    <div class="hero-top">
+      <div class="hero-head">
+        <div class="eyebrow"><span class="dot-cyan"></span> IA fiscal-tributária para empresas</div>
+        <h1 id="hero-h1">A Reforma Tributária vai bater no seu <span class="accent">caixa</span>.</h1>
       </div>
-      <p class="hero-cta-note reveal delay-3">1 CNPJ, 1 cenário, sem custo. Para Lucro Presumido e Lucro Real enxuto.</p>
+      <div class="hero-side">
+        <p class="lead hero-sub">E começa pelo crédito que depende do seu fornecedor. A Kontiva simula o impacto com os dados da sua empresa antes de 2027.</p>
+        <div class="hero-cta-row">
+          <a href={CTA_ANCORA} class="btn btn-primary btn-lg" data-cta="hero">{CTA}</a>
+          <a href="#produto" class="btn btn-ghost btn-lg" data-cta="hero-secondary">{CTA_SECUNDARIO}</a>
+        </div>
+        <p class="hero-cta-note">1 CNPJ, 1 cenário, sem custo. Para Lucro Presumido e Lucro Real enxuto.</p>
+      </div>
     </div>
+    <CreditChain />
   </div>
 </section>

@@ -1,57 +1,62 @@
 ---
-// 08 - CTA + formulario da demo gratuita em duas etapas.
+// 09 - CTA + formulario da demo gratuita em duas etapas.
 // Etapa 1: Nome, E-mail corporativo, WhatsApp, Empresa, Site. Etapa 2: ERP,
-// CNPJs, Regime, Faturamento, Principal dor. Preserva o comportamento atual (sem endpoint: fallback via
-// WhatsApp) e a captura de UTM. Se um endpoint HubSpot for configurado em
-// FORM_ENDPOINT, o POST passa a valer sem quebrar os campos existentes.
+// CNPJs, Regime, Faturamento, Principal dor. Destino do lead inalterado: sem
+// FORM_ENDPOINT, o envio abre o WhatsApp com os dados preenchidos. Se um
+// endpoint (HubSpot) for configurado em FORM_ENDPOINT, o POST passa a valer
+// com os mesmos campos. Os atributos name sao os mesmos da versao anterior.
 import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
+
+const sistemas = ["SAP", "TOTVS", "Oracle", "Senior", "Planilhas", "Outro"];
+const regimes = ["Lucro Presumido", "Lucro Real", "Simples", "Não sei"];
+const faixas = ["até R$ 20M", "R$ 20M a R$ 80M", "R$ 80M a R$ 300M", "acima de R$ 300M"];
+const dores = ["Crédito", "Fornecedor", "Preço", "Caixa", "Notas", "Não sei"];
+const ERR_SELECT = "Selecione uma opção.";
 ---
 <section class="final grain" id="agendar" aria-labelledby="final-h">
   <div class="shell final-grid">
-    <div class="final-copy reveal">
+    <div class="final-copy">
       <div class="eyebrow"><span class="dot-cyan"></span> Demo gratuita</div>
-      <h2 id="final-h" style="margin-top:18px;">Decida com número, <span class="hl">não com susto.</span></h2>
+      <h2 id="final-h">Decida com número, <span class="hl">não com susto.</span></h2>
       <p class="final-sub">O copiloto fiscal-tributário da sua operação na reforma, rodando com os seus dados.</p>
-      <div class="setup-steps">
-        <div class="setup-step"><span class="sn">1</span><p>Você preenche o formulário. Sem custo.</p></div>
-        <div class="setup-step"><span class="sn">2</span><p>Preparamos a demo com 1 CNPJ e 1 cenário da sua empresa.</p></div>
-        <div class="setup-step"><span class="sn">3</span><p>Você vê a simulação em reais e decide se quer seguir.</p></div>
-      </div>
+      <ol class="setup-steps">
+        <li class="setup-step"><span class="sn" aria-hidden="true">1</span><p>Você preenche o formulário. Sem custo.</p></li>
+        <li class="setup-step"><span class="sn" aria-hidden="true">2</span><p>Preparamos a demo com 1 CNPJ e 1 cenário da sua empresa.</p></li>
+        <li class="setup-step"><span class="sn" aria-hidden="true">3</span><p>Você vê a simulação em reais e decide se quer seguir.</p></li>
+      </ol>
+      <p class="form-honesty">Demos assistidas em turmas limitadas pela capacidade do nosso time.</p>
     </div>
 
-    <div class="form-card reveal delay-1" id="form-card">
+    <div class="form-card" id="form-card">
       <div class="form-body">
         <h3>Agende sua demo gratuita</h3>
         <p class="fc-sub">Resposta em até 1 dia útil.</p>
 
-        <div class="lf2-steps" aria-hidden="true">
-          <span class="lf2-dot on" id="dot-1"></span>
-          <span class="lf2-dot" id="dot-2"></span>
-        </div>
+        <div class="lf2-progress" aria-hidden="true"><span id="lf2-bar"></span></div>
 
         <form id="lead-form" novalidate action="" method="post">
           <!-- Etapa 1 -->
           <div class="f-step active" id="step-1" data-step="1">
-            <p class="lf2-stepnote">Etapa 1 de 2 · seus dados</p>
+            <p class="lf2-stepnote">Etapa 1 de 2, seus dados</p>
             <div class="f-field" data-field="nome">
               <label for="lf-nome">Nome</label>
-              <input id="lf-nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" aria-describedby="err-nome">
+              <input id="lf-nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required aria-describedby="err-nome">
               <div class="f-error" id="err-nome">Preencha este campo para continuar.</div>
             </div>
             <div class="f-field" data-field="email">
               <label for="lf-email">E-mail corporativo</label>
-              <input id="lf-email" name="email" type="email" placeholder="voce@suaempresa.com.br" autocomplete="email" aria-describedby="err-email">
+              <input id="lf-email" name="email" type="email" placeholder="voce@suaempresa.com.br" autocomplete="email" required aria-describedby="err-email">
               <div class="f-error" id="err-email">E-mail inválido. Confira e tente de novo.</div>
             </div>
             <div class="f-field" data-field="whatsapp">
               <label for="lf-whats">WhatsApp</label>
-              <input id="lf-whats" name="whatsapp" type="tel" inputmode="tel" placeholder="(00) 00000-0000" autocomplete="tel" aria-describedby="err-whats">
+              <input id="lf-whats" name="whatsapp" type="tel" inputmode="tel" placeholder="(00) 00000-0000" autocomplete="tel" required aria-describedby="err-whats">
               <div class="f-error" id="err-whats">Número incompleto. Inclua o DDD.</div>
             </div>
             <div class="f-row">
               <div class="f-field" data-field="empresa">
                 <label for="lf-empresa">Empresa</label>
-                <input id="lf-empresa" name="empresa" type="text" placeholder="Nome da empresa" autocomplete="organization" aria-describedby="err-empresa">
+                <input id="lf-empresa" name="empresa" type="text" placeholder="Nome da empresa" autocomplete="organization" required aria-describedby="err-empresa">
                 <div class="f-error" id="err-empresa">Informe o nome da empresa.</div>
               </div>
               <div class="f-field" data-field="site">
@@ -65,41 +70,45 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
           <!-- Etapa 2 -->
           <div class="f-step" id="step-2" data-step="2">
             <button type="button" class="lf2-back" id="lf-back">Voltar</button>
-            <p class="lf2-stepnote">Etapa 2 de 2 · para preparar a demo</p>
+            <p class="lf2-stepnote">Etapa 2 de 2, para preparar a demo</p>
             <div class="f-field" data-field="sistema">
               <label for="lf-sistema">Sistema / ERP</label>
-              <select id="lf-sistema" name="sistema">
+              <select id="lf-sistema" name="sistema" required aria-describedby="err-sistema">
                 <option value="">Selecione</option>
-                <option>SAP</option><option>TOTVS</option><option>Oracle</option><option>Senior</option><option>Planilhas</option><option>Outro</option>
+                {sistemas.map((o) => <option>{o}</option>)}
               </select>
+              <div class="f-error" id="err-sistema">{ERR_SELECT}</div>
             </div>
             <div class="f-row">
               <div class="f-field" data-field="carteira">
                 <label for="lf-carteira">Número de CNPJs</label>
-                <input id="lf-carteira" name="carteira" type="number" min="1" step="1" placeholder="Ex: 22" aria-describedby="err-carteira">
+                <input id="lf-carteira" name="carteira" type="number" inputmode="numeric" min="1" step="1" placeholder="Ex: 22" required aria-describedby="err-carteira">
                 <div class="f-error" id="err-carteira">Informe um número maior que zero.</div>
               </div>
               <div class="f-field" data-field="regime">
                 <label for="lf-regime">Regime tributário</label>
-                <select id="lf-regime" name="regime">
+                <select id="lf-regime" name="regime" required aria-describedby="err-regime">
                   <option value="">Selecione</option>
-                  <option>Lucro Presumido</option><option>Lucro Real</option><option>Simples</option><option>Não sei</option>
+                  {regimes.map((o) => <option>{o}</option>)}
                 </select>
+                <div class="f-error" id="err-regime">{ERR_SELECT}</div>
               </div>
             </div>
             <div class="f-field" data-field="faturamento">
               <label for="lf-faturamento">Faixa de faturamento</label>
-              <select id="lf-faturamento" name="faturamento">
+              <select id="lf-faturamento" name="faturamento" required aria-describedby="err-faturamento">
                 <option value="">Selecione</option>
-                <option>até R$ 20M</option><option>R$ 20M a R$ 80M</option><option>R$ 80M a R$ 300M</option><option>acima de R$ 300M</option>
+                {faixas.map((o) => <option>{o}</option>)}
               </select>
+              <div class="f-error" id="err-faturamento">{ERR_SELECT}</div>
             </div>
             <div class="f-field" data-field="dor">
               <label for="lf-dor">Principal dor hoje</label>
-              <select id="lf-dor" name="dor">
+              <select id="lf-dor" name="dor" required aria-describedby="err-dor">
                 <option value="">Selecione</option>
-                <option>Crédito</option><option>Fornecedor</option><option>Preço</option><option>Caixa</option><option>Notas</option><option>Não sei</option>
+                {dores.map((o) => <option>{o}</option>)}
               </select>
+              <div class="f-error" id="err-dor">{ERR_SELECT}</div>
             </div>
             <button type="submit" class="btn btn-primary btn-block btn-lg" id="lf-submit" data-cta="form">Agendar demo gratuita</button>
           </div>
@@ -113,7 +122,7 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
           <p class="f-consent">{DEMO_LIMITE} Ao enviar, você concorda em ser contatado pela Kontiva e autoriza o uso das informações para análise inicial da sua operação. Você pode solicitar exclusão dos dados a qualquer momento.</p>
           <div class="form-sendfail" id="form-sendfail" role="alert">
             Não conseguimos enviar agora. Tente de novo, ou chame a gente no WhatsApp.
-            <a href="#" class="btn btn-dark btn-block" style="margin-top:10px;" id="sendfail-wa" target="_blank" rel="noreferrer" data-cta="whatsapp">Falar no WhatsApp</a>
+            <a href="#" class="btn btn-dark btn-block" id="sendfail-wa" target="_blank" rel="noreferrer" data-cta="whatsapp">Falar no WhatsApp</a>
           </div>
         </form>
       </div>
@@ -125,7 +134,6 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
         <h3>Recebemos seu contato.</h3>
         <p>Nossa equipe responde em até 1 dia útil para marcar a demo e combinar a amostra da sua operação (1 CNPJ, 1 cenário).</p>
       </div>
-      <p class="form-honesty">Demos assistidas em turmas limitadas pela capacidade do nosso time.</p>
     </div>
   </div>
 </section>
@@ -141,7 +149,7 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
     var card = document.getElementById("form-card");
     var step1 = document.getElementById("step-1");
     var step2 = document.getElementById("step-2");
-    var dot2 = document.getElementById("dot-2");
+    var bar = document.getElementById("lf2-bar");
     var nextBtn = document.getElementById("lf-next");
     var backBtn = document.getElementById("lf-back");
     var submitBtn = document.getElementById("lf-submit");
@@ -151,11 +159,12 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
     var whats = document.getElementById("lf-whats");
     var started = false, step1done = false;
 
-    // UTM
+    // UTM e ids de clique (persistidos na sessao)
     var params = new URLSearchParams(location.search), utm = {};
-    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(function (k) {
-      var v = params.get(k) || sessionStorage.getItem(k);
-      if (v) { utm[k] = v; try { sessionStorage.setItem(k, v); } catch (e) {} }
+    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","gclid","fbclid"].forEach(function (k) {
+      var v = params.get(k);
+      try { v = v || sessionStorage.getItem(k); if (v) sessionStorage.setItem(k, v); } catch (e) {}
+      if (v) utm[k] = v;
     });
 
     // form_view quando o form entra na tela
@@ -174,25 +183,49 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
 
     form.addEventListener("focusin", function () { if (!started) { started = true; track("form_start"); } });
 
-    var mark = function (field, invalid) { var el = form.querySelector('[data-field="' + field + '"]'); if (el) el.classList.toggle("invalid", invalid); };
-    var validStep1 = function () {
-      var nome = form.nome.value.trim();
-      var email = form.email.value.trim();
-      var tel = whats.value.replace(/\D/g, "");
-      var empresa = form.empresa.value.trim();
-      var okNome = nome.length > 0, okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), okTel = tel.length >= 10, okEmpresa = empresa.length > 0;
-      mark("nome", !okNome); mark("email", !okEmail); mark("whatsapp", !okTel); mark("empresa", !okEmpresa);
-      return okNome && okEmail && okTel && okEmpresa;
+    // Regras por campo. Validacao no blur (depois do primeiro toque) e ao avancar.
+    var rules = {
+      nome: function (v) { return v.trim().length > 0; },
+      email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); },
+      whatsapp: function (v) { return v.replace(/\D/g, "").length >= 10; },
+      empresa: function (v) { return v.trim().length > 0; },
+      sistema: function (v) { return v !== ""; },
+      carteira: function (v) { var n = Number(v); return v.trim() !== "" && Number.isFinite(n) && n > 0; },
+      regime: function (v) { return v !== ""; },
+      faturamento: function (v) { return v !== ""; },
+      dor: function (v) { return v !== ""; }
     };
+    var STEP1 = ["nome", "email", "whatsapp", "empresa"];
+    var STEP2 = ["sistema", "carteira", "regime", "faturamento", "dor"];
+    var check = function (name) {
+      var input = form.elements[name];
+      var ok = rules[name](input.value);
+      var wrap = form.querySelector('[data-field="' + name + '"]');
+      if (wrap) wrap.classList.toggle("invalid", !ok);
+      input.setAttribute("aria-invalid", ok ? "false" : "true");
+      return ok;
+    };
+    var checkAll = function (names) {
+      var firstBad = null;
+      names.forEach(function (n) { if (!check(n) && !firstBad) firstBad = form.elements[n]; });
+      if (firstBad) firstBad.focus();
+      return !firstBad;
+    };
+    STEP1.concat(STEP2).forEach(function (n) {
+      var input = form.elements[n];
+      input.addEventListener("blur", function () { if (input.value !== "" || input.getAttribute("aria-invalid")) check(n); });
+      input.addEventListener(input.tagName === "SELECT" ? "change" : "input", function () { if (input.getAttribute("aria-invalid") === "true") check(n); });
+    });
+
     var goStep = function (n) {
       step1.classList.toggle("active", n === 1);
       step2.classList.toggle("active", n === 2);
-      dot2.classList.toggle("on", n === 2);
+      bar.style.width = n === 2 ? "100%" : "50%";
       var first = (n === 1 ? step1 : step2).querySelector("input, select");
       if (first) first.focus();
     };
     nextBtn.addEventListener("click", function () {
-      if (!validStep1()) { var bad = form.querySelector(".f-field.invalid input"); if (bad) bad.focus(); return; }
+      if (!checkAll(STEP1)) return;
       if (!step1done) { step1done = true; track("form_step_1_complete"); }
       goStep(2);
     });
@@ -213,12 +246,13 @@ import { WHATSAPP_NUM, WHATSAPP_MSG, DEMO_LIMITE } from "../../content/site";
       e.preventDefault();
       sendfail.classList.remove("show");
       if (form.empresa_site.value) { showSuccess(); return; } // honeypot
-      if (!validStep1()) { goStep(1); var bad = form.querySelector(".f-field.invalid input"); if (bad) bad.focus(); return; }
+      if (!STEP1.every(function (n) { return rules[n](form.elements[n].value); })) { goStep(1); checkAll(STEP1); return; }
+      if (!checkAll(STEP2)) return;
       var data = {
         nome: form.nome.value.trim(), email: form.email.value.trim(), whatsapp: whats.value.trim(),
         empresa: form.empresa.value.trim(), site: form.site.value.trim(),
         sistema: form.sistema.value, carteira: form.carteira.value.trim(), regime: form.regime.value, faturamento: form.faturamento.value,
-        dor: form.dor.value
+        dor: form.dor.value, page_url: location.href
       };
       Object.assign(data, utm);
       submitBtn.classList.add("is-loading");

@@ -1,123 +1,52 @@
 ---
-// 03 - A nova logica do credito, como mapa operacional em 4 camadas
-// (PRD secao nova logica do credito): A headline + painel de sintese,
-// B fluxo das 4 etapas com status, C faixa unica de riscos, D faixa da
-// Kontiva. As camadas B, C e D usam as mesmas 4 colunas, entao etapa, risco
-// e atuacao ficam alinhados. Mobile: etapa seguida do risco, e a faixa da
-// Kontiva no fim. Hover numa coluna acende a etapa, o risco e a atuacao.
-const icoCompra = '<path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/>';
-const icoPag = '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 14h4"/>';
-const icoForn = '<path d="M3 6h11v9H3z"/><path d="M14 9h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>';
-const icoCaixa = '<path d="M12 3v18M17 7.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 2.2 2.8 5 3.5 5 1.6 5 3.5-2.2 3-5 3-5-1.1-5-3"/>';
-
-const etapas = [
-  {
-    n: "01", titulo: "Compra", texto: "O fornecedor vende e emite a nota.", ico: icoCompra,
-    status: { t: "Emissão concluída", tone: "ok" },
-    risco: { k: "Compras", t: "Preço bruto engana", d: "O fornecedor mais barato pode gerar menos crédito e custar mais no final." },
-  },
-  {
-    n: "02", titulo: "Pagamento", texto: "Sua empresa paga pela guia tradicional, split ou RAD.", ico: icoPag,
-    status: { t: "Pagamento processado", tone: "ok" },
-    risco: { k: "Pagamento", t: "Forma de pagamento mal escolhida", d: "Em algumas operações, split ou RAD protegem melhor o crédito." },
-  },
-  {
-    n: "03", titulo: "Recolhimento", texto: "O fornecedor recolhe IBS/CBS, e isso precisa ser confirmado.", ico: icoForn,
-    status: { t: "Aguardando confirmação", tone: "warn" }, critico: true,
-    risco: { k: "Fornecedor", t: "Recolhimento sem confirmação", d: "Se o fornecedor não recolhe certo, o crédito fica em risco." },
-  },
-  {
-    n: "04", titulo: "Crédito", texto: "O crédito é liberado e volta para o caixa.", ico: icoCaixa,
-    status: { t: "Aguarda a etapa 03", tone: "info" }, depende: true,
-    risco: { k: "Caixa", t: "Crédito travado", d: "Sem o crédito no prazo, o capital de giro fica menos previsível." },
-  },
-];
-
-const atuacao = [
-  { onde: "Na compra", t: "Compara fornecedores pelo custo real, e não só pelo preço bruto.", tag: "Análise por IA" },
-  { onde: "No pagamento", t: "Simula a forma de pagamento que protege melhor o crédito.", tag: "Aprovação humana" },
-  { onde: "No recolhimento", t: "Monitora o recolhimento e sinaliza inconsistências do fornecedor.", tag: "Fonte verificada" },
-  { onde: "No crédito e caixa", t: "Projeta o efeito no caixa e mostra onde o crédito pode ficar pressionado.", tag: "Análise por IA" },
-];
+// 03 - A nova logica do credito. O hero ja mostra as 4 etapas; aqui cada
+// etapa aparece uma vez so, numa tabela: onde pode falhar e como a Kontiva
+// ajuda. A etapa 3 (recolhimento) e o ponto critico. Abaixo de 860px a
+// tabela vira blocos e cada celula mostra o nome da coluna (data-l).
+import { etapas, mudancas } from "../../content/secoes";
 ---
 <section class="bg-alt" id="credito" aria-labelledby="hook-h">
   <div class="shell">
-    <!-- A · Headline e enquadramento -->
-    <div class="cm-head">
-      <div class="reveal">
-        <div class="eyebrow"><span class="dot-cyan"></span> A nova lógica do crédito</div>
-        <h2 id="hook-h" class="cm-h2">Seu crédito pode <span class="serif-accent">travar</span> mesmo com a nota correta.</h2>
-        <p class="hook-lead">Na reforma tributária, uma parte do problema sai da sua empresa e passa a depender do fornecedor. Se ninguém acompanha a cadeia inteira, o impacto aparece no crédito e no caixa.</p>
-        <p class="cm-tags" aria-hidden="true">Reforma Tributária · Crédito · Fornecedor · Caixa</p>
-      </div>
-      <aside class="cm-summary reveal delay-1" aria-label="Resumo do que mudou">
-        <span class="cm-summary-k">O que mudou com a reforma</span>
-        <ul>
-          <li>A nota sozinha não garante o crédito.</li>
-          <li>O fornecedor entra no seu risco.</li>
-          <li>O crédito passa a mexer no caixa.</li>
-        </ul>
-        <p class="cm-insight"><b>1 falha</b> na cadeia pode travar o crédito.</p>
-      </aside>
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot-cyan"></span> A nova lógica do crédito</div>
+      <h2 id="hook-h">Seu crédito pode <span class="serif-accent">travar</span> mesmo com a nota correta.</h2>
+      <p class="lead">Na reforma tributária, uma parte do problema sai da sua empresa e passa a depender do fornecedor. Se ninguém acompanha a cadeia inteira, o impacto aparece no crédito e no caixa.</p>
     </div>
 
-    <div class="cm-map reveal delay-1" data-cm>
-      <!-- B + C · Fluxo e faixa de riscos (mesma grade) -->
-      <div class="cm-grid">
-        <div class="cm-riskband" aria-hidden="true"></div>
-        <h3 class="cm-band-title cm-risk-title"><span class="cm-dot-risk"></span> Onde a operação pode falhar</h3>
-        {etapas.map((e, i) => (
-          <div class="cm-col" data-col={i + 1}>
-            <article class={`cm-step${e.critico ? " is-critico" : ""}${e.depende ? " is-depende" : ""}`} tabindex="0">
-              {e.critico && <span class="cm-flag">Ponto crítico</span>}
-              <div class="cm-step-top">
-                <span class="cm-ico" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={e.ico} />
-                </span>
-                <span class="cm-n">Etapa {e.n}</span>
-              </div>
-              <h4>{e.titulo}</h4>
-              <p>{e.texto}</p>
-              <span class={`cm-status is-${e.status.tone}`}><i aria-hidden="true"></i>{e.status.t}</span>
-            </article>
-            <div class="cm-risk">
-              <span class="cm-risk-k">Risco {e.n} · {e.risco.k}</span>
-              <strong>{e.risco.t}</strong>
-              <p>{e.risco.d}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+    <ul class="mud" aria-label="O que mudou com a reforma">
+      {mudancas.map((m) => <li>{m}</li>)}
+    </ul>
 
-      <!-- D · Como a Kontiva ajuda -->
-      <div class="cm-kband">
-        <h3 class="cm-band-title cm-k-title"><span class="cm-dot-k"></span> Como a Kontiva ajuda sua empresa a operar isso</h3>
-        <ol class="cm-kgrid">
-          {atuacao.map((a, i) => (
-            <li class="cm-k" data-col={i + 1}>
-              <span class="cm-k-onde">{a.onde}</span>
-              <p>{a.t}</p>
-              <span class="cm-k-tag">{a.tag}</span>
-            </li>
+    <div class="etp-wrap">
+      <table class="etp">
+        <caption class="sr-only">Onde a operação pode falhar em cada etapa do crédito e como a Kontiva ajuda</caption>
+        <thead>
+          <tr>
+            <th scope="col">Etapa</th>
+            <th scope="col">Onde pode falhar</th>
+            <th scope="col">Como a Kontiva ajuda</th>
+          </tr>
+        </thead>
+        <tbody>
+          {etapas.map((e) => (
+            <tr class={e.estado === "pending" ? "is-crit" : undefined}>
+              <th scope="row" data-l="Etapa">
+                <span class="etp-n">{e.n}</span>
+                <span class="etp-t">{e.titulo}{e.estado === "pending" && <em class="etp-flag">Ponto crítico</em>}</span>
+              </th>
+              <td data-l="Onde pode falhar">
+                <strong>{e.risco.t}</strong>
+                <p>{e.risco.d}</p>
+              </td>
+              <td data-l="Como a Kontiva ajuda">
+                <p>{e.ajuda.t}</p>
+                <span class="tag-ai">{e.ajuda.tag}</span>
+              </td>
+            </tr>
           ))}
-        </ol>
-      </div>
+        </tbody>
+      </table>
     </div>
-
-    <small class="hook-src reveal">Nova lógica de crédito de IBS/CBS. Fonte: LC 214/2025.</small>
+    <p class="etp-note"><b>1 falha</b> na cadeia pode travar o crédito.</p>
   </div>
 </section>
-
-<script>
-  // Hover/foco numa coluna acende etapa, risco e atuacao correspondentes.
-  const map = document.querySelector<HTMLElement>("[data-cm]");
-  if (map && window.matchMedia("(hover: hover) and (min-width: 901px)").matches) {
-    const set = (c: string | null) => { if (c) map.setAttribute("data-active", c); else map.removeAttribute("data-active"); };
-    map.querySelectorAll<HTMLElement>("[data-col]").forEach((el) => {
-      el.addEventListener("mouseenter", () => set(el.getAttribute("data-col")));
-      el.addEventListener("focusin", () => set(el.getAttribute("data-col")));
-    });
-    map.addEventListener("mouseleave", () => set(null));
-    map.addEventListener("focusout", (e) => { if (!map.contains(e.relatedTarget as Node)) set(null); });
-  }
-</script>

@@ -1,44 +1,30 @@
 ---
-// 06 - Demo gratuita e limitada. Deixa claro o que entra na demo e o que
-// fica para a versao contratada, sem expor precos.
+// 07 - Demo gratuita e limitada. Um bloco dividido: o que entra na demo e o
+// que fica para a versao completa, sem expor precos.
 import { CTA_PRIMARIO, CTA_ANCORA, DEMO_LIMITE } from "../../content/site";
-
-const inclui = [
-  "1 CNPJ e 1 cenário, com os seus dados",
-  "Resultado resumido de crédito, fornecedores, preço e caixa",
-  "Próximos passos recomendados",
-];
-const naoInclui = [
-  "Simulador com vários cenários",
-  "Acompanhamento mensal",
-  "Vários CNPJs e reprecificação em lote",
-];
+import { demoInclui, demoCompleta } from "../../content/secoes";
 ---
 <section class="bg-alt" id="demo" aria-labelledby="demo-h">
   <div class="shell">
-    <div class="section-head reveal">
+    <div class="section-head">
       <div class="eyebrow"><span class="dot-cyan"></span> Demo gratuita</div>
       <h2 id="demo-h">Veja o tamanho do risco antes de <span class="serif-accent">decidir</span>.</h2>
-      <p class="urg3-copy">Sem trocar de ERP e sem projeto longo. Rodamos a Kontiva numa amostra da sua operação e mostramos o resultado ao vivo.</p>
+      <p class="lead">Sem trocar de ERP e sem projeto longo. Rodamos a Kontiva numa amostra da sua operação e mostramos o resultado ao vivo.</p>
     </div>
 
-    <div class="diag-grid reveal delay-1">
-      <div class="diag-card diag-in">
+    <div class="split">
+      <div class="split-in">
         <h3>Na demo</h3>
-        <ul>
-          {inclui.map((i) => <li>{i}</li>)}
-        </ul>
+        <ul>{demoInclui.map((i) => <li>{i}</li>)}</ul>
       </div>
-      <div class="diag-card diag-out">
+      <div class="split-out">
         <h3>Na versão completa</h3>
-        <ul>
-          {naoInclui.map((i) => <li>{i}</li>)}
-        </ul>
+        <ul>{demoCompleta.map((i) => <li>{i}</li>)}</ul>
       </div>
     </div>
 
-    <div class="urg3-cta reveal">
-      <a href={CTA_ANCORA} class="btn btn-primary btn-lg" data-cta="demo">{CTA_PRIMARIO}</a>
+    <div class="section-cta-l">
+      <a href={CTA_ANCORA} class="btn btn-dark btn-lg" data-cta="demo">{CTA_PRIMARIO}</a>
       <p class="cta-limit">{DEMO_LIMITE} A versão completa só é apresentada se fizer sentido para você.</p>
     </div>
   </div>

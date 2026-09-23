@@ -183,4 +183,4 @@ export const timeline: Marco[] = [
 ];
 
 /** Tag obrigatoria em toda tela de produto (PRD 7.4). */
-export const seloExemplo = "Exemplo ilustrativo · dados de demonstração";
+export const seloExemplo = "Exemplo ilustrativo com dados de demonstração";

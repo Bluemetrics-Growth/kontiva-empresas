@@ -1,144 +1,27 @@
 ---
-// 04 - Secao unificada (PRD revisao, secoes 4.5 e 5.5). Mescla "O que muda na
-// pratica" e "Produto em acao" em um menu de tabs. Cada aba combina a dor
-// operacional, o risco de nao agir, como a Kontiva ajuda e um exemplo
-// ilustrativo (mini tela), com CTA contextual.
-import { CTA_ANCORA } from "../../content/site";
-import { seloExemplo } from "../../content/facts";
-
-type Row = { b: string; s: string; badge: string; tone: "ok" | "risk" | "neutral" };
-interface Tab {
-  id: string;
-  label: string;
-  title: string;
-  risk: string;
-  how: string;
-  metric: string;
-  cta: string;
-  screen: string;
-  screenTag: string;
-  rows: Row[];
-  toggle?: string;
-}
-
-const tabs: Tab[] = [
-  {
-    id: "credito",
-    label: "Crédito e fornecedores",
-    title: "Seu crédito depende de quem vende para você.",
-    risk: "Sem acompanhamento, você descobre o crédito que não veio quando o caixa já sentiu.",
-    how: "A Kontiva acompanha notas e recolhimento de cada fornecedor e avisa onde há crédito em risco.",
-    metric: "R$ 214.700 em crédito potencial sob revisão · 7 fornecedores exigem revisão",
-    cta: "Ver risco de crédito",
-    screen: "Fornecedores",
-    screenTag: "Risco de crédito",
-    rows: [
-      { b: "Aurora Insumos", s: "recolhimento confirmado", badge: "Gera crédito", tone: "ok" },
-      { b: "Nordeste Log", s: "crédito parcial", badge: "Simples", tone: "neutral" },
-      { b: "Vertex Peças", s: "sem confirmação", badge: "Revisar", tone: "risk" },
-      { b: "Meta Serviços", s: "sem confirmação", badge: "Revisar", tone: "risk" },
-    ],
-  },
-  {
-    id: "compras",
-    label: "Compras e custo real",
-    title: "O menor preço bruto pode não ser o menor custo.",
-    risk: "O fornecedor mais barato na tabela pode custar mais depois do crédito.",
-    how: "A Kontiva compara fornecedores pelo custo real, com crédito, regime e forma de pagamento na conta.",
-    metric: "Fornecedor A × Fornecedor B · custo comparado depois do crédito",
-    cta: "Comparar fornecedores",
-    screen: "Comparativo de compra",
-    screenTag: "Custo depois do crédito",
-    rows: [
-      { b: "Fornecedor A", s: "menor preço bruto", badge: "Maior risco de crédito", tone: "risk" },
-      { b: "Fornecedor B", s: "preço maior", badge: "Crédito mais previsível", tone: "ok" },
-      { b: "Custo real", s: "mesmo cenário, mesmo prazo", badge: "Para decisão", tone: "neutral" },
-    ],
-  },
-  {
-    id: "margem",
-    label: "Preço, contratos e margem",
-    title: "Sua margem pode mudar sem o seu preço mudar.",
-    risk: "Contratos longos e tabelas antigas perdem margem aos poucos, e ninguém vê a tempo.",
-    how: "A Kontiva cruza contratos e custos com IBS/CBS e aponta quais preços revisar. O reajuste só sai com aprovação do seu time.",
-    metric: "Contrato 24 meses · margem pressionada · revisão recomendada",
-    cta: "Avaliar margem",
-    screen: "Contratos e preços",
-    screenTag: "Memória de cálculo",
-    rows: [
-      { b: "Contrato 24 meses", s: "reajuste por IPCA", badge: "Margem pressionada", tone: "risk" },
-      { b: "Custo tributário novo", s: "IBS/CBS por fora", badge: "Recalculado", tone: "neutral" },
-      { b: "Preço sob revisão", s: "com memória de cálculo", badge: "Para aprovação", tone: "ok" },
-    ],
-    toggle: "Nada é aplicado sem aprovação do seu time",
-  },
-  {
-    id: "caixa",
-    label: "Caixa e capital de giro",
-    title: "A reforma muda quando o dinheiro entra e quando o crédito aparece.",
-    risk: "Split payment e RAD são graduais e facultativos, mas cada operação pede uma escolha entre proteger o crédito e preservar caixa.",
-    how: "A Kontiva simula recolhimento tradicional, split e RAD nas operações elegíveis e mostra o efeito no capital de giro mês a mês.",
-    metric: "Cenário tradicional × split/RAD · impacto mês a mês no caixa",
-    cta: "Simular caixa",
-    screen: "Fluxo de caixa",
-    screenTag: "Simulação mês a mês",
-    rows: [
-      { b: "Recolhimento tradicional", s: "crédito com prazo de restituição", badge: "Cenário 1", tone: "neutral" },
-      { b: "Split/RAD", s: "operações elegíveis: crédito mais protegido, possível impacto no capital de giro", badge: "Facultativo", tone: "neutral" },
-      { b: "Capital de giro", s: "em jogo conforme fornecedor, forma de pagamento e estratégia de recolhimento", badge: "A simular", tone: "risk" },
-    ],
-    toggle: "Comparar: cenário tradicional × split/RAD",
-  },
-];
+// 04 - Como opera. Quatro abas (role="tablist") com roving tabindex:
+// setas esquerda/direita, Home e End. Cada painel traz o par risco / como a
+// Kontiva ajuda, o exemplo ilustrativo, um link contextual e a "planilha".
+import OperationPanel from "./OperationPanel.astro";
+import { abas } from "../../content/secoes";
 ---
 <section class="bg-page" id="produto" aria-labelledby="prod-h">
   <div class="shell">
-    <div class="section-head reveal">
+    <div class="section-head">
       <div class="eyebrow"><span class="dot-cyan"></span> Como opera</div>
       <h2 id="prod-h">O que muda na prática e como a Kontiva opera cada <span class="serif-accent">decisão</span>.</h2>
-      <p class="urg3-copy">A reforma muda a operação, e não só o cálculo. A Kontiva transforma seus dados fiscais em uma rotina que mostra onde agir primeiro.</p>
+      <p class="lead">A reforma muda a operação, e não só o cálculo. A Kontiva transforma seus dados fiscais em uma rotina que mostra onde agir primeiro.</p>
     </div>
 
-    <div class="ptabs reveal delay-1">
+    <div class="ptabs">
       <div class="ptab-btns" role="tablist" aria-label="Decisões que mudam com a reforma">
-        {tabs.map((t, i) => (
-          <button class="ptab-btn" role="tab" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? "true" : "false"} data-tab={t.id} data-tab-label={t.label}>{t.label}</button>
+        {abas.map((t, i) => (
+          <button type="button" class="ptab-btn" role="tab" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`}
+            aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? "0" : "-1"}
+            data-tab={t.id} data-tab-label={t.label}>{t.label}</button>
         ))}
       </div>
-
-      <div class="ptab-panels">
-        {tabs.map((t, i) => (
-          <div class={`ptab-panel${i === 0 ? " active" : ""}`} id={`panel-${t.id}`} role="tabpanel" aria-labelledby={`tab-${t.id}`}>
-            <div class="pt-copy">
-              <h3>{t.title}</h3>
-              <dl class="pt-steps">
-                <div class="pt-step pt-step-risk">
-                  <dt>Risco de não agir</dt>
-                  <dd>{t.risk}</dd>
-                </div>
-                <div class="pt-step">
-                  <dt>Como a Kontiva ajuda</dt>
-                  <dd>{t.how}</dd>
-                </div>
-              </dl>
-              <div class="pt-metric"><span class="pt-metric-tag">Exemplo ilustrativo</span> {t.metric}</div>
-              <a href={CTA_ANCORA} class="btn btn-primary" data-cta="product">{t.cta}</a>
-            </div>
-            <div class="pt-visual">
-              <div class="mini" aria-hidden="true">
-                <div class="mini-head">{t.screen} <span class="mini-live">{t.screenTag}</span></div>
-                <div class="mini-body">
-                  {t.rows.map((r) => (
-                    <div class="mini-row"><b>{r.b}</b><span>{r.s}</span><span class={`mini-badge ${r.tone}`}>{r.badge}</span></div>
-                  ))}
-                </div>
-                {t.toggle && <div class="mini-toggle"><span class="sw"></span> {t.toggle}</div>}
-              </div>
-              <small class="selo">{seloExemplo}</small>
-            </div>
-          </div>
-        ))}
-      </div>
+      {abas.map((t, i) => <OperationPanel aba={t} active={i === 0} />)}
     </div>
   </div>
 </section>
@@ -146,20 +29,39 @@ const tabs: Tab[] = [
 <script>
   const root = document.getElementById("produto");
   if (root) {
-    const btns = Array.from(root.querySelectorAll(".ptab-btn"));
-    const panels = Array.from(root.querySelectorAll(".ptab-panel"));
+    const btns = Array.from(root.querySelectorAll<HTMLButtonElement>(".ptab-btn"));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>(".ptab-panel"));
     const viewed = new Set();
     const fireView = (label: string | null) => {
       if (viewed.has(label)) return;
       viewed.add(label);
       if (typeof (window as any).__ktrack === "function") (window as any).__ktrack("product_tab_view", { tab: label });
     };
-    const activate = (id: string | null, label: string | null) => {
-      btns.forEach((b) => b.setAttribute("aria-selected", b.getAttribute("data-tab") === id ? "true" : "false"));
-      panels.forEach((p) => p.classList.toggle("active", p.id === `panel-${id}`));
-      fireView(label);
+    const activate = (btn: HTMLButtonElement, focus = false) => {
+      const id = btn.getAttribute("data-tab");
+      btns.forEach((b) => {
+        const on = b === btn;
+        b.setAttribute("aria-selected", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((p) => { p.hidden = p.id !== `panel-${id}`; });
+      if (focus) { btn.focus(); btn.scrollIntoView({ block: "nearest", inline: "nearest" }); }
+      fireView(btn.getAttribute("data-tab-label"));
     };
-    btns.forEach((b) => b.addEventListener("click", () => activate(b.getAttribute("data-tab"), b.getAttribute("data-tab-label"))));
+    btns.forEach((b, i) => {
+      b.addEventListener("click", () => activate(b));
+      b.addEventListener("keydown", (e) => {
+        const last = btns.length - 1;
+        let next = -1;
+        if (e.key === "ArrowRight") next = i === last ? 0 : i + 1;
+        else if (e.key === "ArrowLeft") next = i === 0 ? last : i - 1;
+        else if (e.key === "Home") next = 0;
+        else if (e.key === "End") next = last;
+        if (next < 0) return;
+        e.preventDefault();
+        activate(btns[next], true);
+      });
+    });
     // primeira aba: dispara product_tab_view quando a secao entra na tela
     if ("IntersectionObserver" in window) {
       const io = new IntersectionObserver((e) => {

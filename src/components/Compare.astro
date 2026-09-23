@@ -1,41 +1,32 @@
 ---
-// 06 - Diferenciacao (PRD revisao, secao 5.6). Comparacao simples.
-type Cell = "yes" | "no" | "part";
-const cols = ["Responde dúvidas", "Simula cenários", "Monitora fornecedores", "Opera todo mês"];
-const rows: { name: string; cells: Cell[]; hl?: boolean }[] = [
-  { name: "Chatbot", cells: ["yes", "no", "no", "no"] },
-  { name: "Consultoria", cells: ["yes", "yes", "part", "no"] },
-  { name: "ERP", cells: ["part", "part", "part", "part"] },
-  { name: "Kontiva", cells: ["yes", "yes", "yes", "yes"], hl: true },
-];
-const label: Record<Cell, string> = { yes: "Sim", no: "Não", part: "Parcial" };
+// 06 - Comparativo. Texto no lugar de simbolos (Sim, Não, Parcial): mais
+// legivel e sem ambiguidade para leitor de tela. Linha da Kontiva em navy.
+import { comparativo as c } from "../../content/secoes";
 ---
 <section class="bg-page" id="diferenciacao" aria-labelledby="cmp-h">
   <div class="shell">
-    <div class="section-head reveal">
+    <div class="section-head">
       <div class="eyebrow"><span class="dot-cyan"></span> Onde a Kontiva entra</div>
       <h2 id="cmp-h">Relatório mostra a foto. A Kontiva acompanha <span class="serif-accent">todo mês</span>.</h2>
     </div>
-    <div class="cmp-wrap reveal delay-1">
+    <div class="cmp-wrap" tabindex="0" role="region" aria-labelledby="cmp-h">
       <table class="cmp-table">
         <thead>
           <tr>
             <th scope="col">Solução</th>
-            {cols.map((c) => <th scope="col">{c}</th>)}
+            {c.cols.map((col) => <th scope="col">{col}</th>)}
           </tr>
         </thead>
         <tbody>
-          {rows.map((r) => (
+          {c.rows.map((r) => (
             <tr class={r.hl ? "hl" : undefined}>
               <th scope="row">{r.name}</th>
-              {r.cells.map((c) => (
-                <td class={c}>{c === "part" ? "parcial" : <span aria-label={label[c]}>{c === "yes" ? "✓" : "–"}</span>}</td>
-              ))}
+              {r.cells.map((cell) => <td class={cell}>{c.label[cell]}</td>)}
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-    <p class="cmp-note reveal">Consultoria e chatbot ajudam a entender a reforma. Depois disso vem o mês a mês, e é nele que a Kontiva trabalha.</p>
+    <p class="cmp-note">Consultoria e chatbot ajudam a entender a reforma. Depois disso vem o mês a mês, e é nele que a Kontiva trabalha.</p>
   </div>
 </section>

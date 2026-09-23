@@ -1,30 +1,27 @@
 ---
-// 07 - IA auditavel e seguranca. Recebe o bloco "Agente de IA, decisao
-// humana" que antes ficava no hero. Credenciais BlueMetrics conforme a fonte
-// oficial da empresa.
-const passos = [
-  { t: "Lê", d: "XML, PDF, SPED e dados financeiros." },
-  { t: "Cruza e simula", d: "Fornecedor, crédito, preço e caixa, por cenário." },
-  { t: "Mostra a origem", d: "Cada número vem com fonte e memória de cálculo." },
-  { t: "Espera sua aprovação", d: "Nada é aplicado sem revisão, e fica registrado quem aprovou." },
-];
+// 08 - IA auditavel. Fluxo de 4 passos sobre uma linha; o ultimo passo fica
+// em ciano porque e onde a decisao volta para o seu time. Abaixo, acesso aos
+// dados e a credencial BlueMetrics.
+import { passosIA } from "../../content/secoes";
 ---
 <section class="bg-dark grain" id="confianca" aria-labelledby="trust-h">
   <div class="shell">
-    <div class="section-head reveal">
+    <div class="section-head">
       <div class="eyebrow"><span class="dot-cyan"></span> IA auditável</div>
-      <h2 id="trust-h" style="color:var(--branco);">Agente de IA, decisão <span class="serif-accent">humana</span>.</h2>
+      <h2 id="trust-h">Agente de IA, decisão <span class="serif-accent">humana</span>.</h2>
     </div>
-    <ol class="trust-grid trust-steps">
-      {passos.map((p, i) => (
-        <li class={`trust-pillar reveal delay-${i % 3}`}>
-          <span class="tp-ico" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+    <ol class="flow">
+      {passosIA.map((p, i) => (
+        <li class={i === passosIA.length - 1 ? "is-human" : undefined}>
+          <span class="flow-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
           <h3>{p.t}</h3>
           <p>{p.d}</p>
         </li>
       ))}
     </ol>
-    <p class="trust-note reveal">Dados com controle de acesso e rastreabilidade. Quando houver certificado digital, o acesso fica restrito à leitura do necessário para a simulação e a operação fiscal.</p>
-    <p class="trust-bm reveal">Kontiva é uma empresa BlueMetrics: 10 anos de dados e IA, mais de 200 projetos entregues e mais de 90 clientes.</p>
+    <div class="trust-cols">
+      <p>Dados com controle de acesso e rastreabilidade. Quando houver certificado digital, o acesso fica restrito à leitura do necessário para a simulação e a operação fiscal.</p>
+      <p>Kontiva é uma empresa BlueMetrics: 10 anos de dados e IA, mais de 200 projetos entregues e mais de 90 clientes.</p>
+    </div>
   </div>
 </section>

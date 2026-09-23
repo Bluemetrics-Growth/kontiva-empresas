@@ -1,9 +1,10 @@
 ---
-// 02 - Contador para 2027 (PRD revisao, secoes 4.6, 5.3 e 7.2). Substitui a
-// dobra "Reforma em curso". Contagem client-side ate 01/01/2027 00:00 (BRT).
-// No HTML estatico os numeros saem como "--" (fallback seguro, sem depender da
-// hora do build); o script preenche e atualiza a cada segundo.
+// 02 - Reforma 2027. Esquerda: titulo, lead e contagem ate 01/01/2027 00:00
+// (BRT). Direita: linha do tempo vertical e CTA. No HTML estatico os numeros
+// saem como "--" (sem depender da hora do build); o script preenche e
+// atualiza a cada segundo, nunca abaixo de zero.
 import { facts } from "../../content/facts";
+import { marcos } from "../../content/secoes";
 import { CTA_PRIMARIO, CTA_ANCORA, DEMO_LIMITE } from "../../content/site";
 
 const TARGET = "2027-01-01T00:00:00-03:00";
@@ -13,47 +14,39 @@ const unidades = [
   { k: "m", l: "minutos" },
   { k: "s", l: "segundos" },
 ];
-const marcos = [
-  { when: "2026", what: "Hora de mapear fornecedores e créditos." },
-  { when: "Jan/2027", what: "CBS plena. Seu crédito passa a depender do recolhimento de quem vende para você." },
-  { when: "A partir de 2027", what: "Split payment e RAD entram aos poucos e são facultativos. Cada operação pede uma escolha." },
-];
 ---
 <section class="bg-page" id="reforma-2027" aria-labelledby="cd-h">
-  <div class="shell">
-    <div class="cd-grid">
-      <div class="cd-copy reveal">
-        <div class="eyebrow"><span class="dot-cyan"></span> Reforma 2027</div>
-        <h2 id="cd-h">Tempo para sua empresa chegar em 2027 com a operação <span class="serif-accent">preparada</span>.</h2>
-        <p class="cd-text">Em janeiro a CBS entra em regime pleno. Quem mapear a operação agora chega lá decidindo com número, não com susto.</p>
-      </div>
+  <div class="shell cd-grid">
+    <div class="cd-copy">
+      <div class="eyebrow"><span class="dot-cyan"></span> Reforma 2027</div>
+      <h2 id="cd-h">Tempo para sua empresa chegar em 2027 com a operação <span class="serif-accent">preparada</span>.</h2>
+      <p class="cd-text">Em janeiro a CBS entra em regime pleno. Quem mapear a operação agora chega lá decidindo com número, não com susto.</p>
 
-      <div class="cd-box reveal delay-1">
-        <div class="cd-clock" id="cd-2027" data-target={TARGET} role="timer" aria-label="Contagem regressiva até 1º de janeiro de 2027">
-          {unidades.map((u) => (
-            <div class="cd-unit">
-              <span class="cd-num" data-unit={u.k}>--</span>
-              <span class="cd-lbl">{u.l}</span>
-            </div>
-          ))}
-        </div>
-        <p class="cd-target">até <b>{facts.cbsPlena.value}</b> · {facts.cbsPlena.label}</p>
-        <small class="cd-src">Fonte: {facts.cbsPlena.source}</small>
+      <div class="cd-clock" id="cd-2027" data-target={TARGET} role="timer" aria-live="off" aria-label="Contagem regressiva até 1º de janeiro de 2027">
+        {unidades.map((u) => (
+          <div class="cd-unit">
+            <span class="cd-num" data-unit={u.k}>--</span>
+            <span class="cd-lbl">{u.l}</span>
+          </div>
+        ))}
       </div>
+      <p class="cd-target">até <b>{facts.cbsPlena.value}</b>, {facts.cbsPlena.label}.</p>
+      <small class="cd-src">Fonte: {facts.cbsPlena.source}</small>
     </div>
 
-    <ol class="urg3-marcos reveal delay-1">
-      {marcos.map((m) => (
-        <li class="marco">
-          <div class="when">{m.when}</div>
-          <p class="what">{m.what}</p>
-        </li>
-      ))}
-    </ol>
-
-    <div class="urg3-cta reveal">
-      <a href={CTA_ANCORA} class="btn btn-primary" data-cta="countdown">{CTA_PRIMARIO}</a>
-      <p class="cta-limit">{DEMO_LIMITE}</p>
+    <div class="cd-side">
+      <ol class="tl">
+        {marcos.map((m) => (
+          <li class={`tl-m${m.now ? " is-now" : ""}`}>
+            <span class="tl-when">{m.when}{m.now && <em>agora</em>}</span>
+            <p>{m.what}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="cd-cta">
+        <a href={CTA_ANCORA} class="btn btn-dark btn-lg" data-cta="countdown">{CTA_PRIMARIO}</a>
+        <p class="cta-limit">{DEMO_LIMITE}</p>
+      </div>
     </div>
   </div>
 </section>

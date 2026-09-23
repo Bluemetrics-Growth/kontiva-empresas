@@ -1,0 +1,39 @@
+---
+// Painel de uma aba de "Como opera". Esquerda: decisao, risco x ajuda,
+// exemplo e link para o agendamento. Direita: a "planilha" ilustrativa.
+import type { Aba } from "../../content/secoes";
+import { CTA_ANCORA } from "../../content/site";
+import { seloExemplo } from "../../content/facts";
+
+interface Props { aba: Aba; active: boolean }
+const { aba: t, active } = Astro.props;
+---
+<div class="ptab-panel" id={`panel-${t.id}`} role="tabpanel" aria-labelledby={`tab-${t.id}`} tabindex="0" hidden={!active}>
+  <div class="pt-copy">
+    <h3>{t.title}</h3>
+    <dl class="pt-pair">
+      <div class="pt-risk">
+        <dt>Risco de não agir</dt>
+        <dd>{t.risk}</dd>
+      </div>
+      <div class="pt-how">
+        <dt>Como a Kontiva ajuda</dt>
+        <dd>{t.how}</dd>
+      </div>
+    </dl>
+    <p class="pt-metric"><span class="pt-metric-tag">Exemplo ilustrativo</span> {t.metric}</p>
+    <a href={CTA_ANCORA} class="link-cta" data-cta="product" data-tab-cta={t.id}>{t.cta}</a>
+  </div>
+  <div class="pt-visual">
+    <div class="sheet" aria-hidden="true">
+      <div class="sheet-head">{t.screen} <span class="sheet-tag">{t.screenTag}</span></div>
+      <div class="sheet-body">
+        {t.rows.map((r) => (
+          <div class="sheet-row"><b>{r.b}</b><span>{r.s}</span><span class={`pill is-${r.tone}`}>{r.badge}</span></div>
+        ))}
+      </div>
+      {t.toggle && <div class="sheet-toggle"><span class="sw"></span> {t.toggle}</div>}
+      <div class="sheet-foot">{seloExemplo}</div>
+    </div>
+  </div>
+</div>
